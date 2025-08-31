@@ -17,7 +17,7 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const queue = new Queue('file-upload-queue', {
   connection: {
-    host: 'localhost',
+    host: 'redis',
     port: '6379',
   },
 });
@@ -66,8 +66,9 @@ app.get('/chat', async (req, res) => {
     const vectorStore = await QdrantVectorStore.fromExistingCollection(
       embeddings,
       {
-        url: qdrantUrl,
+        url: 'http://qdrant:6333',
         collectionName: "langchainjs-testing",
+        clientOptions: { checkCompatibility: false },
       }
     );
 

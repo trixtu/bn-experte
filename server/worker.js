@@ -39,7 +39,7 @@ const worker = new Worker(
     const vectorStore = await QdrantVectorStore.fromExistingCollection(
       embeddings,
       {
-        url: 'http://localhost:6333',
+        url: process.env.QDRANT_URL,
         collectionName: 'langchainjs-testing',
         clientOptions: { checkCompatibility: false },
       }
