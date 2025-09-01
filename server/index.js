@@ -18,8 +18,9 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const queue = new Queue('file-upload-queue', {
   connection: {
-    url:process.env.REDIS_URL,
-    port:6379
+    host: 'redis.railway.internal',
+    port: 6379,
+    password: 'OKfuhClKRmzgqYIqEcjkDVDQaiyOpTwZ'
   }
 });
 
