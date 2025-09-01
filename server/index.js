@@ -15,10 +15,9 @@ import 'dotenv/config';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-const redisUrl = process.env.REDIS_URL || `redis://${process.env.REDISUSER}:${process.env.REDISPASSWORD}@${process.env.REDISHOST}:${process.env.REDISPORT}`;
 
 const queue = new Queue('file-upload-queue', {
-  connection: redisUrl
+  connection: process.env.REDIS_URL
 });
 
 const storage = multer.diskStorage({
