@@ -2,10 +2,18 @@
 FROM node:20-alpine
 
 WORKDIR /app
+
+# Copiem package.json și package-lock.json
 COPY package*.json ./
-RUN npm ci
+
+# Instalăm dependențele
+RUN npm install
+
+# Copiem restul codului
 COPY . .
-ENV NODE_ENV=production
+
+# Expunem portul serverului
 EXPOSE 8000
-# index.js pornește API-ul; worker-ul e separat ca Background Worker
-CMD ["node", "index.js"]
+
+# Comanda de start
+CMD ["npm", "run", "dev"]
