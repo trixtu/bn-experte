@@ -1,61 +1,58 @@
-import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
-import { CharacterTextSplitter } from "@langchain/textsplitters";
+import { Worker } from 'bullmq';
+import { QdrantVectorStore } from '@langchain/qdrant';
+import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
+import { CharacterTextSplitter } from '@langchain/textsplitters';
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
-import { QdrantVectorStore } from "@langchain/qdrant";
+import 'dotenv/config';
 
-const jobQueue = [];
 
-// Adaugă job
-export function addJob(job) {
-  jobQueue.push(job);
-  processJobs();
-}
+const worker = new Worker(
+  'file-upload-queue',
+  async (job) => {
+    console.log(`Job:`, job.data);
+    const data = JSON.parse(job.data);
+    /*
+    Path: data.path
+    read the pdf from path,
+    chunk the pdf,
+    call the openai embedding model for every chunk,
+    store the chunk in qdrant db
+    */
 
-// Procesează job-urile (in-memory)
-let isProcessing = false;
-async function processJobs() {
-  if (isProcessing) return;
-  isProcessing = true;
+    // Load the PDF
+    const loader = new PDFLoader(data.path);
+    let docs = await loader.load();
 
-  while (jobQueue.length > 0) {
-    const job = jobQueue.shift();
-    try {
-      console.log("Procesăm PDF:", job.filename);
+    
+    // 3️⃣ Creează embeddings folosind Hugging Face (gratis)
+    const embeddings = new HuggingFaceInferenceEmbeddings({
+      model: "sentence-transformers/all-MiniLM-L6-v2", 
+      apiKey: process.env.HF_API_KEY,
+    });
 
-      // Salvează temporar PDF-ul în /tmp
-      const tmpPath = `/tmp/${job.filename}`;
-      await import("fs").then(fs => fs.promises.writeFile(tmpPath, job.buffer));
 
-      // Încarcă PDF-ul
-      const loader = new PDFLoader(tmpPath);
-      let docs = await loader.load();
+    // 2️⃣ Împarte textul în chunk-uri mai mici
+    const splitter = new CharacterTextSplitter({ chunkSize: 1000, chunkOverlap: 200 });
+    docs = await splitter.splitDocuments(docs);
 
-      // Split text
-      const splitter = new CharacterTextSplitter({ chunkSize: 1000, chunkOverlap: 200 });
-      docs = await splitter.splitDocuments(docs);
 
-      // Embeddings
-      const embeddings = new HuggingFaceInferenceEmbeddings({
-        model: "sentence-transformers/all-MiniLM-L6-v2",
-        apiKey: process.env.HF_API_KEY,
-      });
-
-      // Qdrant
-      const vectorStore = await QdrantVectorStore.fromExistingCollection(
-        embeddings,
-        {
-          url: process.env.QDRANT_URL,
-          collectionName: "langchainjs-testing",
-          clientOptions: { checkCompatibility: false },
-        }
-      );
-
-      await vectorStore.addDocuments(docs);
-      console.log("✅ PDF procesat:", job.filename);
-    } catch (err) {
-      console.error("Eroare la procesarea PDF:", err);
+    const vectorStore = await QdrantVectorStore.fromExistingCollection(
+      embeddings,
+      {
+        url: process.env.QDRANT_URL,
+        collectionName: 'langchainjs-testing',
+        clientOptions: { checkCompatibility: false },
+      }
+    );
+    await vectorStore.addDocuments(docs);
+    console.log("✅ Toate documentele au fost adăugate în Qdrant!");
+    
+  },
+  {
+    concurrency: 100,
+    connection: {
+      host: process.env.REDIS_HOST || 'localhost',
+      port: parseInt(process.env.REDIS_PORT) || 6379,
     }
   }
-
-  isProcessing = false;
-}
+);
