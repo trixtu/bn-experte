@@ -1,23 +1,38 @@
-FROM node:20
-
-# Set working directory
+FROM node:20-alpine AS deps
 WORKDIR /app
-
-# Instalează pnpm global
-RUN npm install -g pnpm
-
-# Copiază fișierele și package.json
 COPY package*.json ./
-COPY pnpm-lock.yaml ./
+RUN npm ci
 
-# Instalează dependențele
-RUN pnpm install
-
-# Copiază restul aplicației
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# IMPORTANT: Next 13+/15: build pentru producție
+RUN npm run build
 
-# Expune portul
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+# Next produce .next/standalone pe versiunile noi; dacă nu, folosește start clasic
+COPY --from=builder /app ./
 EXPOSE 3000
+CMD ["npm", "run", "start"]
 
-# Rulează aplicația
-CMD ["pnpm", "dev"]
+# # Instalează pnpm global
+# RUN npm install -g pnpm
+
+# # Copiază fișierele și package.json
+# COPY package*.json ./
+# COPY pnpm-lock.yaml ./
+
+# # Instalează dependențele
+# RUN pnpm install
+
+# # Copiază restul aplicației
+# COPY . .
+
+# # Expune portul
+# EXPOSE 3000
+
+# # Rulează aplicația
+# CMD ["pnpm", "dev"]

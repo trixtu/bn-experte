@@ -7,11 +7,11 @@ import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/
 import Groq from "groq-sdk";
 import 'dotenv/config';
 
-const qdrantUrl = process.env.QDRANT_URL;
-const redisHost = process.env.REDIS_HOST;
-const redisPort = process.env.REDIS_PORT;
-const hfApiKey = process.env.HF_API_KEY;
-const groqApiKey = process.env.GROQ_API_KEY;
+// const qdrantUrl = process.env.QDRANT_URL;
+// const redisHost = process.env.REDIS_HOST;
+// const redisPort = process.env.REDIS_PORT;
+// const hfApiKey = process.env.HF_API_KEY;
+// const groqApiKey = process.env.GROQ_API_KEY;
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -35,7 +35,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || "*", // pune domeniul clientului după ce îl ai
+}));
 
 app.get('/', (req, res) => {
   return res.json({ status: 'All Good!' });
