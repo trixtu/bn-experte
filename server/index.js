@@ -15,7 +15,7 @@ import 'dotenv/config';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-const redisUrl = 'redis://default:ej5d8mzzwvoh5txpkkmr9854uf56s2jk@:' || `redis://${process.env.REDISUSER}:${process.env.REDISPASSWORD}@${process.env.REDISHOST}:${process.env.REDISPORT}`;
+const redisUrl = 'redis://default:ej5d8mzzwvoh5txpkkmr9854uf56s2jk@redis.railway.internal:6379?family=0' || `redis://${process.env.REDISUSER}:${process.env.REDISPASSWORD}@${process.env.REDISHOST}:${process.env.REDISPORT}`;
 
 const queue = new Queue('file-upload-queue', {
   connection: redisUrl
