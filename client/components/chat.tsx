@@ -43,7 +43,9 @@ const ChatComponent: React.FC = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:8000/chat?message=${encodeURIComponent(message)}`
+        `${process.env.NEXT_PUBLIC_API_URL}/chat?message=${encodeURIComponent(
+          message
+        )}`
       );
       const data = await res.json();
 
