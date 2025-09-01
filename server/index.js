@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
-// import { Queue } from 'bullmq';
+import { Queue } from 'bullmq';
 import { QdrantVectorStore } from '@langchain/qdrant';
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import Groq from "groq-sdk";
@@ -16,9 +16,12 @@ import 'dotenv/config';
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 
-// const queue = new Queue('file-upload-queue', {
-//   connection: process.env.REDIS_URL
-// });
+const queue = new Queue('file-upload-queue', {
+  connection: {
+    url:process.env.REDIS_URL,
+    port:6379
+  }
+});
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -47,22 +50,22 @@ app.get('/', (req, res) => {
 });
 
 
-// app.post('/upload/pdf', upload.single('pdf'), async (req, res) => {
-//   try {
-//     await queue.add(
-//       'file-ready',
-//       JSON.stringify({
-//         filename: req.file.originalname,
-//         destination: req.file.destination,
-//         path: req.file.path,
-//       })
-//     );
-//     return res.json({ message: 'uploaded' });
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({ error: "Upload failed" });
-//   }
-// });
+app.post('/upload/pdf', upload.single('pdf'), async (req, res) => {
+  try {
+    await queue.add(
+      'file-ready',
+      JSON.stringify({
+        filename: req.file.originalname,
+        destination: req.file.destination,
+        path: req.file.path,
+      })
+    );
+    return res.json({ message: 'uploaded' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Upload failed" });
+  }
+});
 
 app.get('/chat', async (req, res) => {
 
