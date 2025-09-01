@@ -13,6 +13,8 @@ import 'dotenv/config';
 // const hfApiKey = process.env.HF_API_KEY;
 // const groqApiKey = process.env.GROQ_API_KEY;
 
+if (!fs.existsSync('uploads')) fs.mkdirSync('uploads');
+
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 
@@ -48,21 +50,28 @@ app.get('/', (req, res) => {
 
 
 app.post('/upload/pdf', upload.single('pdf'), async (req, res) => {
-  await queue.add(
-    'file-ready',
-    JSON.stringify({
-      filename: req.file.originalname,
-      destination: req.file.destination,
-      path: req.file.path,
-    })
-  );
-  return res.json({ message: 'uploaded' });
+  try {
+    await queue.add(
+      'file-ready',
+      JSON.stringify({
+        filename: req.file.originalname,
+        destination: req.file.destination,
+        path: req.file.path,
+      })
+    );
+    return res.json({ message: 'uploaded' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Upload failed" });
+  }
 });
 
 app.get('/chat', async (req, res) => {
 
   try {
     const userQuery = req.query.message;
+    if (!userQuery) return res.status(400).json({ error: "Missing message" });
+
     const embeddings = new HuggingFaceInferenceEmbeddings({
       model: "sentence-transformers/all-MiniLM-L6-v2",
       apiKey: process.env.HF_API_KEY,
@@ -111,7 +120,10 @@ app.get('/chat', async (req, res) => {
     });
   } catch (error) {
     console.log(error)
+    return res.status(500).json({ error: "Eroare la procesarea cererii" });
   }
 });
 
-app.listen(8000, () => console.log(`Server started on PORT:${8000}`));
+const PORT = process.env.PORT || 8000;
+
+app.listen(8000, () => console.log(`Server started on PORT:${PORT}`));
