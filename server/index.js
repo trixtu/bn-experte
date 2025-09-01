@@ -13,8 +13,6 @@ import 'dotenv/config';
 // const hfApiKey = process.env.HF_API_KEY;
 // const groqApiKey = process.env.GROQ_API_KEY;
 
-if (!fs.existsSync('uploads')) fs.mkdirSync('uploads');
-
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 
