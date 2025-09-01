@@ -17,10 +17,8 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 
 const queue = new Queue('file-upload-queue', {
-  connection: 
-  {
-    url:process.env.REDIS_URL
-  }
+  connection: process.env.REDIS_URL,
+  
 });
 
 const storage = multer.diskStorage({
