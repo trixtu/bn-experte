@@ -40,9 +40,9 @@ export default function RootLayout({
           <section>
             <SignedOut>
               <div className="flex min-h-screen items-center justify-center">
-                <Button>
+                <div className="bg-black p-2">
                   <SignUpButton />
-                </Button>
+                </div>
               </div>
             </SignedOut>
           </section>
