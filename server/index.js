@@ -35,13 +35,19 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 const app = express();
+
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || "*", // pune domeniul clientului după ce îl ai
+  origin: "*", // pentru test poți lăsa *, apoi specifică domeniile reale
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+app.use(express.json());
 
 app.get('/', (req, res) => {
   return res.json({ status: 'All Good!' });
 });
+
 
 app.post('/upload/pdf', upload.single('pdf'), async (req, res) => {
   await queue.add(
