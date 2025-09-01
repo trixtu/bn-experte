@@ -17,7 +17,9 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 
 const queue = new Queue('file-upload-queue', {
-  connection: process.env.REDIS_URL,
+  connection: {
+    url:'rediss://default:AcxpAAIncDE3YWMxMmNkZWYyMjU0ODE5OGM4ZTEyNDFjOTg4NGQwZnAxNTIzMjk@optimum-jay-52329.upstash.io:6379'
+  },
   
 });
 
