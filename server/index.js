@@ -6,15 +6,25 @@ import { QdrantVectorStore } from '@langchain/qdrant';
 import { QdrantClient } from "@qdrant/js-client-rest";
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import Groq from "groq-sdk";
+import fetch from "node-fetch"; 
 import 'dotenv/config';
 
-// const qdrantUrl = process.env.QDRANT_URL;
-// const redisHost = process.env.REDIS_HOST;
-// const redisPort = process.env.REDIS_PORT;
-// const hfApiKey = process.env.HF_API_KEY;
-// const groqApiKey = process.env.GROQ_API_KEY;
+
+// const SERVER_URL = process.env.SERVER_URL || "https://bn-experte-4.onrender.com";
+
+// setInterval(async () => {
+//   try {
+//     const res = await fetch(SERVER_URL);
+//     if (res.ok) console.log(`🟢 Ping reușit la ${SERVER_URL}`);
+//     else console.log(`⚠️ Ping nereușit: ${res.status}`);
+//   } catch (err) {
+//     console.error("❌ Eroare la ping:", err);
+//   }
+// }, 1 * 60 * 1000); // 1 minut = 60.000 ms
+
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
 
 const qdrant = new QdrantClient({
   url: process.env.QDRANT_URL,
@@ -150,4 +160,18 @@ app.get('/chat', async (req, res) => {
 
 const PORT = process.env.PORT || 8000;
 
-app.listen(PORT, () => console.log(`Server started on PORT:${PORT}`));
+app.listen(PORT, ()=>{
+  console.log(`Server started on PORT:${PORT}`);
+
+  // Keep-alive ping
+  const SERVER_URL = process.env.SERVER_URL || `http://localhost:${PORT}`;
+  setInterval(async ()=>{
+    try{
+      const res = await fetch(SERVER_URL);
+      if(res.ok) console.log(`🟢 Ping reușit la ${SERVER_URL}`);
+      else console.log(`⚠️ Ping nereușit: ${res.status}`);
+    } catch(err){
+      console.error("❌ Eroare la ping:", err);
+    }
+  }, 1*60*1000); // 30 minute
+});
