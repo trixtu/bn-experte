@@ -173,5 +173,5 @@ app.listen(PORT, ()=>{
     } catch(err){
       console.error("❌ Eroare la ping:", err);
     }
-  }, 1*60*1000); // 30 minute
+  }, 30*60*1000); // 30 minute
 });
