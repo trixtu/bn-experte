@@ -3,6 +3,7 @@ import cors from 'cors';
 import multer from 'multer';
 import { Queue } from 'bullmq';
 import { QdrantVectorStore } from '@langchain/qdrant';
+import { QdrantClient } from "@qdrant/js-client-rest";
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import Groq from "groq-sdk";
 import 'dotenv/config';
@@ -14,6 +15,11 @@ import 'dotenv/config';
 // const groqApiKey = process.env.GROQ_API_KEY;
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+const qdrant = new QdrantClient({
+  url: process.env.QDRANT_URL,
+  apiKey: process.env.QDRANT_API_KEY,
+});
 
 
 const queue = new Queue('file-upload-queue', {
@@ -50,6 +56,9 @@ app.get('/', (req, res) => {
 
 
 app.post('/upload/pdf', upload.single('pdf'), async (req, res) => {
+   const manualName = req.body.manualName; // fiecare manual are un ID
+  if (!manualName) return res.status(400).json({ error: "manualName lipsă" });
+
   try {
     await queue.add(
       'file-ready',
@@ -57,20 +66,34 @@ app.post('/upload/pdf', upload.single('pdf'), async (req, res) => {
         filename: req.file.originalname,
         destination: req.file.destination,
         path: req.file.path,
+        manualName
       }
     );
-    return res.json({ message: 'uploaded' });
+    res.json({ message: 'PDF încărcat și trimis la procesare', manualName });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Upload failed" });
   }
 });
 
+app.get("/manuals", async (req, res) => {
+  try {
+    // Preia lista de colecții (fiecare colecție = un manual)
+    const collections = await qdrant.getCollections();
+    const manualNames = collections.collections.map(c => c.name);
+    
+    res.json({ manuals: manualNames });
+  } catch (err) {
+    console.error("Error fetching manuals from Qdrant:", err);
+    res.status(500).json({ manuals: [] });
+  }
+});
+
 app.get('/chat', async (req, res) => {
 
   try {
-    const userQuery = req.query.message;
-    if (!userQuery) return res.status(400).json({ error: "Missing message" });
+    const { message, manualName } = req.query;
+    if (!message || !manualName) return res.status(400).json({ error: "Lipsește message sau manualName" });
 
     const embeddings = new HuggingFaceInferenceEmbeddings({
       model: "sentence-transformers/all-MiniLM-L6-v2",
@@ -82,20 +105,20 @@ app.get('/chat', async (req, res) => {
       embeddings,
       {
         url: process.env.QDRANT_URL,
-        collectionName: "langchainjs-testing",
+        collectionName: `${manualName}`,
         clientOptions: { checkCompatibility: false },
         apiKey: process.env.QDRANT_API_KEY
       }
     );
 
     const retriever = vectorStore.asRetriever({ k: 3 });
-    const result = await retriever.invoke(userQuery);
+    const result = await retriever.invoke(message);
 
     const context = result.map(r => r.pageContent).slice(0, 3).join("\n\n");
     
     const SYSTEM_PROMPT = `
-      Ești un asistent care răspunde STRICT pe baza manualului PDF încărcat si imi explici in limba romana. 
-      Dacă nu găsești răspunsul în context poti cauta si pe internet dar sa specifici ca este luat din internet"
+      Ești un asistent care răspunde STRICT pe baza manualului selectat și explică clar în limba română.
+      Dacă răspunsul nu se găsește în manual, răspunde: "Nu am informații în manualul curent."
 
       Context:
       ${context}
@@ -105,7 +128,7 @@ app.get('/chat', async (req, res) => {
       model: "meta-llama/llama-4-scout-17b-16e-instruct",   // ⚡ rapid și puternic
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: userQuery },
+        { role: "user", content: message },
       ],
       temperature: 0.2,
     });

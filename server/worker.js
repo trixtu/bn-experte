@@ -12,16 +12,16 @@ const worker = new Worker(
     console.log("📥 Job primit:", job.data);
 
     try {
-      const data = job.data; // deja obiect, nu mai facem JSON.parse
+      const { path, manualName } = job.data;
 
       // Verific dacă fișierul există
-      if (!fs.existsSync(data.path)) {
-        throw new Error(`❌ Fișierul nu există: ${data.path}`);
+      if (!fs.existsSync(path)) {
+        throw new Error(`❌ Fișierul nu există: ${path}`);
       }
 
       // 1️⃣ Încarcă PDF-ul
-      console.log("➡ Încărc PDF:", data.path);
-      const loader = new PDFLoader(data.path);
+      console.log("➡ Încărc PDF:", path);
+      const loader = new PDFLoader(path);
       let docs = await loader.load();
       console.log(`✅ PDF încărcat (${docs.length} pagini)`);
 
@@ -47,7 +47,7 @@ const worker = new Worker(
         embeddings,
         {
           url: process.env.QDRANT_URL,
-          collectionName: "langchainjs-testing",
+          collectionName: `manual-${manualName}`,
           clientOptions: { checkCompatibility: false },
           apiKey: process.env.QDRANT_API_KEY,
         }

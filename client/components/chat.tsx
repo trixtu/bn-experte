@@ -5,15 +5,16 @@ import { Input } from "@/components/ui/input";
 import { UserButton } from "@clerk/nextjs";
 import * as React from "react";
 
+import FileUploadComponent from "./file-upload";
+
 interface Doc {
   pageContent?: string;
   metadata?: {
-    loc?: {
-      pageNumber?: number;
-    };
+    loc?: { pageNumber?: number };
     source?: string;
   };
 }
+
 interface IMessage {
   role: "assistant" | "user";
   content?: string;
@@ -23,6 +24,8 @@ interface IMessage {
 const ChatComponent: React.FC = () => {
   const [message, setMessage] = React.useState<string>("");
   const [messages, setMessages] = React.useState<IMessage[]>([]);
+  const [availableManuals, setAvailableManuals] = React.useState<string[]>([]);
+  const [selectedManual, setSelectedManual] = React.useState<string>("");
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -33,19 +36,36 @@ const ChatComponent: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
+  React.useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/manuals`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        setAvailableManuals(data.manuals || []);
+        if (data.manuals?.length > 0) setSelectedManual(data.manuals[0]);
+      })
+      .catch((err) => {
+        console.error("Error fetching manuals:", err);
+        setAvailableManuals([]); // fallback
+      });
+  }, []);
+
+  console.log(availableManuals);
+
   const handleSendChatMessage = async () => {
-    if (!message.trim()) return;
+    if (!message.trim() || !selectedManual) return;
 
     const userMessage: IMessage = { role: "user", content: message };
     setMessages((prev) => [...prev, userMessage]);
-
     setMessage("");
 
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/chat?message=${encodeURIComponent(
           message
-        )}`
+        )}&manualName=${encodeURIComponent(selectedManual)}`
       );
       const data = await res.json();
 
@@ -67,9 +87,24 @@ const ChatComponent: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex justify-end mb-4 p-2 border-b-2">
+      <div className="flex justify-between lg:justify-end mb-4 p-2 border-b-2 items-center gap-2">
+        {/* Select manual */}
+        <select
+          value={selectedManual}
+          onChange={(e) => setSelectedManual(e.target.value)}
+          className="border rounded p-2 text-black"
+        >
+          <option value="">Select manual</option>
+          {availableManuals.map((manual, i) => (
+            <option key={i} value={manual}>
+              {manual}
+            </option>
+          ))}
+        </select>
+
         <UserButton />
       </div>
+
       <div className="flex-1 overflow-y-auto mb-24 p-8">
         {messages.map((msg, index) => (
           <div
@@ -118,14 +153,17 @@ const ChatComponent: React.FC = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="fixed bottom-4 w-100 flex gap-3 px-4">
+      <div className="fixed bottom-6 w-full lg:w-200 flex gap-3 px-4">
         <Input
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type your message here"
           onKeyDown={(e) => e.key === "Enter" && handleSendChatMessage()}
         />
-        <Button onClick={handleSendChatMessage} disabled={!message.trim()}>
+        <Button
+          onClick={handleSendChatMessage}
+          disabled={!message.trim() || !selectedManual}
+        >
           Send
         </Button>
       </div>
