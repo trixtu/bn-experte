@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "concurrently \"node index.js\" \"node worker.js\"",
-  "dev": "concurrently \"node --watch index.js\" \"node --watch worker.js\"",
-  "worker": "node worker.js"
+    "start": "node index.js",
+    "dev": "concurrently \"node --watch index.js\" \"node --watch worker.js\"",
+    "worker": "node worker.js"
   },
   "keywords": [],
   "author": "",

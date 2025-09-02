@@ -17,10 +17,9 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 
 const queue = new Queue('file-upload-queue', {
-  connection: {
-    url:'rediss://default:AcxpAAIncDE3YWMxMmNkZWYyMjU0ODE5OGM4ZTEyNDFjOTg4NGQwZnAxNTIzMjk@optimum-jay-52329.upstash.io:6379'
-  },
-  
+  connection:{
+    url:process.env.REDIS_URL
+  }
 });
 
 const storage = multer.diskStorage({
@@ -38,7 +37,7 @@ const upload = multer({ storage: storage });
 const app = express();
 
 app.use(cors({
-  origin: ['https://keen-laughter-production.up.railway.app','https://bn-experte-production.up.railway.app'], // pentru test poți lăsa *, apoi specifică domeniile reale
+  origin: ['*','http://localhost:8000','https://bn-experte-production.up.railway.app','http://localhost:3000'], // pentru test poți lăsa *, apoi specifică domeniile reale
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
@@ -54,11 +53,11 @@ app.post('/upload/pdf', upload.single('pdf'), async (req, res) => {
   try {
     await queue.add(
       'file-ready',
-      JSON.stringify({
+      {
         filename: req.file.originalname,
         destination: req.file.destination,
         path: req.file.path,
-      })
+      }
     );
     return res.json({ message: 'uploaded' });
   } catch (error) {
@@ -82,9 +81,10 @@ app.get('/chat', async (req, res) => {
     const vectorStore = await QdrantVectorStore.fromExistingCollection(
       embeddings,
       {
-        url: 'http://qdrant:6333',
+        url: process.env.QDRANT_URL,
         collectionName: "langchainjs-testing",
         clientOptions: { checkCompatibility: false },
+        apiKey: process.env.QDRANT_API_KEY
       }
     );
 
@@ -127,4 +127,4 @@ app.get('/chat', async (req, res) => {
 
 const PORT = process.env.PORT || 8000;
 
-app.listen(8000, () => console.log(`Server started on PORT:${PORT}`));
+app.listen(PORT, () => console.log(`Server started on PORT:${PORT}`));
