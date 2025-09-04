@@ -136,7 +136,7 @@ app.get('/chat', async (req, res) => {
     `;
 
     const chat = await groq.chat.completions.create({
-      model: "gpt-4o",
+      model: "google/gemma-3-12b-it",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: message },
