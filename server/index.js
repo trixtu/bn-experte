@@ -53,7 +53,7 @@ const upload = multer({ storage: storage });
 const app = express();
 
 app.use(cors({
-  origin: ['*','http://localhost:8000','https://bn-experte-production.up.railway.app','http://localhost:3000','https://keen-laughter-production.up.railway.app'], // pentru test poți lăsa *, apoi specifică domeniile reale
+  origin: ['*','https://bn-experte.vercel.app','http://localhost:8000','https://bn-experte-production.up.railway.app','http://localhost:3000','https://keen-laughter-production.up.railway.app'], // pentru test poți lăsa *, apoi specifică domeniile reale
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
