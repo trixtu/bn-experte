@@ -7,6 +7,7 @@ import { QdrantClient } from "@qdrant/js-client-rest";
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import Groq from "groq-sdk";
 import fetch from "node-fetch"; 
+import OpenAI from 'openai'
 import 'dotenv/config';
 
 
@@ -23,7 +24,7 @@ import 'dotenv/config';
 // }, 1 * 60 * 1000); // 1 minut = 60.000 ms
 
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const groq = new OpenAI({ baseURL:"https://api.aimlapi.com/v1", apiKey: '22b3d74f625947108742210e4168c72d' });
 
 
 const qdrant = new QdrantClient({
@@ -135,7 +136,7 @@ app.get('/chat', async (req, res) => {
     `;
 
     const chat = await groq.chat.completions.create({
-      model: "deepseek-r1-distill-llama-70b",
+      model: "gpt-4o",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: message },
