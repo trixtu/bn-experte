@@ -135,7 +135,7 @@ app.get('/chat', async (req, res) => {
     `;
 
     const chat = await groq.chat.completions.create({
-      model: "meta-llama/llama-4-scout-17b-16e-instruct",   // ⚡ rapid și puternic
+      model: "deepseek-r1-distill-llama-70b",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: message },
