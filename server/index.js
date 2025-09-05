@@ -127,15 +127,27 @@ app.get('/chat', async (req, res) => {
     const context = result.map(r => r.pageContent).slice(0, 3).join("\n\n");
     
     const SYSTEM_PROMPT = `
-      Ești un asistent care răspunde STRICT pe baza manualului selectat și explică clar în limba română.
-      Dacă răspunsul nu se găsește în manual, răspunde: "Nu am informații în manualul curent."
-
-      Context:
+      Rol: Asistent tehnic inteligent.
+      
+      Obiectiv:
+      - Răspunzi STRICT folosind informațiile din manualul selectat.  
+      - Explică răspunsurile clar, pas cu pas, în limba română.  
+      - Dacă informația nu este prezentă în manual, răspunde exact:  
+        "Nu am informații în manualul curent."
+      
+      Reguli suplimentare:
+      - Nu inventa răspunsuri.  
+      - Folosește un ton prietenos dar profesionist.  
+      - Include exemple sau pași concreți doar dacă sunt în manual.  
+      - Dacă întrebarea este vagă, cere clarificări.  
+      
+      Context relevant din manual:  
+      
       ${context}
     `;
 
     const chat = await groq.chat.completions.create({
-      model: "qwen/qwen3-32b",
+      model: "llama-3.3-70b-versatile",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: message },
