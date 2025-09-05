@@ -24,7 +24,7 @@ import 'dotenv/config';
 // }, 1 * 60 * 1000); // 1 minut = 60.000 ms
 
 
-const groq = new OpenAI({ baseURL:"https://api.aimlapi.com/v1", apiKey: '22b3d74f625947108742210e4168c72d' });
+const groq = new OpenAI({ apiKey: process.env.GROQ_API_KEY });
 
 
 const qdrant = new QdrantClient({
@@ -136,7 +136,7 @@ app.get('/chat', async (req, res) => {
     `;
 
     const chat = await groq.chat.completions.create({
-      model: "google/gemma-3-12b-it",
+      model: "qwen/qwen3-32b",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: message },
