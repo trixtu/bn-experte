@@ -7,7 +7,6 @@ import { QdrantClient } from "@qdrant/js-client-rest";
 import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import Groq from "groq-sdk";
 import fetch from "node-fetch"; 
-import OpenAI from 'openai'
 import 'dotenv/config';
 
 
@@ -24,7 +23,7 @@ import 'dotenv/config';
 // }, 1 * 60 * 1000); // 1 minut = 60.000 ms
 
 
-const groq = new OpenAI({ apiKey: process.env.GROQ_API_KEY });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 
 const qdrant = new QdrantClient({
