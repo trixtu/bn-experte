@@ -25,9 +25,6 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
 
         <div className="flex items-center gap-4">
-          {/* selector limbă */}
-          <SelectorLimba />
-
           {/* upload pdf */}
           <UploadPdf
             id={id}

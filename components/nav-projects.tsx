@@ -32,13 +32,14 @@ export function NavProjects({
     icon: LucideIcon;
   }[];
 }) {
-  const { isMobile } = useSidebar();
+  const { isMobile, setOpenMobile } = useSidebar();
+
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Projects</SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => (
-          <SidebarMenuItem key={item.name}>
+          <SidebarMenuItem key={item.name} onClick={() => setOpenMobile(false)}>
             <SidebarMenuButton asChild>
               <Link href={item.url}>
                 <item.icon />

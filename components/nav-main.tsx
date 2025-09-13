@@ -14,6 +14,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 export function NavMain({
@@ -30,6 +31,7 @@ export function NavMain({
     }[];
   }[];
 }) {
+  const { setOpenMobile } = useSidebar();
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -41,7 +43,7 @@ export function NavMain({
             defaultOpen={item.isActive}
             className="group/collapsible"
           >
-            <SidebarMenuItem>
+            <SidebarMenuItem onClick={() => setOpenMobile(false)}>
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton tooltip={item.title}>
                   {item.icon && <item.icon />}
