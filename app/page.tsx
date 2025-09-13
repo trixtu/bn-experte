@@ -1,5 +1,3 @@
-import betterAuthLogo from "@/assets/better_auth_logo.png";
-import codingInFlowLogo from "@/assets/coding_in_flow_logo.jpg";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,37 +6,20 @@ export default function Home() {
   return (
     <main className="flex min-h-svh items-center justify-center px-4">
       <div className="mx-auto max-w-3xl text-center">
-        <div className="mb-8 flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center">
           <Image
-            src={codingInFlowLogo}
-            alt="Coding in Flow logo"
-            width={80}
-            height={80}
-            className="border-muted rounded-full border"
-          />
-          <span className="text-muted-foreground text-2xl font-bold">+</span>
-          <Image
-            src={betterAuthLogo}
-            alt="Better Auth logo"
-            width={80}
-            height={80}
-            className="border-muted rounded-full border"
+            src="/BN-Tortechnik-Logo.svg" // direct din public
+            alt="B&N Tortechnik Logo"
+            width={220} // sau dimensiunea dorită
+            height={120}
           />
         </div>
-        <h1 className="text-3xl font-semibold sm:text-4xl">
-          Better-Auth Tutorial
-        </h1>
+
         <p className="text-muted-foreground mt-3 text-base text-balance sm:text-lg">
-          Learn how to handle authentication in Next.js using Better-Auth with
-          this tutorial by{" "}
-          <Link
-            href="https://www.youtube.com/c/codinginflow?sub_confirmation=1"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary hover:underline"
-          >
-            Coding in Flow
-          </Link>
+          With this application, you can upload technical manuals and use an AI
+          assistant that provides targeted answers from the uploaded documents.
+          Perfect for quickly obtaining precise information about machines,
+          controls, and technical processes—all in one place.
         </p>
         <div className="mx-auto mt-6 flex max-w-sm flex-col gap-3 sm:flex-row sm:justify-center">
           <Button asChild>
