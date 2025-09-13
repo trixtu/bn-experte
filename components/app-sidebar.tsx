@@ -18,6 +18,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { NavProjects } from "./nav-projects";
+import { Separator } from "@/components/ui/separator";
 import { NavUser } from "./nav-user";
 import { TeamSwitcher } from "./team-switcher";
 
@@ -137,6 +138,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
+        <Separator />
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>

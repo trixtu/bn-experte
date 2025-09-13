@@ -24,6 +24,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
+import Link from "next/link";
 export function NavUser({
   user,
 }: {
@@ -35,7 +36,7 @@ export function NavUser({
     role?: string;
   };
 }) {
-  const { isMobile } = useSidebar();
+  const { isMobile, setOpenMobile } = useSidebar();
 
   const handlerSignout = async () => {
     try {
@@ -94,9 +95,11 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
+              <DropdownMenuItem asChild onClick={() => setOpenMobile(false)}>
+                <Link href={"/profile"}>
+                  <BadgeCheck />
+                  Account
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <CreditCard />

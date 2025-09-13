@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
+import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
 
 type Message = {
   role: "user" | "assistant";
@@ -18,12 +20,11 @@ export default function Chat({ assistantId }: { assistantId: string }) {
   const [threadId, setThreadId] = useState<string | null>(null);
   const chatRef = useRef<HTMLDivElement>(null);
 
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
-    chatRef.current?.scrollTo({
-      top: chatRef.current.scrollHeight,
-      behavior: "smooth",
-    });
-  }, [messages]);
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -58,9 +59,9 @@ export default function Chat({ assistantId }: { assistantId: string }) {
   };
 
   return (
-    <div className="flex flex-col h-full border rounded-lg">
+    <div className="relative flex flex-col h-[calc(100vh-180px)] border rounded-lg overflow-hidden">
       {/* Zona mesaje scrollabilă */}
-      <ScrollArea className="h-[600px] p-4 bg-gray-50" ref={chatRef}>
+      <ScrollArea className="h-full p-4 pb-20 bg-gray-50" ref={chatRef}>
         <div className="space-y-4">
           {messages.map((msg, idx) => (
             <div
@@ -70,12 +71,12 @@ export default function Chat({ assistantId }: { assistantId: string }) {
               }`}
             >
               <div
-                className={`chat lg:max-w-[70%] rounded-2xl px-4 py-2 text-sm shadow
-                ${
-                  msg.role === "user"
-                    ? "bg-blue-500 text-white rounded-br-none"
-                    : "bg-white text-gray-800 border rounded-bl-none"
-                }`}
+                className={`chat lg:max-w-[70%] rounded-2xl px-4 py-2 shadow
+            ${
+              msg.role === "user"
+                ? "bg-blue-500 text-white rounded-br-none"
+                : "bg-white text-gray-800 border rounded-bl-none"
+            }`}
               >
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
@@ -88,18 +89,34 @@ export default function Chat({ assistantId }: { assistantId: string }) {
           ))}
           {loading && (
             <div className="flex justify-start">
-              <div className="bg-white border rounded-2xl rounded-bl-none px-4 py-2 text-sm text-gray-500 shadow">
-                Asistentul scrie...
+              <div className="bg-white border rounded-2xl rounded-bl-none px-4 py-2 text-sm text-gray-500 shadow flex items-center gap-1">
+                {[".", ".", "."].map((dot, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0.3, y: 0 }}
+                    animate={{ opacity: [0.3, 1, 0.3], y: [0, -3, 0] }}
+                    transition={{
+                      duration: 0.6,
+                      repeat: Infinity,
+                      delay: i * 0.2,
+                    }}
+                    className="w-2 h-2 bg-gray-400 rounded-full"
+                  />
+                ))}
               </div>
             </div>
           )}
+
+          {/* Ancoră pentru scroll */}
+          <div ref={bottomRef} />
         </div>
       </ScrollArea>
 
-      {/* Input fix jos */}
-      <div className="p-3 border-t bg-white flex gap-2">
-        <input
-          className="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+      {/* Input absolut jos */}
+      <div className="absolute bottom-0 left-0 right-0 p-3 border-t bg-white flex items-center gap-2">
+        <Input
+          id="chat"
+          className="rounded-full h-[42px] shadow-sm border px-4 py-4 focus:outline-none focus:ring-1 focus:ring-blue-400 text-base"
           placeholder="Scrie un mesaj..."
           value={input}
           onChange={(e) => setInput(e.target.value)}

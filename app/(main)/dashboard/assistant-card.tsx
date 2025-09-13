@@ -40,12 +40,13 @@ export default function AssistantCard({
         <CardContent>
           <div className="rounded flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
-              <IoFolderOutline className="w-7 h-7" />
+              <IoFolderOutline className="w-7 h-7" color="blue" />
               <h1 className="text-2xl">{assistant.name}</h1>
             </div>
             {admin && (
               <Button
-                variant="outline"
+                variant="destructive"
+                size={"icon"}
                 onClick={(e) => {
                   e.preventDefault();
                   handleDelete();
