@@ -8,8 +8,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { User } from "@/lib/generated/prisma";
 import MembersTableAction from "./members-table-action";
+import { User } from "@/prisma/lib/generated/prisma";
 
 interface MembersTableProps {
   users: User[];

@@ -77,6 +77,7 @@ export default function UploadPdf({
         setMessage("❌ Eroare: " + data.error);
       }
     } catch (err) {
+      console.log(err);
       setMessage("❌ Eroare la încărcare");
     } finally {
       setLoading(false);

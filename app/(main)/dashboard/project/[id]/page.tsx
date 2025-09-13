@@ -12,6 +12,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   try {
     assistant = await openai.beta.assistants.retrieve(id);
   } catch (e) {
+    console.log(e);
     return notFound();
   }
 

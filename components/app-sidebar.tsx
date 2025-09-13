@@ -4,10 +4,7 @@ import {
   BookOpen,
   Bot,
   Folder,
-  Frame,
-  Map,
   MessageSquareText,
-  PieChart,
   Settings2,
   Users,
 } from "lucide-react";

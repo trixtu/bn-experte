@@ -1,7 +1,6 @@
 import { getServerSession } from "@/lib/get-session";
 import type { Metadata } from "next";
 import { forbidden, unauthorized } from "next/navigation";
-import { DeleteApplication } from "./delete-application";
 import AllUsers from "@/components/all-users";
 import { getUsers } from "@/server/users";
 import MembersTable from "@/components/members-table";

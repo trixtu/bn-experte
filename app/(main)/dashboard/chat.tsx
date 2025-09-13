@@ -47,6 +47,7 @@ export default function Chat({ assistantId }: { assistantId: string }) {
         { role: "assistant", content: data.answer },
       ]);
     } catch (err) {
+      console.log(err);
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: "❌ Eroare la server" },

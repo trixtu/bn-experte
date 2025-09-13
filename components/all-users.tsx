@@ -3,9 +3,6 @@
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
 import { User } from "@/lib/auth";
 
 interface AllUsersProps {
@@ -14,7 +11,6 @@ interface AllUsersProps {
 
 export default function AllUsers({ users }: AllUsersProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
 
   //   const handleInviteMember = async (user: User) => {
   //     try {
