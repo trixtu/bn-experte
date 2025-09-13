@@ -7,6 +7,8 @@ const page = async () => {
   const session = await getServerSession();
   const user = session?.user;
 
+  const admin = user?.role === "admin";
+
   if (!user) unauthorized();
 
   const myAssistants = await openai.beta.assistants.list({
@@ -15,9 +17,9 @@ const page = async () => {
   });
 
   return myAssistants.data.length > 0 ? (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
       {myAssistants.data.map((assistant) => (
-        <AssistantCard key={assistant.id} assistant={assistant} />
+        <AssistantCard key={assistant.id} assistant={assistant} admin={admin} />
       ))}
     </div>
   ) : (
