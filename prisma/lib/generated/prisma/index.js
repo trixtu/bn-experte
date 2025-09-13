@@ -222,6 +222,10 @@ const config = {
         "fromEnvVar": null,
         "value": "darwin-arm64",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -229,7 +233,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../../.env"
   },
   "relativePath": "../../..",
@@ -248,8 +252,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"lib/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum Role {\n  member\n  admin\n  owner\n}\n\nmodel Organization {\n  id        String   @id\n  name      String\n  slug      String?  @unique\n  logo      String?\n  createdAt DateTime\n  metadata  String?\n\n  members     Member[]\n  invitations Invitation[]\n}\n\nmodel Member {\n  id             String   @id\n  organizationId String\n  userId         String\n  role           Role     @default(member)\n  createdAt      DateTime\n\n  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)\n  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)\n}\n\nmodel Invitation {\n  id             String   @id\n  organizationId String\n  email          String\n  role           String?\n  status         String   @default(\"pending\")\n  expiresAt      DateTime\n  inviterId      String\n\n  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)\n  inviter      User         @relation(\"UserInvitations\", fields: [inviterId], references: [id], onDelete: Cascade)\n}\n\nmodel User {\n  id            String    @id\n  name          String\n  email         String    @unique\n  emailVerified Boolean\n  image         String?\n  role          Role      @default(member)\n  createdAt     DateTime\n  updatedAt     DateTime\n  sessions      Session[]\n  accounts      Account[]\n\n  banned      Boolean?     @default(false)\n  banReason   String?\n  banExpires  DateTime?\n  members     Member[]\n  invitations Invitation[] @relation(\"UserInvitations\")\n\n  @@map(\"user\")\n}\n\nmodel Session {\n  id        String   @id\n  expiresAt DateTime\n  token     String   @unique\n  createdAt DateTime\n  updatedAt DateTime\n  ipAddress String?\n  userAgent String?\n  userId    String\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  impersonatedBy String?\n\n  @@map(\"session\")\n}\n\nmodel Account {\n  id                    String    @id\n  accountId             String\n  providerId            String\n  userId                String\n  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  accessToken           String?\n  refreshToken          String?\n  idToken               String?\n  accessTokenExpiresAt  DateTime?\n  refreshTokenExpiresAt DateTime?\n  scope                 String?\n  password              String?\n  createdAt             DateTime\n  updatedAt             DateTime\n\n  @@map(\"account\")\n}\n\nmodel Verification {\n  id         String    @id\n  identifier String\n  value      String\n  expiresAt  DateTime\n  createdAt  DateTime?\n  updatedAt  DateTime?\n\n  @@map(\"verification\")\n}\n",
-  "inlineSchemaHash": "a90bcc35bf67a8b887e226e44fb1059911d62b88e4b456c86e0eb943b3f61bce",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n  output        = \"lib/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum Role {\n  member\n  admin\n  owner\n}\n\nmodel Organization {\n  id        String   @id\n  name      String\n  slug      String?  @unique\n  logo      String?\n  createdAt DateTime\n  metadata  String?\n\n  members     Member[]\n  invitations Invitation[]\n}\n\nmodel Member {\n  id             String   @id\n  organizationId String\n  userId         String\n  role           Role     @default(member)\n  createdAt      DateTime\n\n  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)\n  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)\n}\n\nmodel Invitation {\n  id             String   @id\n  organizationId String\n  email          String\n  role           String?\n  status         String   @default(\"pending\")\n  expiresAt      DateTime\n  inviterId      String\n\n  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)\n  inviter      User         @relation(\"UserInvitations\", fields: [inviterId], references: [id], onDelete: Cascade)\n}\n\nmodel User {\n  id            String    @id\n  name          String\n  email         String    @unique\n  emailVerified Boolean\n  image         String?\n  role          Role      @default(member)\n  createdAt     DateTime\n  updatedAt     DateTime\n  sessions      Session[]\n  accounts      Account[]\n\n  banned      Boolean?     @default(false)\n  banReason   String?\n  banExpires  DateTime?\n  members     Member[]\n  invitations Invitation[] @relation(\"UserInvitations\")\n\n  @@map(\"user\")\n}\n\nmodel Session {\n  id        String   @id\n  expiresAt DateTime\n  token     String   @unique\n  createdAt DateTime\n  updatedAt DateTime\n  ipAddress String?\n  userAgent String?\n  userId    String\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  impersonatedBy String?\n\n  @@map(\"session\")\n}\n\nmodel Account {\n  id                    String    @id\n  accountId             String\n  providerId            String\n  userId                String\n  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)\n  accessToken           String?\n  refreshToken          String?\n  idToken               String?\n  accessTokenExpiresAt  DateTime?\n  refreshTokenExpiresAt DateTime?\n  scope                 String?\n  password              String?\n  createdAt             DateTime\n  updatedAt             DateTime\n\n  @@map(\"account\")\n}\n\nmodel Verification {\n  id         String    @id\n  identifier String\n  value      String\n  expiresAt  DateTime\n  createdAt  DateTime?\n  updatedAt  DateTime?\n\n  @@map(\"verification\")\n}\n",
+  "inlineSchemaHash": "572961ab79c79c1f76763a0f9daaaec52d52ea0f02eb3836d7dc4dccfa28071c",
   "copyEngine": true
 }
 
@@ -290,6 +294,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
 path.join(process.cwd(), "prisma/lib/generated/prisma/libquery_engine-darwin-arm64.dylib.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-rhel-openssl-3.0.x.so.node");
+path.join(process.cwd(), "prisma/lib/generated/prisma/libquery_engine-rhel-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/lib/generated/prisma/schema.prisma")
