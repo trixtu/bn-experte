@@ -5,21 +5,36 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { redirect } from "@/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "better-auth";
 import { useLocale, useTranslations } from "next-intl";
+import { Model } from "openai/resources/models.mjs";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
-export function FormAddNewProject({ user }: { user: User }) {
+export function FormAddNewProject({
+  user,
+  models,
+}: {
+  user: User;
+  models: Model[];
+}) {
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const locale = useLocale();
@@ -29,6 +44,7 @@ export function FormAddNewProject({ user }: { user: User }) {
 
   const createAsistentSchema = z.object({
     name: z.string().min(2, validations("name.min")),
+    model: z.string().min(1),
   });
 
   type CreateAsistentValues = z.infer<typeof createAsistentSchema>;
@@ -37,16 +53,17 @@ export function FormAddNewProject({ user }: { user: User }) {
     resolver: zodResolver(createAsistentSchema),
     defaultValues: {
       name: "",
+      model: "gpt-4o-mini",
     },
   });
 
-  async function onSubmit({ name }: CreateAsistentValues) {
+  async function onSubmit({ name, model }: CreateAsistentValues) {
     setStatus(null);
     setError(null);
 
     const res = await fetch("/api/create-project", {
       method: "POST",
-      body: JSON.stringify({ name: name, userId: user.id }),
+      body: JSON.stringify({ name: name, userId: user.id, model }),
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
@@ -85,6 +102,35 @@ export function FormAddNewProject({ user }: { user: User }) {
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="model"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Models</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a model" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {models.map((model) => (
+                        <SelectItem key={model.id} value={model.id}>
+                          {model.id}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+
                   <FormMessage />
                 </FormItem>
               )}
