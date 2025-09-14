@@ -20,8 +20,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { redirect } from "@/i18n/routing";
+import { User } from "@/prisma/lib/generated/prisma";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "better-auth";
 import { useLocale, useTranslations } from "next-intl";
 import { Model } from "openai/resources/models.mjs";
 import React, { useState } from "react";
@@ -41,6 +41,8 @@ export function FormAddNewProject({
 
   const t = useTranslations("AddProject");
   const validations = useTranslations("Validation");
+
+  const admin = user.role === "admin";
 
   const createAsistentSchema = z.object({
     name: z.string().min(2, validations("name.min")),
@@ -124,7 +126,11 @@ export function FormAddNewProject({
                     </FormControl>
                     <SelectContent>
                       {models.map((model) => (
-                        <SelectItem key={model.id} value={model.id}>
+                        <SelectItem
+                          key={model.id}
+                          value={model.id}
+                          disabled={!admin}
+                        >
                           {model.id}
                         </SelectItem>
                       ))}

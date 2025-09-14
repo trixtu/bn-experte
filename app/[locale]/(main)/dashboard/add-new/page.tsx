@@ -4,6 +4,7 @@ import { getServerSession } from "@/lib/get-session";
 import { unauthorized } from "next/navigation";
 import { openai } from "@/lib/openai";
 import { Model } from "openai/resources/models.mjs";
+import { User } from "@/prisma/lib/generated/prisma";
 
 const AddnewPage = async () => {
   const list = await openai.models.list();
@@ -11,7 +12,7 @@ const AddnewPage = async () => {
   const models = list.data;
 
   const session = await getServerSession();
-  const user = session?.user;
+  const user = session?.user as User;
 
   if (!user) unauthorized();
 
