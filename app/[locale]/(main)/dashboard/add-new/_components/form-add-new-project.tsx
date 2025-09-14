@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { redirect } from "@/i18n/routing";
-import { TFunction } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "better-auth";
 import { useLocale, useTranslations } from "next-intl";

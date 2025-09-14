@@ -1,6 +1,5 @@
 "use client";
 
-import { GitHubIcon } from "@/components/icons/GitHubIcon";
 import { GoogleIcon } from "@/components/icons/GoogleIcon";
 import { LoadingButton } from "@/components/loading-button";
 import { PasswordInput } from "@/components/password-input";

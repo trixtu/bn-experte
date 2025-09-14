@@ -11,17 +11,14 @@ import { UserAvatar } from "@/components/user-avatar";
 import { Link } from "@/i18n/routing";
 import { User } from "@/lib/auth";
 import { getServerSession } from "@/lib/get-session";
+
 import { format } from "date-fns";
 import { CalendarDaysIcon, MailIcon, ShieldIcon, UserIcon } from "lucide-react";
 import type { Metadata } from "next";
+import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { unauthorized } from "next/navigation";
-
-type TFunction = {
-  (key: string, ...args: any[]): string;
-  rich: (key: string, ...args: any[]) => React.ReactNode;
-  markup: (key: string, ...args: any[]) => string;
-};
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -41,8 +38,8 @@ export default async function DashboardPage() {
           <h1 className="text-2xl font-semibold">{t("title")}</h1>
           <p className="text-muted-foreground">{t("description")}</p>
         </div>
-        {!user.emailVerified && <EmailVerificationAlert t={t} />}
-        <ProfileInformation user={user} t={t} />
+        {!user.emailVerified && <EmailVerificationAlert />}
+        <ProfileInformation user={user} />
       </div>
     </main>
   );
@@ -50,10 +47,10 @@ export default async function DashboardPage() {
 
 interface ProfileInformationProps {
   user: User;
-  t: TFunction;
 }
 
-function ProfileInformation({ user, t }: ProfileInformationProps) {
+function ProfileInformation({ user }: ProfileInformationProps) {
+  const t = useTranslations("Dashboard");
   return (
     <Card>
       <CardHeader>
@@ -101,7 +98,9 @@ function ProfileInformation({ user, t }: ProfileInformationProps) {
   );
 }
 
-function EmailVerificationAlert({ t }: { t: TFunction }) {
+function EmailVerificationAlert() {
+  const t = useTranslations("Dashboard");
+
   return (
     <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-800/50 dark:bg-yellow-950/30">
       <div className="flex items-center justify-between">
