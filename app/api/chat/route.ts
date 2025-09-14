@@ -9,11 +9,36 @@ export async function POST(req: Request) {
     const thread = await openai.beta.threads.create();
     thread_id = thread.id;
   }
-  const languagePrompt = `Răspunde la toate întrebările în limba ${language}.\n\n${message}`;
-  // 2. Adăugăm mesajul în thread
-  await openai.beta.threads.messages.create(thread_id, {
+
+  let localizedMessage: string;
+
+  switch (language) {
+    case "ro":
+      localizedMessage = `Răspunde **în limba română**. ${message}`;
+      break;
+    case "en":
+      localizedMessage = `Answer **in English**. ${message}`;
+      break;
+    case "de":
+      localizedMessage = `Antworte **auf Deutsch**. ${message}`;
+      break;
+    case "fr":
+      localizedMessage = `Réponds **en français**. ${message}`;
+      break;
+    case "ru":
+      localizedMessage = `Ответь **на русском языке**. ${message}`;
+      break;
+    case "pl":
+      localizedMessage = `Odpowiedz **po polsku**. ${message}`;
+      break;
+    default:
+      localizedMessage = `Răspunde **în limba română. ${message}`;
+      break;
+  }
+  // 2️⃣ Trimite mesajul utilizatorului
+  const test = await openai.beta.threads.messages.create(thread_id, {
     role: "user",
-    content: languagePrompt,
+    content: localizedMessage,
   });
 
   // 3. Rulăm asistentul

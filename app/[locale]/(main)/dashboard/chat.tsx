@@ -56,7 +56,6 @@ export default function Chat({ assistantId }: { assistantId: string }) {
       // fake typewriter effect
       const answer = data.answer;
 
-      console.log(answer);
       let index = 0;
       setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
 
@@ -72,7 +71,7 @@ export default function Chat({ assistantId }: { assistantId: string }) {
         });
 
         if (index === answer.length) clearInterval(interval);
-      }, 25); // viteza efectului: 25ms pe caracter
+      }, 5); // viteza efectului: 25ms pe caracter
     } catch (err) {
       console.log(err);
       setMessages((prev) => [
