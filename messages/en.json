@@ -1,0 +1,64 @@
+{
+  "HomePage": {
+    "description": "With this application, you can upload technical manuals and use an AI assistant that provides targeted answers from the uploaded documents. Perfect for quickly obtaining precise information about machines, controls, and technical processes—all in one place.",
+    "buttons":{
+      "dashboard":"Go to Dashboard",
+      "sign-in":"Sign In"
+    }
+  },
+  "Dashboard": {
+    "title":"Dashboard",
+    "description":"Welcome back! Here's your account overview.",
+    "emailVerification": {
+      "description":"Please verify your email address to access all features.",
+      "button":"Verify Email"
+    },
+    "profilInfo":{
+      "title":"Profile Information",
+      "description":"Your account details and current status",
+      "memberSince": "Member Since"
+    }
+  },
+  "Sidebar": {
+    "navMain": {
+      "project": {
+        "title": "Project",
+        "items": {
+          "addNew": "Add new",
+          "allProjects": "All projects"
+        }
+      }
+    }
+  },
+  "AddProject":{
+    "title":"Add Project",
+    "name":"Name",
+    "placeHolder":"Name Project",
+    "button":"Add New"  
+  },
+  "Validation": {
+    "name": {
+      "min": "Please enter at least 2 characters"
+    }
+  },
+  "UploadPdf":{
+    "foldersProject":"Folders Project",
+    "button":"Upload PDF",
+    "buttonLoading":"Loading...",
+    "Warnings":{
+      "incarca":"Select a PDF file first!",
+      "success":"✅ PDF uploaded and attached to the assistant",
+      "error":"❌ Error"
+    },
+    "addFile":"Add file",
+    "files":"File"
+  },
+  "Chat":{
+    "input":{
+      "placeholder":"Write a message..."
+    },
+    "buttons":{
+      "send":"Send"
+    }
+  }
+}

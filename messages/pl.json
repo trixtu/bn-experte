@@ -1,0 +1,64 @@
+{
+  "HomePage": {
+    "description": "Dzięki tej aplikacji możesz przesyłać instrukcje techniczne i korzystać z asystenta AI, który udziela ukierunkowanych odpowiedzi na podstawie przesłanych dokumentów. Idealne rozwiązanie do szybkiego uzyskiwania precyzyjnych informacji o maszynach, elementach sterujących i procesach technicznych – wszystko w jednym miejscu.",
+    "buttons":{
+      "dashboard":"Przejdź do Panelu",
+      "sign-in":"Zalogować się"
+    }
+  },
+  "Dashboard": {
+    "title":"Panel",
+    "description":"Witamy ponownie! Oto przegląd Twojego konta.",
+    "emailVerification": {
+      "description":"Zweryfikuj swój adres e-mail, aby uzyskać dostęp do wszystkich funkcji.",
+      "button":"Zweryfikuj adres e-mail"
+    },
+    "profilInfo":{
+      "title":"Informacje o profilu",
+      "description":"Szczegóły Twojego konta i aktualny status",
+      "memberSince": "Członek od"
+    }
+  },
+  "Sidebar": {
+    "navMain": {
+      "project": {
+        "title": "Projekt",
+        "items": {
+          "addNew": "Dodaj nowe",
+          "allProjects": "Wszystkie projekty"
+        }
+      }
+    }
+  },
+  "AddProject":{
+    "title":"Dodaj projekt",
+    "name":"Nazwa",
+    "placeHolder":"Nazwa projektu",
+    "button":"Dodaj nowy"  
+  },
+  "Validation": {
+    "name": {
+      "min": "Proszę wpisać co najmniej 2 znaki"
+    }
+  },
+  "UploadPdf":{
+    "foldersProject":"Projekt folderów",
+    "button":"Prześlij plik PDF",
+    "buttonLoading":"Załadunek...",
+    "Warnings":{
+      "incarca":"Najpierw wybierz plik PDF!",
+      "success":"✅ Plik PDF przesłany i dołączony do asystenta",
+      "error":"❌ Błąd"
+    },
+    "addFile":"Dodaj plik",
+    "files":"Plik"
+  },
+  "Chat":{
+    "input":{
+      "placeholder":"Napisz wiadomość..."
+    },
+    "buttons":{
+      "send":"Wysłać"
+    }
+  }
+}

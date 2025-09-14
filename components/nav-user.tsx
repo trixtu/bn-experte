@@ -24,7 +24,8 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
-import Link from "next/link";
+import { Link, useRouter } from "@/i18n/routing";
+
 export function NavUser({
   user,
 }: {
@@ -37,12 +38,15 @@ export function NavUser({
   };
 }) {
   const { isMobile, setOpenMobile } = useSidebar();
+  const router = useRouter();
 
   const handlerSignout = async () => {
     try {
       await authClient.signOut();
       // Dacă vrei redirect după logout
-      window.location.href = "/sign-in";
+      // Obținem locale-ul activ
+
+      router.push(`/sign-in`);
     } catch (error) {
       console.error("Logout failed:", error);
     }

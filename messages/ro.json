@@ -1,0 +1,64 @@
+{
+  "HomePage": {
+    "description": "Cu această aplicație, puteți încărca manuale tehnice și puteți utiliza un asistent de inteligență artificială care oferă răspunsuri specifice din documentele încărcate. Perfectă pentru obținerea rapidă a informațiilor precise despre mașini, comenzi și procese tehnice - toate într-un singur loc.",
+    "buttons":{
+      "dashboard":"Go to Dashboard",
+      "sign-in":"Sign In"
+    }
+  },
+  "Dashboard": {
+    "title":"Dashboard",
+    "description":"Bine ați revenit! Iată o prezentare generală a contului dvs.",
+    "emailVerification": {
+      "description":"Vă rugăm să vă verificați adresa de e-mail pentru a accesa toate funcțiile.",
+      "button":"Verificați e-mailul"
+    },
+    "profilInfo":{
+      "title":"Informații de profil",
+      "description":"Detaliile contului dvs. și starea actuală",
+      "memberSince": "Membru De când"
+    }
+  },
+  "Sidebar": {
+    "navMain": {
+      "project": {
+        "title": "Proiect",
+        "items": {
+          "addNew": "Adăugați nou",
+          "allProjects": "Toate proiectele"
+        }
+      }
+    }
+  },
+  "AddProject":{
+    "title":"Adăugați proiect",
+    "name":"Nume",
+    "placeHolder":"Nume Proiect",
+    "button":"Adauga project"  
+  },
+  "Validation": {
+    "name": {
+      "min": "Vă rugăm să introduceți cel puțin 2 caractere"
+    }
+  },
+  "UploadPdf":{
+    "foldersProject":"Proiect Foldere",
+    "button":"Încărcați PDF",
+    "buttonLoading":"Încărcare...",
+    "Warnings":{
+      "incarca":"Selectați mai întâi un fișier PDF!",
+      "success":"✅ PDF încărcat și atașat asistentului",
+      "error":"❌ Eroare"
+    },
+    "addFile":"Adăugați fișier",
+    "files":"Fişier"
+  },
+  "Chat":{
+    "input":{
+      "placeholder":"Scrie un mesaj..."
+    },
+    "buttons":{
+      "send":"Trimite"
+    }
+  }
+}

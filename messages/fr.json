@@ -1,0 +1,64 @@
+{
+  "HomePage": {
+     "description": "Grâce à cette application, vous pouvez télécharger des manuels techniques et utiliser un assistant IA qui fournit des réponses ciblées à partir des documents téléchargés. Idéal pour obtenir rapidement des informations précises sur les machines, les commandes et les processus techniques, le tout en un seul endroit.",
+     "buttons":{
+      "dashboard":"Aller au tableau de bord",
+      "sign-in":"Se Connecter"
+    }
+  },
+  "Dashboard": {
+    "title":"Tableau de bord",
+    "description":"Bienvenue ! Voici un aperçu de votre compte.",
+    "emailVerification": {
+      "description":"Veuillez vérifier votre adresse e-mail pour accéder à toutes les fonctionnalités.",
+      "button":"Vérifier l'e-mail"
+    },
+    "profilInfo":{
+      "title":"Informations sur le profil",
+      "description":"Les détails de votre compte et votre statut actuel",
+      "memberSince": "Membre depuis"
+    }
+  },
+  "Sidebar": {
+    "navMain": {
+      "project": {
+        "title": "Projet",
+        "items": {
+          "addNew": "Ajouter un nouveau",
+          "allProjects": "Tous les projets"
+        }
+      }
+    }
+  },
+  "AddProject":{
+    "title":"Ajouter un projet",
+    "name":"Nom",
+    "placeHolder":"Nom du projet",
+    "button":"Ajouter un nouveau"  
+  },
+  "Validation": {
+    "name": {
+      "min": "Veuillez saisir au moins 2 caractères"
+    }
+  },
+  "UploadPdf":{
+    "foldersProject":"Projet de dossiers",
+    "button":"Télécharger le PDF",
+    "buttonLoading":"Chargement...",
+    "Warnings":{
+      "incarca":"Sélectionnez d’abord un fichier PDF !",
+      "success":"✅ PDF téléchargé et joint à l'assistant",
+      "error":"❌ Erreur"
+    },
+    "addFile":"Ajouter un fichier",
+    "files":"Déposer"
+  },
+  "Chat":{
+    "input":{
+      "placeholder":"Écrire un message..."
+    },
+    "buttons":{
+      "send":"Envoyer"
+    }
+  }
+}

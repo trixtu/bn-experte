@@ -6,7 +6,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+
 export function TeamSwitcher() {
   return (
     <SidebarMenu>
@@ -15,7 +16,7 @@ export function TeamSwitcher() {
           asChild
           className="data-[slot=sidebar-menu-button]:!p-1.5"
         >
-          <Link href="/">
+          <Link href="/dashboard">
             <IconInnerShadowTop className="!size-5" />
             <span className="text-base font-semibold">Trixtu</span>
           </Link>

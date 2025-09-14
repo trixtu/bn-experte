@@ -1,0 +1,64 @@
+{
+  "HomePage": {
+    "description": "Mit dieser Anwendung können Sie technische Handbücher hochladen und einen KI-Assistenten nutzen, der Ihnen aus den hochgeladenen Dokumenten zielgerichtete Antworten liefert. Perfekt, um schnell und präzise Informationen zu Maschinen, Steuerungen und technischen Prozessen zu erhalten – alles an einem Ort.",
+    "buttons":{
+      "dashboard":"Gehen Sie zum Dashboard",
+      "sign-in":"Anmelden"
+    }
+  },
+  "Dashboard": {
+    "title":"Dashboard",
+    "description":"Willkommen zurück! Hier ist Ihre Kontoübersicht.",
+    "emailVerification": {
+      "description":"Bitte bestätigen Sie Ihre E-Mail-Adresse, um auf alle Funktionen zugreifen zu können.",
+      "button":"E-Mail bestätigen"
+    },
+    "profilInfo":{
+      "title":"Profilinformationen",
+      "description":"Ihre Kontodaten und Ihr aktueller Status",
+      "memberSince": "Mitglied seit"
+    }
+  },
+  "Sidebar": {
+    "navMain": {
+      "project": {
+        "title": "Projekt",
+        "items": {
+          "addNew": "Neu hinzufügen",
+          "allProjects": "Alle Projekte"
+        }
+      }
+    }
+  },
+   "AddProject":{
+    "title":"Projekt hinzufügen",
+    "name":"Name",
+    "placeHolder":"Projekt benennen",
+    "button":"Neu hinzufügen"  
+  },
+  "Validation": {
+    "name": {
+      "min": "Bitte geben Sie mindestens 2 Zeichen ein"
+    }
+  },
+  "UploadPdf":{
+    "foldersProject":"Ordnerprojekt",
+    "button":"PDF hochladen",
+    "buttonLoading":"Laden...",
+    "Warnings":{
+      "incarca":"Wählen Sie zuerst eine PDF-Datei aus!",
+      "success":"✅ PDF hochgeladen und an den Assistenten angehängt",
+      "error":"❌ Fehler"
+    },
+    "addFile":"Dateien hinzufügen",
+    "files":"Datei"
+  },
+  "Chat":{
+    "input":{
+      "placeholder":"Nachricht schreiben..."
+    },
+    "buttons":{
+      "send":"Schicken"
+    }
+  }
+}

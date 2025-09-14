@@ -1,7 +1,7 @@
 import { openai } from "@/lib/openai";
 
 export async function POST(req: Request) {
-  const { assistantId, message, threadId } = await req.json();
+  const { assistantId, message, threadId, language } = await req.json();
 
   // 1. Dacă nu există threadId, creăm unul nou
   let thread_id = threadId;
@@ -9,11 +9,11 @@ export async function POST(req: Request) {
     const thread = await openai.beta.threads.create();
     thread_id = thread.id;
   }
-
+  const languagePrompt = `Răspunde la toate întrebările în limba ${language}.\n\n${message}`;
   // 2. Adăugăm mesajul în thread
   await openai.beta.threads.messages.create(thread_id, {
     role: "user",
-    content: message,
+    content: languagePrompt,
   });
 
   // 3. Rulăm asistentul

@@ -8,6 +8,7 @@ import { ac, admin, member, owner } from "./auth/permissions";
 
 import { passwordSchema } from "./validation";
 import { prisma } from "./prisma";
+import { nextCookies } from "better-auth/next-js";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -17,10 +18,6 @@ export const auth = betterAuth({
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    },
-    github: {
-      clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     },
   },
   emailAndPassword: {
@@ -90,6 +87,7 @@ export const auth = betterAuth({
         member,
       },
     }),
+    nextCookies(),
   ],
 });
 
