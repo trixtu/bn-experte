@@ -60,5 +60,18 @@
     "buttons":{
       "send":"Schicken"
     }
+  },
+  "WaitingApproval": {
+    "title": "Konto wartet auf Genehmigung",
+    "description": "Ihr Konto wurde erfolgreich erstellt und wartet auf die Genehmigung des Administrators, bevor Sie auf das Dashboard zugreifen können.",
+    "step1": "Senden Sie Ihre Daten. Der Administrator wird die Anfrage überprüfen.",
+    "step2": "Sie erhalten eine E-Mail-Benachrichtigung, wenn Ihr Konto genehmigt wurde.",
+    "step3": "Bis dahin können Sie den Status überprüfen oder sich abmelden.",
+    "note": "Wenn es zu lange dauert, wenden Sie sich an Ihren Administrator oder suchen Sie in Ihrem Spam-Ordner nach der Bestätigungs-E-Mail.",
+    "Responde":{
+      "waiting":"Das Konto ist noch ausstehend.",
+      "error":"Fehler beim Überprüfen des Status",
+      "aprobat":"Ihr Konto wurde genehmigt. Weiterleitung..."
+    }
   }
 }

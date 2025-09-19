@@ -89,6 +89,8 @@ export default function UploadPdf({
 
   const handleDelete = () => {};
 
+  console.log(fileData);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -122,6 +124,13 @@ export default function UploadPdf({
                 <span>{fileData.filename}</span>
                 <span>PDF</span>
               </div>
+              <a
+                href={`/api/vector-file/original?fileId=${fileData.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Vezi PDF original
+              </a>
             </div>
             <button
               className="hover:bg-gray-200 p-1 rounded cursor-pointer"

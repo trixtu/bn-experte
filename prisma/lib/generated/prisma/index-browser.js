@@ -154,6 +154,7 @@ exports.Prisma.UserScalarFieldEnum = {
   emailVerified: 'emailVerified',
   image: 'image',
   role: 'role',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   banned: 'banned',
@@ -216,6 +217,12 @@ exports.Role = exports.$Enums.Role = {
   member: 'member',
   admin: 'admin',
   owner: 'owner'
+};
+
+exports.Status = exports.$Enums.Status = {
+  pending: 'pending',
+  active: 'active',
+  blocked: 'blocked'
 };
 
 exports.Prisma.ModelName = {

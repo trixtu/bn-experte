@@ -60,5 +60,18 @@
     "buttons":{
       "send":"Trimite"
     }
+  },
+  "WaitingApproval": {
+    "title": "Cont în așteptarea aprobării",
+    "description": "Contul tău a fost creat cu succes și așteaptă aprobarea administratorului înainte de a putea accesa dashboard-ul.",
+    "step1": "Trimite-ți datele; adminul va verifica solicitarea.",
+    "step2": "Vei primi o notificare pe email când contul este aprobat.",
+    "step3": "Până atunci poți verifica statusul sau te poți deconecta.",
+    "note": "Dacă durează prea mult, contactează administratorul sau verifică folderul de spam pentru e-mailul de confirmare.",
+    "Responde":{
+      "waiting":"Contul este încă în așteptare.",
+      "error":"Eroare la verificarea stării",
+      "aprobat":"Contul dumneavoastră a fost aprobat. Redirecționare..."
+    }
   }
 }

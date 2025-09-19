@@ -60,5 +60,18 @@
     "buttons":{
       "send":"Wysłać"
     }
+  },
+  "WaitingApproval": {
+    "title": "Konto oczekuje na zatwierdzenie",
+    "description": "Twoje konto zostało pomyślnie utworzone. Oczekuje ono na zatwierdzenie przez administratora, zanim uzyskasz dostęp do pulpitu nawigacyjnego.",
+    "step1": "Podaj swoje dane, a administrator zweryfikuje prośbę.",
+    "step2": "Otrzymasz powiadomienie e-mailem, gdy Twoje konto zostanie zatwierdzone.",
+    "step3": "Na razie możesz sprawdzić status lub się wylogować.",
+    "note": "Jeśli trwa to zbyt długo, skontaktuj się z administratorem lub sprawdź folder ze spamem, w którym znajduje się e-mail z potwierdzeniem.",
+    "Responde":{
+      "waiting":"Konto jest nadal w trakcie rozpatrywania.",
+      "error":"Błąd podczas sprawdzania stanu",
+      "aprobat":"Twoje konto zostało zatwierdzone. Przekierowanie..."
+    }
   }
 }

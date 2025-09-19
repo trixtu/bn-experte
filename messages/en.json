@@ -60,5 +60,18 @@
     "buttons":{
       "send":"Send"
     }
+  },
+  "WaitingApproval": {
+    "title": "Account awaiting approval",
+    "description": "Your account has been successfully created and is awaiting administrator approval before you can access the dashboard.",
+    "step1": "Submit your details; the admin will verify the request.",
+    "step2": "You will receive an email notification when your account is approved.",
+    "step3": "Until then, you can check the status or log out.",
+    "note": "If it takes too long, contact your administrator or check your spam folder for the confirmation email.",
+    "Responde":{
+      "waiting":"The account is still pending.",
+      "error":"Error checking status",
+      "aprobat":"Your account has been approved. Redirect..."
+    }
   }
 }

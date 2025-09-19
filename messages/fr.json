@@ -60,5 +60,18 @@
     "buttons":{
       "send":"Envoyer"
     }
+  },
+  "WaitingApproval": {
+    "title": "Compte en attente d'approbation",
+    "description": "Votre compte a été créé avec succès et attend l'approbation de l'administrateur avant de pouvoir accéder au tableau de bord.",
+    "step1": "Soumettez vos coordonnées ; l'administrateur vérifiera la demande.",
+    "step2": "Vous recevrez une notification par e-mail lorsque votre compte sera approuvé.",
+    "step3": "Jusqu'à présent, vous pouvez vérifier le statut ou vous déconnecter.",
+    "note": "Si cela prend trop de temps, contactez votre administrateur ou vérifiez votre dossier spam pour l'e-mail de confirmation.",
+    "Responde":{
+      "waiting":"Le compte est toujours en attente.",
+      "error":"Erreur lors de la vérification de l'état",
+      "aprobat":"Votre compte a été approuvé. Redirection..."
+    }
   }
 }

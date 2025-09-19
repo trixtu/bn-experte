@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { isAdmin } from "./permissions";
+import { Role, Status } from "@/prisma/lib/generated/prisma";
 
 export const getCurrentUser = async () => {
   const session = await auth.api.getSession({
@@ -128,3 +129,20 @@ export const removeUser = async (userId: string) => {
     };
   }
 };
+
+export async function updateUser(
+  userId: string,
+  data: { status?: Status; role?: Role }
+) {
+  try {
+    await prisma.user.update({
+      where: { id: userId },
+      data,
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    console.error(error);
+    return { success: false, error: error.message };
+  }
+}

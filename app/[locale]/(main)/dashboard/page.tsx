@@ -8,15 +8,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { UserAvatar } from "@/components/user-avatar";
-import { Link } from "@/i18n/routing";
+import { Link, redirect, useRouter } from "@/i18n/routing";
 import { User } from "@/lib/auth";
 import { getServerSession } from "@/lib/get-session";
+import { prisma } from "@/lib/prisma";
 
 import { format } from "date-fns";
 import { CalendarDaysIcon, MailIcon, ShieldIcon, UserIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { unauthorized } from "next/navigation";
 import React from "react";
 
@@ -27,8 +28,20 @@ export const metadata: Metadata = {
 export default async function DashboardPage() {
   const session = await getServerSession();
   const user = session?.user;
+  const locale = await getLocale();
+
+  const userPrisma = await prisma.user.findUnique({
+    where: { id: user?.id },
+  });
+
+  const status = userPrisma?.status;
 
   if (!user) unauthorized();
+
+  if (status === "pending" || status === "blocked") {
+    redirect({ href: `/waiting-approval`, locale });
+  }
+
   const t = await getTranslations("Dashboard");
 
   return (

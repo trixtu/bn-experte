@@ -24,6 +24,7 @@ export default function MembersTable({ users }: MembersTableProps) {
           <TableHead className="w-[100px]">Username</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Role</TableHead>
+          <TableHead>Status</TableHead>
           <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
@@ -33,8 +34,9 @@ export default function MembersTable({ users }: MembersTableProps) {
             <TableCell className="font-medium">{user.name}</TableCell>
             <TableCell>{user.email}</TableCell>
             <TableCell>{user.role}</TableCell>
+            <TableCell>{user.status}</TableCell>
             <TableCell className="text-right">
-              <MembersTableAction memberId={user.id} />
+              <MembersTableAction memberId={user.id} user={user} />
             </TableCell>
           </TableRow>
         ))}

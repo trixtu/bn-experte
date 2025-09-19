@@ -61,11 +61,24 @@ export namespace $Enums {
 
 export type Role = (typeof Role)[keyof typeof Role]
 
+
+export const Status: {
+  pending: 'pending',
+  active: 'active',
+  blocked: 'blocked'
+};
+
+export type Status = (typeof Status)[keyof typeof Status]
+
 }
 
 export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
+
+export type Status = $Enums.Status
+
+export const Status: typeof $Enums.Status
 
 /**
  * ##  Prisma Client ʲˢ
@@ -4807,6 +4820,7 @@ export namespace Prisma {
     emailVerified: boolean | null
     image: string | null
     role: $Enums.Role | null
+    status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
     banned: boolean | null
@@ -4821,6 +4835,7 @@ export namespace Prisma {
     emailVerified: boolean | null
     image: string | null
     role: $Enums.Role | null
+    status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
     banned: boolean | null
@@ -4835,6 +4850,7 @@ export namespace Prisma {
     emailVerified: number
     image: number
     role: number
+    status: number
     createdAt: number
     updatedAt: number
     banned: number
@@ -4851,6 +4867,7 @@ export namespace Prisma {
     emailVerified?: true
     image?: true
     role?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     banned?: true
@@ -4865,6 +4882,7 @@ export namespace Prisma {
     emailVerified?: true
     image?: true
     role?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     banned?: true
@@ -4879,6 +4897,7 @@ export namespace Prisma {
     emailVerified?: true
     image?: true
     role?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     banned?: true
@@ -4966,6 +4985,7 @@ export namespace Prisma {
     emailVerified: boolean
     image: string | null
     role: $Enums.Role
+    status: $Enums.Status
     createdAt: Date
     updatedAt: Date
     banned: boolean | null
@@ -4997,6 +5017,7 @@ export namespace Prisma {
     emailVerified?: boolean
     image?: boolean
     role?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     banned?: boolean
@@ -5016,6 +5037,7 @@ export namespace Prisma {
     emailVerified?: boolean
     image?: boolean
     role?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     banned?: boolean
@@ -5030,6 +5052,7 @@ export namespace Prisma {
     emailVerified?: boolean
     image?: boolean
     role?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     banned?: boolean
@@ -5044,6 +5067,7 @@ export namespace Prisma {
     emailVerified?: boolean
     image?: boolean
     role?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     banned?: boolean
@@ -5051,7 +5075,7 @@ export namespace Prisma {
     banExpires?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "role" | "createdAt" | "updatedAt" | "banned" | "banReason" | "banExpires", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "role" | "status" | "createdAt" | "updatedAt" | "banned" | "banReason" | "banExpires", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
@@ -5077,6 +5101,7 @@ export namespace Prisma {
       emailVerified: boolean
       image: string | null
       role: $Enums.Role
+      status: $Enums.Status
       createdAt: Date
       updatedAt: Date
       banned: boolean | null
@@ -5515,6 +5540,7 @@ export namespace Prisma {
     readonly emailVerified: FieldRef<"User", 'Boolean'>
     readonly image: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
+    readonly status: FieldRef<"User", 'Status'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly banned: FieldRef<"User", 'Boolean'>
@@ -9359,6 +9385,7 @@ export namespace Prisma {
     emailVerified: 'emailVerified',
     image: 'image',
     role: 'role',
+    status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     banned: 'banned',
@@ -9490,6 +9517,20 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'Status'
+   */
+  export type EnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status'>
+    
+
+
+  /**
+   * Reference to a field of type 'Status[]'
+   */
+  export type ListEnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status[]'>
     
 
 
@@ -9709,6 +9750,7 @@ export namespace Prisma {
     emailVerified?: BoolFilter<"User"> | boolean
     image?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
+    status?: EnumStatusFilter<"User"> | $Enums.Status
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     banned?: BoolNullableFilter<"User"> | boolean | null
@@ -9727,6 +9769,7 @@ export namespace Prisma {
     emailVerified?: SortOrder
     image?: SortOrderInput | SortOrder
     role?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     banned?: SortOrderInput | SortOrder
@@ -9748,6 +9791,7 @@ export namespace Prisma {
     emailVerified?: BoolFilter<"User"> | boolean
     image?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
+    status?: EnumStatusFilter<"User"> | $Enums.Status
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     banned?: BoolNullableFilter<"User"> | boolean | null
@@ -9766,6 +9810,7 @@ export namespace Prisma {
     emailVerified?: SortOrder
     image?: SortOrderInput | SortOrder
     role?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     banned?: SortOrderInput | SortOrder
@@ -9786,6 +9831,7 @@ export namespace Prisma {
     emailVerified?: BoolWithAggregatesFilter<"User"> | boolean
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+    status?: EnumStatusWithAggregatesFilter<"User"> | $Enums.Status
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     banned?: BoolNullableWithAggregatesFilter<"User"> | boolean | null
@@ -10220,6 +10266,7 @@ export namespace Prisma {
     emailVerified: boolean
     image?: string | null
     role?: $Enums.Role
+    status?: $Enums.Status
     createdAt: Date | string
     updatedAt: Date | string
     banned?: boolean | null
@@ -10238,6 +10285,7 @@ export namespace Prisma {
     emailVerified: boolean
     image?: string | null
     role?: $Enums.Role
+    status?: $Enums.Status
     createdAt: Date | string
     updatedAt: Date | string
     banned?: boolean | null
@@ -10256,6 +10304,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -10274,6 +10323,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -10292,6 +10342,7 @@ export namespace Prisma {
     emailVerified: boolean
     image?: string | null
     role?: $Enums.Role
+    status?: $Enums.Status
     createdAt: Date | string
     updatedAt: Date | string
     banned?: boolean | null
@@ -10306,6 +10357,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -10320,6 +10372,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -10813,6 +10866,13 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type EnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
   export type BoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
@@ -10856,6 +10916,7 @@ export namespace Prisma {
     emailVerified?: SortOrder
     image?: SortOrder
     role?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     banned?: SortOrder
@@ -10870,6 +10931,7 @@ export namespace Prisma {
     emailVerified?: SortOrder
     image?: SortOrder
     role?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     banned?: SortOrder
@@ -10884,6 +10946,7 @@ export namespace Prisma {
     emailVerified?: SortOrder
     image?: SortOrder
     role?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     banned?: SortOrder
@@ -10897,6 +10960,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type EnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -11248,6 +11321,10 @@ export namespace Prisma {
     set?: boolean
   }
 
+  export type EnumStatusFieldUpdateOperationsInput = {
+    set?: $Enums.Status
+  }
+
   export type NullableBoolFieldUpdateOperationsInput = {
     set?: boolean | null
   }
@@ -11527,6 +11604,13 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type NestedEnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
@@ -11549,6 +11633,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -11713,6 +11807,7 @@ export namespace Prisma {
     emailVerified: boolean
     image?: string | null
     role?: $Enums.Role
+    status?: $Enums.Status
     createdAt: Date | string
     updatedAt: Date | string
     banned?: boolean | null
@@ -11730,6 +11825,7 @@ export namespace Prisma {
     emailVerified: boolean
     image?: string | null
     role?: $Enums.Role
+    status?: $Enums.Status
     createdAt: Date | string
     updatedAt: Date | string
     banned?: boolean | null
@@ -11794,6 +11890,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -11811,6 +11908,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -11853,6 +11951,7 @@ export namespace Prisma {
     emailVerified: boolean
     image?: string | null
     role?: $Enums.Role
+    status?: $Enums.Status
     createdAt: Date | string
     updatedAt: Date | string
     banned?: boolean | null
@@ -11870,6 +11969,7 @@ export namespace Prisma {
     emailVerified: boolean
     image?: string | null
     role?: $Enums.Role
+    status?: $Enums.Status
     createdAt: Date | string
     updatedAt: Date | string
     banned?: boolean | null
@@ -11934,6 +12034,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -11951,6 +12052,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -12190,6 +12292,7 @@ export namespace Prisma {
     emailVerified: boolean
     image?: string | null
     role?: $Enums.Role
+    status?: $Enums.Status
     createdAt: Date | string
     updatedAt: Date | string
     banned?: boolean | null
@@ -12207,6 +12310,7 @@ export namespace Prisma {
     emailVerified: boolean
     image?: string | null
     role?: $Enums.Role
+    status?: $Enums.Status
     createdAt: Date | string
     updatedAt: Date | string
     banned?: boolean | null
@@ -12240,6 +12344,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -12257,6 +12362,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -12274,6 +12380,7 @@ export namespace Prisma {
     emailVerified: boolean
     image?: string | null
     role?: $Enums.Role
+    status?: $Enums.Status
     createdAt: Date | string
     updatedAt: Date | string
     banned?: boolean | null
@@ -12291,6 +12398,7 @@ export namespace Prisma {
     emailVerified: boolean
     image?: string | null
     role?: $Enums.Role
+    status?: $Enums.Status
     createdAt: Date | string
     updatedAt: Date | string
     banned?: boolean | null
@@ -12324,6 +12432,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -12341,6 +12450,7 @@ export namespace Prisma {
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     banned?: NullableBoolFieldUpdateOperationsInput | boolean | null

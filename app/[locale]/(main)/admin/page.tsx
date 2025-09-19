@@ -1,7 +1,6 @@
 import { getServerSession } from "@/lib/get-session";
 import type { Metadata } from "next";
 import { forbidden, unauthorized } from "next/navigation";
-import AllUsers from "@/components/all-users";
 import { getUsers } from "@/server/users";
 import MembersTable from "@/components/members-table";
 
@@ -27,7 +26,7 @@ export default async function AdminPage() {
             You have administrator access.
           </p>
         </div>
-        <AllUsers users={users} />
+        {/* <AllUsers users={users} /> */}
         <MembersTable users={users} />
         {/* <DeleteApplication /> */}
       </div>

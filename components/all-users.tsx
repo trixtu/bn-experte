@@ -11,31 +11,32 @@ interface AllUsersProps {
 
 export default function AllUsers({ users }: AllUsersProps) {
   const [isLoading, setIsLoading] = useState(false);
+  // const router = useRouter();
 
-  //   const handleInviteMember = async (user: User) => {
-  //     try {
-  //       setIsLoading(true);
-  //       const { error } = await authClient.organization.inviteMember({
-  //         email: user.email,
-  //         role: "member",
-  //         organizationId: organizationId,
-  //       });
+  // const handleInviteMember = async (user: User) => {
+  //   try {
+  //     setIsLoading(true);
+  //     const { error } = await authClient.organization.inviteMember({
+  //       email: user.email,
+  //       role: "member",
+  //       organizationId: organizationId,
+  //     });
 
-  //       if (error) {
-  //         toast.error(error.message);
-  //         return;
-  //       }
-
-  //       setIsLoading(false);
-  //       toast.success("Invitation sent to member");
-  //       router.refresh();
-  //     } catch (error) {
-  //       toast.error("Failed to invite member to organization");
-  //       console.error(error);
-  //     } finally {
-  //       setIsLoading(false);
+  //     if (error) {
+  //       toast.error(error.message);
+  //       return;
   //     }
-  //   };
+
+  //     setIsLoading(false);
+  //     toast.success("Invitation sent to member");
+  //     router.refresh();
+  //   } catch (error) {
+  //     toast.error("Failed to invite member to organization");
+  //     console.error(error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <div>

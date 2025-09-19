@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     instructions:
       "Tu ești un asistent tehnic care explică manuale și pași de reparație.",
     model: model, // sau altul (o3-mini pentru ieftin & rapid)
-    tools: [{ type: "file_search" }],
+    tools: [{ type: "file_search" }, { type: "code_interpreter" }],
     temperature: 0,
     top_p: 1,
     metadata: { userId: userId },
