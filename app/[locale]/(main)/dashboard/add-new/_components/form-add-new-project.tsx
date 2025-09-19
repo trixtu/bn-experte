@@ -55,7 +55,7 @@ export function FormAddNewProject({
     resolver: zodResolver(createAsistentSchema),
     defaultValues: {
       name: "",
-      model: "gpt-4o-mini",
+      model: "gpt-4o",
     },
   });
 

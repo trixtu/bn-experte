@@ -50,30 +50,30 @@ export default function Chat({ assistantId }: { assistantId: string }) {
         }),
       });
 
-      const data = await res.json();
-      setThreadId(data.threadId);
+      if (!res.body) throw new Error("No response body");
 
-      // fake typewriter effect
-      const answer = data.answer;
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
 
-      let index = 0;
       setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
 
-      const interval = setInterval(() => {
-        index++;
+      let buffer = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
         setMessages((prev) => {
           const updated = [...prev];
           updated[updated.length - 1] = {
             role: "assistant",
-            content: answer.slice(0, index),
+            content: buffer,
           };
           return updated;
         });
-
-        if (index === answer.length) clearInterval(interval);
-      }, 5); // viteza efectului: 25ms pe caracter
+      }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: "❌ Eroare la server" },
