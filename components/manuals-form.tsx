@@ -14,6 +14,19 @@ import {
   VideoIcon,
   XIcon,
 } from "lucide-react";
+import { CircleAlertIcon } from "lucide-react";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 import {
   formatBytes,
@@ -340,18 +353,52 @@ export default function ManualsForm(props: { manuals: Manual[] }) {
                           </div>
                         </div>
                       </Link>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        className="text-muted-foreground/80 hover:text-foreground -me-2 size-8 hover:bg-transparent"
-                        onClick={() => {
-                          handleFileRemoved(file.id);
-                          removeFile(file.id);
-                        }}
-                        aria-label="Remove file"
-                      >
-                        <XIcon className="size-4" aria-hidden="true" />
-                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="text-muted-foreground/80 hover:text-foreground -me-2 size-8 hover:bg-transparent"
+                            aria-label="Remove file"
+                          >
+                            <XIcon className="size-4" aria-hidden="true" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <div className="flex flex-col gap-2 max-sm:items-center sm:flex-row sm:gap-4">
+                            <div
+                              className="flex size-9 shrink-0 items-center justify-center rounded-full border bg-orange-200"
+                              aria-hidden="true"
+                            >
+                              <CircleAlertIcon
+                                className="opacity-80"
+                                size={16}
+                              />
+                            </div>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Are you sure you want to delete manual
+                                <strong> "{file.file.name}"</strong>? All your
+                                data will be removed.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                          </div>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <Button asChild variant={"destructive"}>
+                              <AlertDialogAction
+                                onClick={() => {
+                                  handleFileRemoved(file.id);
+                                  removeFile(file.id);
+                                }}
+                              >
+                                Confirm
+                              </AlertDialogAction>
+                            </Button>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
 
                     {/* Upload progress bar */}
@@ -410,21 +457,6 @@ export default function ManualsForm(props: { manuals: Manual[] }) {
           <span>{errors[0]}</span>
         </div>
       )}
-
-      <p
-        aria-live="polite"
-        role="region"
-        className="text-muted-foreground mt-2 text-center text-xs"
-      >
-        With simulated progress track ∙{" "}
-        <a
-          href="https://github.com/origin-space/originui/tree/main/docs/use-file-upload.md"
-          className="hover:text-foreground underline"
-          target="_blank"
-        >
-          API
-        </a>
-      </p>
     </div>
   );
 }
