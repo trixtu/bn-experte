@@ -315,7 +315,11 @@ export default function ManualsForm(props: { manuals: Manual[] }) {
                     className="bg-background flex flex-col gap-1 rounded-lg border p-2 pe-3 transition-opacity duration-300"
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <Link href={file.preview ? file.preview : "#"}>
+                      <Link
+                        href={file.preview ? file.preview : "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <div className="flex items-center gap-3 overflow-hidden in-data-[uploading=true]:opacity-50">
                           <div className="flex aspect-square size-10 shrink-0 items-center justify-center rounded border">
                             {getFileIcon(file)}
