@@ -4,7 +4,8 @@ import {
   BookOpen,
   Bot,
   Folder,
-  MessageSquareText,
+  FolderTree,
+  NotebookText,
   Settings2,
   Users,
 } from "lucide-react";
@@ -56,6 +57,17 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
         ],
       },
       {
+        title: "Manuals",
+        url: "#",
+        icon: NotebookText,
+        items: [
+          {
+            title: "Add New",
+            url: "/manuals/add-new",
+          },
+        ],
+      },
+      {
         title: "Models",
         url: "#",
         icon: Bot,
@@ -74,6 +86,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
           },
         ],
       },
+
       {
         title: "Documentation",
         url: "#",
@@ -123,9 +136,9 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
     ],
     projects: [
       {
-        name: "Chat",
-        url: "#",
-        icon: MessageSquareText,
+        name: "Manuals",
+        url: "/manuals",
+        icon: FolderTree,
       },
       {
         name: "Users",

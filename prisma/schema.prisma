@@ -124,3 +124,12 @@ model Verification {
 
   @@map("verification")
 }
+
+model Manual {
+  id        String   @id @default(cuid())
+  url       String
+  fileName  String
+  size      Int?
+  type      String?
+  createdAt DateTime @default(now())
+}

@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { UserAvatar } from "@/components/user-avatar";
-import { Link, redirect, useRouter } from "@/i18n/routing";
+import { Link, redirect } from "@/i18n/routing";
 import { User } from "@/lib/auth";
 import { getServerSession } from "@/lib/get-session";
 import { prisma } from "@/lib/prisma";

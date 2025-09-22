@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       break;
   }
   // 2️⃣ Trimite mesajul utilizatorului
-  const test = await openai.beta.threads.messages.create(thread_id, {
+  await openai.beta.threads.messages.create(thread_id, {
     role: "user",
     content: localizedMessage,
   });

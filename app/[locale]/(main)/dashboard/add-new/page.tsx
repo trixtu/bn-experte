@@ -3,7 +3,6 @@ import { FormAddNewProject } from "./_components/form-add-new-project";
 import { getServerSession } from "@/lib/get-session";
 import { unauthorized } from "next/navigation";
 import { openai } from "@/lib/openai";
-import { Model } from "openai/resources/models.mjs";
 import { User } from "@/prisma/lib/generated/prisma";
 
 const AddnewPage = async () => {

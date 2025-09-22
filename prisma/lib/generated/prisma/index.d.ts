@@ -48,6 +48,11 @@ export type Account = $Result.DefaultSelection<Prisma.$AccountPayload>
  * 
  */
 export type Verification = $Result.DefaultSelection<Prisma.$VerificationPayload>
+/**
+ * Model Manual
+ * 
+ */
+export type Manual = $Result.DefaultSelection<Prisma.$ManualPayload>
 
 /**
  * Enums
@@ -267,6 +272,16 @@ export class PrismaClient<
     * ```
     */
   get verification(): Prisma.VerificationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.manual`: Exposes CRUD operations for the **Manual** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Manuals
+    * const manuals = await prisma.manual.findMany()
+    * ```
+    */
+  get manual(): Prisma.ManualDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -713,7 +728,8 @@ export namespace Prisma {
     User: 'User',
     Session: 'Session',
     Account: 'Account',
-    Verification: 'Verification'
+    Verification: 'Verification',
+    Manual: 'Manual'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -732,7 +748,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "organization" | "member" | "invitation" | "user" | "session" | "account" | "verification"
+      modelProps: "organization" | "member" | "invitation" | "user" | "session" | "account" | "verification" | "manual"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1254,6 +1270,80 @@ export namespace Prisma {
           }
         }
       }
+      Manual: {
+        payload: Prisma.$ManualPayload<ExtArgs>
+        fields: Prisma.ManualFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ManualFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ManualPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ManualFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ManualPayload>
+          }
+          findFirst: {
+            args: Prisma.ManualFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ManualPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ManualFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ManualPayload>
+          }
+          findMany: {
+            args: Prisma.ManualFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ManualPayload>[]
+          }
+          create: {
+            args: Prisma.ManualCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ManualPayload>
+          }
+          createMany: {
+            args: Prisma.ManualCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ManualCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ManualPayload>[]
+          }
+          delete: {
+            args: Prisma.ManualDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ManualPayload>
+          }
+          update: {
+            args: Prisma.ManualUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ManualPayload>
+          }
+          deleteMany: {
+            args: Prisma.ManualDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ManualUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ManualUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ManualPayload>[]
+          }
+          upsert: {
+            args: Prisma.ManualUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ManualPayload>
+          }
+          aggregate: {
+            args: Prisma.ManualAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateManual>
+          }
+          groupBy: {
+            args: Prisma.ManualGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ManualGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ManualCountArgs<ExtArgs>
+            result: $Utils.Optional<ManualCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1357,6 +1447,7 @@ export namespace Prisma {
     session?: SessionOmit
     account?: AccountOmit
     verification?: VerificationOmit
+    manual?: ManualOmit
   }
 
   /* Types for Logging */
@@ -9329,6 +9420,1048 @@ export namespace Prisma {
 
 
   /**
+   * Model Manual
+   */
+
+  export type AggregateManual = {
+    _count: ManualCountAggregateOutputType | null
+    _avg: ManualAvgAggregateOutputType | null
+    _sum: ManualSumAggregateOutputType | null
+    _min: ManualMinAggregateOutputType | null
+    _max: ManualMaxAggregateOutputType | null
+  }
+
+  export type ManualAvgAggregateOutputType = {
+    size: number | null
+  }
+
+  export type ManualSumAggregateOutputType = {
+    size: number | null
+  }
+
+  export type ManualMinAggregateOutputType = {
+    id: string | null
+    url: string | null
+    fileName: string | null
+    size: number | null
+    type: string | null
+    createdAt: Date | null
+  }
+
+  export type ManualMaxAggregateOutputType = {
+    id: string | null
+    url: string | null
+    fileName: string | null
+    size: number | null
+    type: string | null
+    createdAt: Date | null
+  }
+
+  export type ManualCountAggregateOutputType = {
+    id: number
+    url: number
+    fileName: number
+    size: number
+    type: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ManualAvgAggregateInputType = {
+    size?: true
+  }
+
+  export type ManualSumAggregateInputType = {
+    size?: true
+  }
+
+  export type ManualMinAggregateInputType = {
+    id?: true
+    url?: true
+    fileName?: true
+    size?: true
+    type?: true
+    createdAt?: true
+  }
+
+  export type ManualMaxAggregateInputType = {
+    id?: true
+    url?: true
+    fileName?: true
+    size?: true
+    type?: true
+    createdAt?: true
+  }
+
+  export type ManualCountAggregateInputType = {
+    id?: true
+    url?: true
+    fileName?: true
+    size?: true
+    type?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ManualAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Manual to aggregate.
+     */
+    where?: ManualWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Manuals to fetch.
+     */
+    orderBy?: ManualOrderByWithRelationInput | ManualOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ManualWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Manuals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Manuals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Manuals
+    **/
+    _count?: true | ManualCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ManualAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ManualSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ManualMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ManualMaxAggregateInputType
+  }
+
+  export type GetManualAggregateType<T extends ManualAggregateArgs> = {
+        [P in keyof T & keyof AggregateManual]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateManual[P]>
+      : GetScalarType<T[P], AggregateManual[P]>
+  }
+
+
+
+
+  export type ManualGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ManualWhereInput
+    orderBy?: ManualOrderByWithAggregationInput | ManualOrderByWithAggregationInput[]
+    by: ManualScalarFieldEnum[] | ManualScalarFieldEnum
+    having?: ManualScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ManualCountAggregateInputType | true
+    _avg?: ManualAvgAggregateInputType
+    _sum?: ManualSumAggregateInputType
+    _min?: ManualMinAggregateInputType
+    _max?: ManualMaxAggregateInputType
+  }
+
+  export type ManualGroupByOutputType = {
+    id: string
+    url: string
+    fileName: string
+    size: number | null
+    type: string | null
+    createdAt: Date
+    _count: ManualCountAggregateOutputType | null
+    _avg: ManualAvgAggregateOutputType | null
+    _sum: ManualSumAggregateOutputType | null
+    _min: ManualMinAggregateOutputType | null
+    _max: ManualMaxAggregateOutputType | null
+  }
+
+  type GetManualGroupByPayload<T extends ManualGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ManualGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ManualGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ManualGroupByOutputType[P]>
+            : GetScalarType<T[P], ManualGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ManualSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    url?: boolean
+    fileName?: boolean
+    size?: boolean
+    type?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["manual"]>
+
+  export type ManualSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    url?: boolean
+    fileName?: boolean
+    size?: boolean
+    type?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["manual"]>
+
+  export type ManualSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    url?: boolean
+    fileName?: boolean
+    size?: boolean
+    type?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["manual"]>
+
+  export type ManualSelectScalar = {
+    id?: boolean
+    url?: boolean
+    fileName?: boolean
+    size?: boolean
+    type?: boolean
+    createdAt?: boolean
+  }
+
+  export type ManualOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "url" | "fileName" | "size" | "type" | "createdAt", ExtArgs["result"]["manual"]>
+
+  export type $ManualPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Manual"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      url: string
+      fileName: string
+      size: number | null
+      type: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["manual"]>
+    composites: {}
+  }
+
+  type ManualGetPayload<S extends boolean | null | undefined | ManualDefaultArgs> = $Result.GetResult<Prisma.$ManualPayload, S>
+
+  type ManualCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ManualFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ManualCountAggregateInputType | true
+    }
+
+  export interface ManualDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Manual'], meta: { name: 'Manual' } }
+    /**
+     * Find zero or one Manual that matches the filter.
+     * @param {ManualFindUniqueArgs} args - Arguments to find a Manual
+     * @example
+     * // Get one Manual
+     * const manual = await prisma.manual.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ManualFindUniqueArgs>(args: SelectSubset<T, ManualFindUniqueArgs<ExtArgs>>): Prisma__ManualClient<$Result.GetResult<Prisma.$ManualPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Manual that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ManualFindUniqueOrThrowArgs} args - Arguments to find a Manual
+     * @example
+     * // Get one Manual
+     * const manual = await prisma.manual.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ManualFindUniqueOrThrowArgs>(args: SelectSubset<T, ManualFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ManualClient<$Result.GetResult<Prisma.$ManualPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Manual that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ManualFindFirstArgs} args - Arguments to find a Manual
+     * @example
+     * // Get one Manual
+     * const manual = await prisma.manual.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ManualFindFirstArgs>(args?: SelectSubset<T, ManualFindFirstArgs<ExtArgs>>): Prisma__ManualClient<$Result.GetResult<Prisma.$ManualPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Manual that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ManualFindFirstOrThrowArgs} args - Arguments to find a Manual
+     * @example
+     * // Get one Manual
+     * const manual = await prisma.manual.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ManualFindFirstOrThrowArgs>(args?: SelectSubset<T, ManualFindFirstOrThrowArgs<ExtArgs>>): Prisma__ManualClient<$Result.GetResult<Prisma.$ManualPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Manuals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ManualFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Manuals
+     * const manuals = await prisma.manual.findMany()
+     * 
+     * // Get first 10 Manuals
+     * const manuals = await prisma.manual.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const manualWithIdOnly = await prisma.manual.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ManualFindManyArgs>(args?: SelectSubset<T, ManualFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ManualPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Manual.
+     * @param {ManualCreateArgs} args - Arguments to create a Manual.
+     * @example
+     * // Create one Manual
+     * const Manual = await prisma.manual.create({
+     *   data: {
+     *     // ... data to create a Manual
+     *   }
+     * })
+     * 
+     */
+    create<T extends ManualCreateArgs>(args: SelectSubset<T, ManualCreateArgs<ExtArgs>>): Prisma__ManualClient<$Result.GetResult<Prisma.$ManualPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Manuals.
+     * @param {ManualCreateManyArgs} args - Arguments to create many Manuals.
+     * @example
+     * // Create many Manuals
+     * const manual = await prisma.manual.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ManualCreateManyArgs>(args?: SelectSubset<T, ManualCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Manuals and returns the data saved in the database.
+     * @param {ManualCreateManyAndReturnArgs} args - Arguments to create many Manuals.
+     * @example
+     * // Create many Manuals
+     * const manual = await prisma.manual.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Manuals and only return the `id`
+     * const manualWithIdOnly = await prisma.manual.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ManualCreateManyAndReturnArgs>(args?: SelectSubset<T, ManualCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ManualPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Manual.
+     * @param {ManualDeleteArgs} args - Arguments to delete one Manual.
+     * @example
+     * // Delete one Manual
+     * const Manual = await prisma.manual.delete({
+     *   where: {
+     *     // ... filter to delete one Manual
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ManualDeleteArgs>(args: SelectSubset<T, ManualDeleteArgs<ExtArgs>>): Prisma__ManualClient<$Result.GetResult<Prisma.$ManualPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Manual.
+     * @param {ManualUpdateArgs} args - Arguments to update one Manual.
+     * @example
+     * // Update one Manual
+     * const manual = await prisma.manual.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ManualUpdateArgs>(args: SelectSubset<T, ManualUpdateArgs<ExtArgs>>): Prisma__ManualClient<$Result.GetResult<Prisma.$ManualPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Manuals.
+     * @param {ManualDeleteManyArgs} args - Arguments to filter Manuals to delete.
+     * @example
+     * // Delete a few Manuals
+     * const { count } = await prisma.manual.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ManualDeleteManyArgs>(args?: SelectSubset<T, ManualDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Manuals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ManualUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Manuals
+     * const manual = await prisma.manual.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ManualUpdateManyArgs>(args: SelectSubset<T, ManualUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Manuals and returns the data updated in the database.
+     * @param {ManualUpdateManyAndReturnArgs} args - Arguments to update many Manuals.
+     * @example
+     * // Update many Manuals
+     * const manual = await prisma.manual.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Manuals and only return the `id`
+     * const manualWithIdOnly = await prisma.manual.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ManualUpdateManyAndReturnArgs>(args: SelectSubset<T, ManualUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ManualPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Manual.
+     * @param {ManualUpsertArgs} args - Arguments to update or create a Manual.
+     * @example
+     * // Update or create a Manual
+     * const manual = await prisma.manual.upsert({
+     *   create: {
+     *     // ... data to create a Manual
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Manual we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ManualUpsertArgs>(args: SelectSubset<T, ManualUpsertArgs<ExtArgs>>): Prisma__ManualClient<$Result.GetResult<Prisma.$ManualPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Manuals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ManualCountArgs} args - Arguments to filter Manuals to count.
+     * @example
+     * // Count the number of Manuals
+     * const count = await prisma.manual.count({
+     *   where: {
+     *     // ... the filter for the Manuals we want to count
+     *   }
+     * })
+    **/
+    count<T extends ManualCountArgs>(
+      args?: Subset<T, ManualCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ManualCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Manual.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ManualAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ManualAggregateArgs>(args: Subset<T, ManualAggregateArgs>): Prisma.PrismaPromise<GetManualAggregateType<T>>
+
+    /**
+     * Group by Manual.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ManualGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ManualGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ManualGroupByArgs['orderBy'] }
+        : { orderBy?: ManualGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ManualGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetManualGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Manual model
+   */
+  readonly fields: ManualFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Manual.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ManualClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Manual model
+   */
+  interface ManualFieldRefs {
+    readonly id: FieldRef<"Manual", 'String'>
+    readonly url: FieldRef<"Manual", 'String'>
+    readonly fileName: FieldRef<"Manual", 'String'>
+    readonly size: FieldRef<"Manual", 'Int'>
+    readonly type: FieldRef<"Manual", 'String'>
+    readonly createdAt: FieldRef<"Manual", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Manual findUnique
+   */
+  export type ManualFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Manual
+     */
+    select?: ManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Manual
+     */
+    omit?: ManualOmit<ExtArgs> | null
+    /**
+     * Filter, which Manual to fetch.
+     */
+    where: ManualWhereUniqueInput
+  }
+
+  /**
+   * Manual findUniqueOrThrow
+   */
+  export type ManualFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Manual
+     */
+    select?: ManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Manual
+     */
+    omit?: ManualOmit<ExtArgs> | null
+    /**
+     * Filter, which Manual to fetch.
+     */
+    where: ManualWhereUniqueInput
+  }
+
+  /**
+   * Manual findFirst
+   */
+  export type ManualFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Manual
+     */
+    select?: ManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Manual
+     */
+    omit?: ManualOmit<ExtArgs> | null
+    /**
+     * Filter, which Manual to fetch.
+     */
+    where?: ManualWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Manuals to fetch.
+     */
+    orderBy?: ManualOrderByWithRelationInput | ManualOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Manuals.
+     */
+    cursor?: ManualWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Manuals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Manuals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Manuals.
+     */
+    distinct?: ManualScalarFieldEnum | ManualScalarFieldEnum[]
+  }
+
+  /**
+   * Manual findFirstOrThrow
+   */
+  export type ManualFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Manual
+     */
+    select?: ManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Manual
+     */
+    omit?: ManualOmit<ExtArgs> | null
+    /**
+     * Filter, which Manual to fetch.
+     */
+    where?: ManualWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Manuals to fetch.
+     */
+    orderBy?: ManualOrderByWithRelationInput | ManualOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Manuals.
+     */
+    cursor?: ManualWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Manuals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Manuals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Manuals.
+     */
+    distinct?: ManualScalarFieldEnum | ManualScalarFieldEnum[]
+  }
+
+  /**
+   * Manual findMany
+   */
+  export type ManualFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Manual
+     */
+    select?: ManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Manual
+     */
+    omit?: ManualOmit<ExtArgs> | null
+    /**
+     * Filter, which Manuals to fetch.
+     */
+    where?: ManualWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Manuals to fetch.
+     */
+    orderBy?: ManualOrderByWithRelationInput | ManualOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Manuals.
+     */
+    cursor?: ManualWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Manuals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Manuals.
+     */
+    skip?: number
+    distinct?: ManualScalarFieldEnum | ManualScalarFieldEnum[]
+  }
+
+  /**
+   * Manual create
+   */
+  export type ManualCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Manual
+     */
+    select?: ManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Manual
+     */
+    omit?: ManualOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Manual.
+     */
+    data: XOR<ManualCreateInput, ManualUncheckedCreateInput>
+  }
+
+  /**
+   * Manual createMany
+   */
+  export type ManualCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Manuals.
+     */
+    data: ManualCreateManyInput | ManualCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Manual createManyAndReturn
+   */
+  export type ManualCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Manual
+     */
+    select?: ManualSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Manual
+     */
+    omit?: ManualOmit<ExtArgs> | null
+    /**
+     * The data used to create many Manuals.
+     */
+    data: ManualCreateManyInput | ManualCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Manual update
+   */
+  export type ManualUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Manual
+     */
+    select?: ManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Manual
+     */
+    omit?: ManualOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Manual.
+     */
+    data: XOR<ManualUpdateInput, ManualUncheckedUpdateInput>
+    /**
+     * Choose, which Manual to update.
+     */
+    where: ManualWhereUniqueInput
+  }
+
+  /**
+   * Manual updateMany
+   */
+  export type ManualUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Manuals.
+     */
+    data: XOR<ManualUpdateManyMutationInput, ManualUncheckedUpdateManyInput>
+    /**
+     * Filter which Manuals to update
+     */
+    where?: ManualWhereInput
+    /**
+     * Limit how many Manuals to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Manual updateManyAndReturn
+   */
+  export type ManualUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Manual
+     */
+    select?: ManualSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Manual
+     */
+    omit?: ManualOmit<ExtArgs> | null
+    /**
+     * The data used to update Manuals.
+     */
+    data: XOR<ManualUpdateManyMutationInput, ManualUncheckedUpdateManyInput>
+    /**
+     * Filter which Manuals to update
+     */
+    where?: ManualWhereInput
+    /**
+     * Limit how many Manuals to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Manual upsert
+   */
+  export type ManualUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Manual
+     */
+    select?: ManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Manual
+     */
+    omit?: ManualOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Manual to update in case it exists.
+     */
+    where: ManualWhereUniqueInput
+    /**
+     * In case the Manual found by the `where` argument doesn't exist, create a new Manual with this data.
+     */
+    create: XOR<ManualCreateInput, ManualUncheckedCreateInput>
+    /**
+     * In case the Manual was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ManualUpdateInput, ManualUncheckedUpdateInput>
+  }
+
+  /**
+   * Manual delete
+   */
+  export type ManualDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Manual
+     */
+    select?: ManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Manual
+     */
+    omit?: ManualOmit<ExtArgs> | null
+    /**
+     * Filter which Manual to delete.
+     */
+    where: ManualWhereUniqueInput
+  }
+
+  /**
+   * Manual deleteMany
+   */
+  export type ManualDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Manuals to delete
+     */
+    where?: ManualWhereInput
+    /**
+     * Limit how many Manuals to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Manual without action
+   */
+  export type ManualDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Manual
+     */
+    select?: ManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Manual
+     */
+    omit?: ManualOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -9442,6 +10575,18 @@ export namespace Prisma {
   export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
+  export const ManualScalarFieldEnum: {
+    id: 'id',
+    url: 'url',
+    fileName: 'fileName',
+    size: 'size',
+    type: 'type',
+    createdAt: 'createdAt'
+  };
+
+  export type ManualScalarFieldEnum = (typeof ManualScalarFieldEnum)[keyof typeof ManualScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -9545,6 +10690,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -10064,6 +11223,65 @@ export namespace Prisma {
     expiresAt?: DateTimeWithAggregatesFilter<"Verification"> | Date | string
     createdAt?: DateTimeNullableWithAggregatesFilter<"Verification"> | Date | string | null
     updatedAt?: DateTimeNullableWithAggregatesFilter<"Verification"> | Date | string | null
+  }
+
+  export type ManualWhereInput = {
+    AND?: ManualWhereInput | ManualWhereInput[]
+    OR?: ManualWhereInput[]
+    NOT?: ManualWhereInput | ManualWhereInput[]
+    id?: StringFilter<"Manual"> | string
+    url?: StringFilter<"Manual"> | string
+    fileName?: StringFilter<"Manual"> | string
+    size?: IntNullableFilter<"Manual"> | number | null
+    type?: StringNullableFilter<"Manual"> | string | null
+    createdAt?: DateTimeFilter<"Manual"> | Date | string
+  }
+
+  export type ManualOrderByWithRelationInput = {
+    id?: SortOrder
+    url?: SortOrder
+    fileName?: SortOrder
+    size?: SortOrderInput | SortOrder
+    type?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ManualWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ManualWhereInput | ManualWhereInput[]
+    OR?: ManualWhereInput[]
+    NOT?: ManualWhereInput | ManualWhereInput[]
+    url?: StringFilter<"Manual"> | string
+    fileName?: StringFilter<"Manual"> | string
+    size?: IntNullableFilter<"Manual"> | number | null
+    type?: StringNullableFilter<"Manual"> | string | null
+    createdAt?: DateTimeFilter<"Manual"> | Date | string
+  }, "id">
+
+  export type ManualOrderByWithAggregationInput = {
+    id?: SortOrder
+    url?: SortOrder
+    fileName?: SortOrder
+    size?: SortOrderInput | SortOrder
+    type?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: ManualCountOrderByAggregateInput
+    _avg?: ManualAvgOrderByAggregateInput
+    _max?: ManualMaxOrderByAggregateInput
+    _min?: ManualMinOrderByAggregateInput
+    _sum?: ManualSumOrderByAggregateInput
+  }
+
+  export type ManualScalarWhereWithAggregatesInput = {
+    AND?: ManualScalarWhereWithAggregatesInput | ManualScalarWhereWithAggregatesInput[]
+    OR?: ManualScalarWhereWithAggregatesInput[]
+    NOT?: ManualScalarWhereWithAggregatesInput | ManualScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Manual"> | string
+    url?: StringWithAggregatesFilter<"Manual"> | string
+    fileName?: StringWithAggregatesFilter<"Manual"> | string
+    size?: IntNullableWithAggregatesFilter<"Manual"> | number | null
+    type?: StringNullableWithAggregatesFilter<"Manual"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Manual"> | Date | string
   }
 
   export type OrganizationCreateInput = {
@@ -10637,6 +11855,69 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type ManualCreateInput = {
+    id?: string
+    url: string
+    fileName: string
+    size?: number | null
+    type?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ManualUncheckedCreateInput = {
+    id?: string
+    url: string
+    fileName: string
+    size?: number | null
+    type?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ManualUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    size?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ManualUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    size?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ManualCreateManyInput = {
+    id?: string
+    url: string
+    fileName: string
+    size?: number | null
+    type?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ManualUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    size?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ManualUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    size?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -11105,6 +12386,68 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type ManualCountOrderByAggregateInput = {
+    id?: SortOrder
+    url?: SortOrder
+    fileName?: SortOrder
+    size?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ManualAvgOrderByAggregateInput = {
+    size?: SortOrder
+  }
+
+  export type ManualMaxOrderByAggregateInput = {
+    id?: SortOrder
+    url?: SortOrder
+    fileName?: SortOrder
+    size?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ManualMinOrderByAggregateInput = {
+    id?: SortOrder
+    url?: SortOrder
+    fileName?: SortOrder
+    size?: SortOrder
+    type?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ManualSumOrderByAggregateInput = {
+    size?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
   export type MemberCreateNestedManyWithoutOrganizationInput = {
     create?: XOR<MemberCreateWithoutOrganizationInput, MemberUncheckedCreateWithoutOrganizationInput> | MemberCreateWithoutOrganizationInput[] | MemberUncheckedCreateWithoutOrganizationInput[]
     connectOrCreate?: MemberCreateOrConnectWithoutOrganizationInput | MemberCreateOrConnectWithoutOrganizationInput[]
@@ -11473,6 +12816,14 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAccountsInput, UserUpdateWithoutAccountsInput>, UserUncheckedUpdateWithoutAccountsInput>
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -11665,6 +13016,33 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type MemberCreateWithoutOrganizationInput = {

@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { redirect } from "@/i18n/routing";
 import { User } from "@/prisma/lib/generated/prisma";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,6 +47,7 @@ export function FormAddNewProject({
   const createAsistentSchema = z.object({
     name: z.string().min(2, validations("name.min")),
     model: z.string().min(1),
+    system_instructions: z.string().optional(),
   });
 
   type CreateAsistentValues = z.infer<typeof createAsistentSchema>;
@@ -56,16 +57,26 @@ export function FormAddNewProject({
     defaultValues: {
       name: "",
       model: "gpt-4o",
+      system_instructions: "",
     },
   });
 
-  async function onSubmit({ name, model }: CreateAsistentValues) {
+  async function onSubmit({
+    name,
+    model,
+    system_instructions,
+  }: CreateAsistentValues) {
     setStatus(null);
     setError(null);
 
     const res = await fetch("/api/create-project", {
       method: "POST",
-      body: JSON.stringify({ name: name, userId: user.id, model }),
+      body: JSON.stringify({
+        name: name,
+        userId: user.id,
+        model,
+        system_instructions,
+      }),
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
@@ -137,6 +148,25 @@ export function FormAddNewProject({
                     </SelectContent>
                   </Select>
 
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="system_instructions"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>System instructions</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="You are a helpful assistant..."
+                      className="resize-none"
+                      disabled={!admin}
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

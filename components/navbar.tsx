@@ -1,4 +1,3 @@
-import { SelectorLimba } from "@/app/[locale]/(main)/dashboard/selector-limba";
 import { ModeToggle } from "@/components/mode-toggle";
 import LocaleSwitcher from "./local-switcher";
 
