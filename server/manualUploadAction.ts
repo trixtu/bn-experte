@@ -21,7 +21,7 @@ export const manualUploadAction = async (formData: FormData) => {
 
   const user = await getCurrentUser();
 
-  const fileName = `manual-${file.name}`;
+  const fileName = `${file.name}`;
   const url = await uploadFileToS3({
     file,
     prefix: `users/${user.user.id}`,

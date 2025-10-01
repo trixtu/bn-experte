@@ -5,7 +5,6 @@ import {
   Bot,
   Folder,
   FolderTree,
-  NotebookText,
   Settings2,
   Users,
 } from "lucide-react";
@@ -53,17 +52,6 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
           {
             title: t("navMain.project.items.allProjects"),
             url: "/dashboard/all-projects",
-          },
-        ],
-      },
-      {
-        title: "Manuals",
-        url: "#",
-        icon: NotebookText,
-        items: [
-          {
-            title: "Add New",
-            url: "/manuals/add-new",
           },
         ],
       },

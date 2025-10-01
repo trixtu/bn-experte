@@ -5,7 +5,11 @@ import React from "react";
 const ManualsPage = async () => {
   const manuals = await prisma.manual.findMany();
 
-  return <ManualsForm manuals={manuals} />;
+  return (
+    <div className="w-full flex  items-center justify-center">
+      <ManualsForm manuals={manuals} />
+    </div>
+  );
 };
 
 export default ManualsPage;

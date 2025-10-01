@@ -1,30 +1,30 @@
-import { openai } from "@/lib/openai";
-import AssistantCard from "../assistant-card";
 import { getServerSession } from "@/lib/get-session";
 import { unauthorized } from "next/navigation";
+import AllAsistants from "./all-assistants";
+import { getAsistants } from "../actions";
 
 const page = async () => {
   const session = await getServerSession();
   const user = session?.user;
 
-  const admin = user?.role === "admin";
-
   if (!user) unauthorized();
 
-  const myAssistants = await openai.beta.assistants.list({
-    order: "desc",
-    limit: 20,
-  });
+  const myAssistants = await getAsistants();
 
-  return myAssistants.data.length > 0 ? (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      {myAssistants.data.map((assistant) => (
-        <AssistantCard key={assistant.id} assistant={assistant} admin={admin} />
-      ))}
-    </div>
-  ) : (
-    <div className="w-full flex items-center justify-center mt-20">
-      <h1 className="text-3xl"> No Projects</h1>
+  // return myAssistants.data.length > 0 ? (
+  //   <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+  //     {myAssistants.data.map((assistant) => (
+  //       <AssistantCard key={assistant.id} assistant={assistant} admin={admin} />
+  //     ))}
+  //   </div>
+  // ) : (
+  //   <div className="w-full flex items-center justify-center mt-20">
+  //     <h1 className="text-3xl"> No Projects</h1>
+  //   </div>
+  // );
+  return (
+    <div className="w-full flex  items-center justify-center">
+      <AllAsistants assistants={myAssistants.data} />
     </div>
   );
 };

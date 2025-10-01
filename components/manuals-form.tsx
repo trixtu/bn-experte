@@ -3,15 +3,10 @@
 import { useState } from "react";
 import {
   AlertCircleIcon,
-  FileArchiveIcon,
-  FileIcon,
-  FileSpreadsheetIcon,
-  FileTextIcon,
-  HeadphonesIcon,
+  ChevronLeft,
+  ChevronRight,
   ImageIcon,
-  Trash2Icon,
   UploadIcon,
-  VideoIcon,
   XIcon,
 } from "lucide-react";
 import { CircleAlertIcon } from "lucide-react";
@@ -39,149 +34,9 @@ import { toast } from "sonner";
 import { uploadFileWithProgress } from "@/app/[locale]/(main)/manuals/manual-upload.action";
 import { manualDeleteAction } from "@/server/manualUploadAction";
 import { Link } from "@/i18n/routing";
-
-const getFileIcon = (file: { file: File | { type: string; name: string } }) => {
-  const fileType = file.file instanceof File ? file.file.type : file.file.type;
-  const fileName = file.file instanceof File ? file.file.name : file.file.name;
-
-  const iconMap = {
-    pdf: {
-      icon: FileTextIcon,
-      conditions: (type: string, name: string) =>
-        type.includes("pdf") ||
-        name.endsWith(".pdf") ||
-        type.includes("word") ||
-        name.endsWith(".doc") ||
-        name.endsWith(".docx"),
-    },
-    archive: {
-      icon: FileArchiveIcon,
-      conditions: (type: string, name: string) =>
-        type.includes("zip") ||
-        type.includes("archive") ||
-        name.endsWith(".zip") ||
-        name.endsWith(".rar"),
-    },
-    excel: {
-      icon: FileSpreadsheetIcon,
-      conditions: (type: string, name: string) =>
-        type.includes("excel") ||
-        name.endsWith(".xls") ||
-        name.endsWith(".xlsx"),
-    },
-    video: {
-      icon: VideoIcon,
-      conditions: (type: string) => type.includes("video/"),
-    },
-    audio: {
-      icon: HeadphonesIcon,
-      conditions: (type: string) => type.includes("audio/"),
-    },
-    image: {
-      icon: ImageIcon,
-      conditions: (type: string) => type.startsWith("image/"),
-    },
-  };
-
-  for (const { icon: Icon, conditions } of Object.values(iconMap)) {
-    if (conditions(fileType, fileName)) {
-      return <Icon className="size-5 opacity-60" />;
-    }
-  }
-
-  return <FileIcon className="size-5 opacity-60" />;
-};
-
-// const getFilePreview = (file: {
-//   file: File | { type: string; name: string; url?: string };
-// }) => {
-//   const fileType = file.file instanceof File ? file.file.type : file.file.type;
-//   const fileName = file.file instanceof File ? file.file.name : file.file.name;
-
-//   const renderImage = (src: string) => (
-//     <img
-//       src={src}
-//       alt={fileName}
-//       className="size-full rounded-t-[inherit] object-cover"
-//     />
-//   );
-
-//   return (
-//     <div className="bg-accent flex aspect-square items-center justify-center overflow-hidden rounded-t-[inherit]">
-//       {fileType.startsWith("image/") ? (
-//         file.file instanceof File ? (
-//           (() => {
-//             const previewUrl = URL.createObjectURL(file.file);
-//             return renderImage(previewUrl);
-//           })()
-//         ) : file.file.url ? (
-//           renderImage(file.file.url)
-//         ) : (
-//           <ImageIcon className="size-5 opacity-60" />
-//         )
-//       ) : (
-//         getFileIcon(file)
-//       )}
-//     </div>
-//   );
-// };
-
-// Type for tracking upload progress
-type UploadProgress = {
-  fileId: string;
-  progress: number;
-  completed: boolean;
-};
-
-// Function to simulate file upload with more realistic timing and progress
-const simulateUpload = (
-  totalBytes: number,
-  onProgress: (progress: number) => void,
-  onComplete: () => void
-) => {
-  let timeoutId: NodeJS.Timeout;
-  let uploadedBytes = 0;
-  let lastProgressReport = 0;
-
-  const simulateChunk = () => {
-    // Simulate variable network conditions with random chunk sizes
-    const chunkSize = Math.floor(Math.random() * 300000) + 2000;
-    uploadedBytes = Math.min(totalBytes, uploadedBytes + chunkSize);
-
-    // Calculate progress percentage (0-100)
-    const progressPercent = Math.floor((uploadedBytes / totalBytes) * 100);
-
-    // Only report progress if it's changed by at least 1%
-    if (progressPercent > lastProgressReport) {
-      lastProgressReport = progressPercent;
-      onProgress(progressPercent);
-    }
-
-    // Continue simulation if not complete
-    if (uploadedBytes < totalBytes) {
-      // Variable delay between 50ms and 500ms to simulate network fluctuations (reduced for faster uploads)
-      const delay = Math.floor(Math.random() * 450) + 50;
-
-      // Occasionally add a longer pause to simulate network congestion (5% chance, shorter duration)
-      const extraDelay = Math.random() < 0.05 ? 500 : 0;
-
-      timeoutId = setTimeout(simulateChunk, delay + extraDelay);
-    } else {
-      // Upload complete
-      onComplete();
-    }
-  };
-
-  // Start the simulation
-  timeoutId = setTimeout(simulateChunk, 100);
-
-  // Return a cleanup function to cancel the simulation
-  return () => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-  };
-};
+import { getFileIcon } from "@/lib/functions";
+import { UploadProgress } from "@/types";
+import { Input } from "./ui/input";
 
 export default function ManualsForm(props: { manuals: Manual[] }) {
   const maxSizeMB = 50;
@@ -190,6 +45,9 @@ export default function ManualsForm(props: { manuals: Manual[] }) {
 
   // State to track upload progress for each file
   const [uploadProgress, setUploadProgress] = useState<UploadProgress[]>([]);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const perPage = 20;
 
   // Function to handle newly added files
   const handleFilesAdded = async (addedFiles: FileWithPreview[]) => {
@@ -264,199 +122,240 @@ export default function ManualsForm(props: { manuals: Manual[] }) {
     onFilesAdded: handleFilesAdded,
   });
 
+  // Aplica search
+  const filteredFiles = files.filter((file) =>
+    (file.file instanceof File ? file.file.name : file.file.name)
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
+  // Aplica paginație
+  const totalPages = Math.ceil(filteredFiles.length / perPage) || 1;
+  const paginatedFiles = filteredFiles.slice(
+    (page - 1) * perPage,
+    page * perPage
+  );
+
   return (
-    <div className="flex flex-col gap-2">
-      {/* Drop area */}
-      <div
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        data-dragging={isDragging || undefined}
-        data-files={files.length > 0 || undefined}
-        className="border-input data-[dragging=true]:bg-accent/50 has-[input:focus]:border-ring has-[input:focus]:ring-ring/50 relative flex min-h-52 flex-col items-center overflow-hidden rounded-xl border border-dashed p-4 transition-colors not-data-[files]:justify-center has-[input:focus]:ring-[3px]"
-      >
-        <input
-          {...getInputProps()}
-          className="sr-only"
-          aria-label="Upload image file"
-        />
-        {files.length > 0 ? (
-          <div className="flex w-full flex-col gap-3">
-            <div className="flex items-center justify-between gap-2">
-              <h3 className="truncate text-sm font-medium">
-                Files ({files.length})
-              </h3>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" onClick={openFileDialog}>
-                  <UploadIcon
-                    className="-ms-0.5 size-3.5 opacity-60"
-                    aria-hidden="true"
-                  />
-                  Add files
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    // Clear all progress tracking
-                    setUploadProgress([]);
-                    clearFiles();
-                  }}
-                >
-                  <Trash2Icon
-                    className="-ms-0.5 size-3.5 opacity-60"
-                    aria-hidden="true"
-                  />
-                  Remove all
-                </Button>
-              </div>
-            </div>
-
-            <div className="w-full space-y-2">
-              {files.map((file) => {
-                // Find the upload progress for this file once to avoid repeated lookups
-                const fileProgress = uploadProgress.find(
-                  (p) => p.fileId === file.id
-                );
-                const isUploading = fileProgress && !fileProgress.completed;
-
-                return (
-                  <div
-                    key={file.id}
-                    data-uploading={isUploading || undefined}
-                    className="bg-background flex flex-col gap-1 rounded-lg border p-2 pe-3 transition-opacity duration-300"
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <Link
-                        href={file.preview ? file.preview : "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <div className="flex items-center gap-3 overflow-hidden in-data-[uploading=true]:opacity-50">
-                          <div className="flex aspect-square size-10 shrink-0 items-center justify-center rounded border">
-                            {getFileIcon(file)}
-                          </div>
-                          <div className="flex min-w-0 flex-col gap-0.5">
-                            <p className="truncate text-[13px] font-medium">
-                              {file.file instanceof File
-                                ? file.file.name
-                                : file.file.name}
-                            </p>
-                            <p className="text-muted-foreground text-xs">
-                              {formatBytes(
-                                file.file instanceof File
-                                  ? file.file.size
-                                  : file.file.size
-                              )}
-                            </p>
-                          </div>
-                        </div>
-                      </Link>
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            className="text-muted-foreground/80 hover:text-foreground -me-2 size-8 hover:bg-transparent"
-                            aria-label="Remove file"
-                          >
-                            <XIcon className="size-4" aria-hidden="true" />
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <div className="flex flex-col gap-2 max-sm:items-center sm:flex-row sm:gap-4">
-                            <div
-                              className="flex size-9 shrink-0 items-center justify-center rounded-full border bg-orange-200"
-                              aria-hidden="true"
-                            >
-                              <CircleAlertIcon
-                                className="opacity-80"
-                                size={16}
-                              />
-                            </div>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                Are you sure you want to delete manual
-                                <strong> "{file.file.name}"</strong>? All your
-                                data will be removed.
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                          </div>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <Button asChild variant={"destructive"}>
-                              <AlertDialogAction
-                                onClick={() => {
-                                  handleFileRemoved(file.id);
-                                  removeFile(file.id);
-                                }}
-                              >
-                                Confirm
-                              </AlertDialogAction>
-                            </Button>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </div>
-
-                    {/* Upload progress bar */}
-                    {fileProgress &&
-                      (() => {
-                        const progress = fileProgress.progress || 0;
-                        const completed = fileProgress.completed || false;
-
-                        if (completed) return null;
-
-                        return (
-                          <div className="mt-1 flex items-center gap-2">
-                            <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
-                              <div
-                                className="bg-primary h-full transition-all duration-300 ease-out"
-                                style={{ width: `${progress}%` }}
-                              />
-                            </div>
-                            <span className="text-muted-foreground w-10 text-xs tabular-nums">
-                              {progress}%
-                            </span>
-                          </div>
-                        );
-                      })()}
-                  </div>
-                );
-              })}
+    <div className="space-y-4 w-2xl ">
+      <div className="flex flex-col gap-2">
+        {/* Search bar */}
+        {files.length > 0 && (
+          <div className="flex items-center justify-between mb-2">
+            <Input
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+              placeholder="Search files..."
+              className="max-w-xs"
+            />
+            <div className="flex items-center gap-2 text-sm">
+              <span>
+                Page {page} / {totalPages}
+              </span>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+              >
+                <ChevronLeft className="size-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+              >
+                <ChevronRight className="size-4" />
+              </Button>
             </div>
           </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center px-4 py-3 text-center">
-            <div
-              className="bg-background mb-2 flex size-11 shrink-0 items-center justify-center rounded-full border"
-              aria-hidden="true"
-            >
-              <ImageIcon className="size-4 opacity-60" />
+        )}
+        {/* Drop area */}
+        <div
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          data-dragging={isDragging || undefined}
+          data-files={files.length > 0 || undefined}
+          className="border-input data-[dragging=true]:bg-accent/50 has-[input:focus]:border-ring has-[input:focus]:ring-ring/50 relative flex min-h-52 flex-col items-center overflow-hidden rounded-xl border border-dashed p-4 transition-colors not-data-[files]:justify-center has-[input:focus]:ring-[3px]"
+        >
+          <input
+            {...getInputProps()}
+            className="sr-only"
+            aria-label="Upload image file"
+          />
+          {files.length > 0 ? (
+            <div className="flex w-full flex-col gap-3">
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="truncate text-sm font-medium">
+                  Files ({files.length})
+                </h3>
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" onClick={openFileDialog}>
+                    <UploadIcon
+                      className="-ms-0.5 size-3.5 opacity-60"
+                      aria-hidden="true"
+                    />
+                    Add files
+                  </Button>
+                </div>
+              </div>
+
+              <div className="w-full space-y-2">
+                {paginatedFiles.map((file) => {
+                  const fileProgress = uploadProgress.find(
+                    (p) => p.fileId === file.id
+                  );
+                  const isUploading = fileProgress && !fileProgress.completed;
+
+                  return (
+                    <div
+                      key={file.id}
+                      data-uploading={isUploading || undefined}
+                      className="bg-background flex flex-col gap-1 rounded-lg border p-2 pe-3 transition-opacity duration-300"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <Link
+                          href={file.preview ? file.preview : "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <div className="flex items-center gap-3 overflow-hidden in-data-[uploading=true]:opacity-50">
+                            <div className="flex aspect-square size-10 shrink-0 items-center justify-center rounded border">
+                              {getFileIcon(file)}
+                            </div>
+                            <div className="flex min-w-0 flex-col gap-0.5">
+                              <p className="truncate text-[13px] font-medium">
+                                {file.file instanceof File
+                                  ? file.file.name
+                                  : file.file.name}
+                              </p>
+                              <p className="text-muted-foreground text-xs">
+                                {formatBytes(
+                                  file.file instanceof File
+                                    ? file.file.size
+                                    : file.file.size
+                                )}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="text-muted-foreground/80 hover:text-foreground -me-2 size-8 hover:bg-transparent"
+                              aria-label="Remove file"
+                            >
+                              <XIcon className="size-4" aria-hidden="true" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <div className="flex flex-col gap-2 max-sm:items-center sm:flex-row sm:gap-4">
+                              <div
+                                className="flex size-9 shrink-0 items-center justify-center rounded-full border bg-orange-200"
+                                aria-hidden="true"
+                              >
+                                <CircleAlertIcon
+                                  className="opacity-80"
+                                  size={16}
+                                />
+                              </div>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  Are you sure?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  Are you sure you want to delete manual
+                                  <strong>&quot;{file.file.name}&quot;</strong>?
+                                  All your data will be removed.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                            </div>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <Button asChild variant={"destructive"}>
+                                <AlertDialogAction
+                                  onClick={() => {
+                                    handleFileRemoved(file.id);
+                                    removeFile(file.id);
+                                  }}
+                                >
+                                  Confirm
+                                </AlertDialogAction>
+                              </Button>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+
+                      {/* Upload progress bar */}
+                      {fileProgress &&
+                        (() => {
+                          const progress = fileProgress.progress || 0;
+                          const completed = fileProgress.completed || false;
+
+                          if (completed) return null;
+
+                          return (
+                            <div className="mt-1 flex items-center gap-2">
+                              <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
+                                <div
+                                  className="bg-primary h-full transition-all duration-300 ease-out"
+                                  style={{ width: `${progress}%` }}
+                                />
+                              </div>
+                              <span className="text-muted-foreground w-10 text-xs tabular-nums">
+                                {progress}%
+                              </span>
+                            </div>
+                          );
+                        })()}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-            <p className="mb-1.5 text-sm font-medium">Drop your files here</p>
-            <p className="text-muted-foreground text-xs">
-              Max {maxFiles} files ∙ Up to {maxSizeMB}MB
-            </p>
-            <Button variant="outline" className="mt-4" onClick={openFileDialog}>
-              <UploadIcon className="-ms-1 opacity-60" aria-hidden="true" />
-              Select files
-            </Button>
+          ) : (
+            <div className="flex flex-col items-center justify-center px-4 py-3 text-center">
+              <div
+                className="bg-background mb-2 flex size-11 shrink-0 items-center justify-center rounded-full border"
+                aria-hidden="true"
+              >
+                <ImageIcon className="size-4 opacity-60" />
+              </div>
+              <p className="mb-1.5 text-sm font-medium">Drop your files here</p>
+              <p className="text-muted-foreground text-xs">
+                Max {maxFiles} files ∙ Up to {maxSizeMB}MB
+              </p>
+              <Button
+                variant="outline"
+                className="mt-4"
+                onClick={openFileDialog}
+              >
+                <UploadIcon className="-ms-1 opacity-60" aria-hidden="true" />
+                Select files
+              </Button>
+            </div>
+          )}
+        </div>
+
+        {errors.length > 0 && (
+          <div
+            className="text-destructive flex items-center gap-1 text-xs"
+            role="alert"
+          >
+            <AlertCircleIcon className="size-3 shrink-0" />
+            <span>{errors[0]}</span>
           </div>
         )}
       </div>
-
-      {errors.length > 0 && (
-        <div
-          className="text-destructive flex items-center gap-1 text-xs"
-          role="alert"
-        >
-          <AlertCircleIcon className="size-3 shrink-0" />
-          <span>{errors[0]}</span>
-        </div>
-      )}
     </div>
   );
 }

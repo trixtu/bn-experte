@@ -1,32 +1,49 @@
 "use server";
 
 import { openai } from "@/lib/openai";
-import { Assistant } from "openai/resources/beta/assistants.mjs";
+
+export async function getAsistants() {
+  const assistants = await openai.beta.assistants.list({
+    order: "desc",
+  });
+
+  return assistants;
+}
 
 export async function deleteAssistant(assistantId: string) {
   if (!assistantId) throw new Error("Missing assistantId");
 
-  // 1️⃣ Retrieve assistant
-  const assistant = (await openai.beta.assistants.retrieve(
-    assistantId
-  )) as Assistant;
+  try {
+    const assistant = await openai.beta.assistants.retrieve(assistantId);
 
-  const vectorStoreIDS =
-    assistant.tool_resources?.file_search?.vector_store_ids;
+    const vectorStoreIDS =
+      assistant.tool_resources?.file_search?.vector_store_ids;
 
-  if (vectorStoreIDS && vectorStoreIDS.length > 0) {
-    for (const vs of vectorStoreIDS) {
-      const vectorStore = await openai.vectorStores.retrieve(vs);
+    if (vectorStoreIDS && vectorStoreIDS.length > 0) {
+      for (const vs of vectorStoreIDS) {
+        const vectorStore = await openai.vectorStores.retrieve(vs);
 
-      if (vectorStore.metadata && vectorStore.metadata.fileId) {
-        const fileId = vectorStore.metadata.fileId;
-        await openai.files.delete(fileId);
+        if (vectorStore.metadata && vectorStore.metadata.fileId) {
+          const fileId = vectorStore.metadata.fileId;
+          await openai.files.delete(fileId);
+        }
+        await openai.vectorStores.delete(vs);
       }
-      await openai.vectorStores.delete(vs);
     }
-  }
 
-  await openai.beta.assistants.delete(assistantId);
+    await openai.beta.assistants.delete(assistantId);
+
+    // succes ✅
+    return { success: true, message: "Assistant deleted" };
+  } catch (err: unknown) {
+    let message = "Delete failed";
+
+    if (err instanceof Error) {
+      message = err.message;
+    }
+
+    return { success: false, message };
+  }
 }
 
 export async function updateAssistantLanguage(id: string, lang: string) {
