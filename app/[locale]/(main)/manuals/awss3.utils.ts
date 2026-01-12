@@ -16,7 +16,7 @@ export const s3 = new S3Client({
 export async function uploadFileToS3(params: {
   file: File;
   prefix: string;
-  fileName: string;
+  fileName?: string;
 }) {
   const fileBuffer = await params.file.arrayBuffer();
   const buffer = Buffer.from(fileBuffer);

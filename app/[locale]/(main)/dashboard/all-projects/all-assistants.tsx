@@ -80,7 +80,7 @@ type Item = {
 };
 
 export default function AllAsistants({
-  assistants,
+  assistants, 
 }: {
   assistants: Assistant[];
 }) {

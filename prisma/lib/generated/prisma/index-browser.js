@@ -208,6 +208,14 @@ exports.Prisma.ManualScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.MaterialScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  artNummer: 'artNummer',
+  url: 'url',
+  fileName: 'fileName'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -242,7 +250,8 @@ exports.Prisma.ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
-  Manual: 'Manual'
+  Manual: 'Manual',
+  Material: 'Material'
 };
 
 /**

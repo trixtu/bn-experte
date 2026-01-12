@@ -133,3 +133,11 @@ model Manual {
   type      String?
   createdAt DateTime @default(now())
 }
+
+model Material {
+  id        Int    @id @default(autoincrement())
+  name      String 
+  artNummer String @unique 
+  url       String
+  fileName  String 
+}

@@ -3,6 +3,7 @@ import * as React from "react";
 import {
   BookOpen,
   Bot,
+  BrickWall,
   Folder,
   FolderTree,
   Settings2,
@@ -56,22 +57,14 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
         ],
       },
       {
-        title: "Models",
+        title: "Materials",
         url: "#",
-        icon: Bot,
+        icon: BrickWall,
         items: [
           {
-            title: "Genesis",
-            url: "#",
-          },
-          {
-            title: "Explorer",
-            url: "#",
-          },
-          {
-            title: "Quantum",
-            url: "#",
-          },
+            title: "Add new",
+            url: "/materials/add-new",
+          }
         ],
       },
 
@@ -127,6 +120,11 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
         name: "Manuals",
         url: "/manuals",
         icon: FolderTree,
+      },
+      { 
+        name: "Materials",
+        url: "/materials",
+        icon: FolderTree, 
       },
       {
         name: "Users",

@@ -9,6 +9,16 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "50mb",
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: 'trixtu.com',
+        port: '',
+        pathname: '/uploads/**',
+      },
+    ],
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();
