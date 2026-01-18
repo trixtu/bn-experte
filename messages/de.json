@@ -25,7 +25,8 @@
         "title": "Projekt",
         "items": {
           "addNew": "Neu hinzufügen",
-          "allProjects": "Alle Projekte"
+          "allProjects": "Alle Projekte",
+           "geminiAssistant": "Gemini Assistant"
         }
       }
     }

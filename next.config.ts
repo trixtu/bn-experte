@@ -3,6 +3,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  serverExternalPackages: ['pdfjs-dist'],
   experimental: {
     authInterrupts: true,
     serverActions: {

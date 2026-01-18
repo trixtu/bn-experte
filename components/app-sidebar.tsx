@@ -54,6 +54,10 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
             title: t("navMain.project.items.allProjects"),
             url: "/dashboard/all-projects",
           },
+          {
+            title: t("navMain.project.items.geminiAssistant"),
+            url: "/dashboard/gemini",
+          }
         ],
       },
       {

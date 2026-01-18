@@ -5,6 +5,7 @@ export async function POST(req: Request) {
 
   // 1. Dacă nu există threadId, creăm unul nou
   let thread_id = threadId;
+  
   if (!thread_id) {
     const thread = await openai.beta.threads.create();
     thread_id = thread.id;

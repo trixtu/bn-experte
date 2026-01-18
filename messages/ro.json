@@ -25,7 +25,8 @@
         "title": "Proiect",
         "items": {
           "addNew": "Adăugați nou",
-          "allProjects": "Toate proiectele"
+          "allProjects": "Toate proiectele",
+           "geminiAssistant": "Gemini Assistant"
         }
       }
     }

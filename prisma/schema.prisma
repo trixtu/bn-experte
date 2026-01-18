@@ -141,3 +141,13 @@ model Material {
   url       String
   fileName  String 
 }
+
+model Assistant {
+  id            String      @id @default(cuid())
+  name          String
+  fileName      String
+  content       String      @db.Text
+  charCount     Int
+  pageCount     Int
+  createdAt     DateTime    @default(now())
+}

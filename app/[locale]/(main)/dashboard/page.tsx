@@ -16,10 +16,9 @@ import { prisma } from "@/lib/prisma";
 import { format } from "date-fns";
 import { CalendarDaysIcon, MailIcon, ShieldIcon, UserIcon } from "lucide-react";
 import type { Metadata } from "next";
-import { useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { unauthorized } from "next/navigation";
-import React from "react";
+
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -28,7 +27,7 @@ export const metadata: Metadata = {
 export default async function DashboardPage() {
   const session = await getServerSession();
   const user = session?.user;
-  const locale = await getLocale();
+  const locale = await getLocale(); 
 
   const userPrisma = await prisma.user.findUnique({
     where: { id: user?.id },
@@ -62,8 +61,8 @@ interface ProfileInformationProps {
   user: User;
 }
 
-function ProfileInformation({ user }: ProfileInformationProps) {
-  const t = useTranslations("Dashboard");
+async function ProfileInformation({ user }: ProfileInformationProps) {
+const t = await getTranslations("Dashboard");
   return (
     <Card>
       <CardHeader>
@@ -111,9 +110,8 @@ function ProfileInformation({ user }: ProfileInformationProps) {
   );
 }
 
-function EmailVerificationAlert() {
-  const t = useTranslations("Dashboard");
-
+async function EmailVerificationAlert() {
+const t = await getTranslations("Dashboard");
   return (
     <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-800/50 dark:bg-yellow-950/30">
       <div className="flex items-center justify-between">
