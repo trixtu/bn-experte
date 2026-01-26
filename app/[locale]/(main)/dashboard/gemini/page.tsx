@@ -11,6 +11,9 @@ const page = async () => {
   const user = session?.user;
 
   if (!user) unauthorized();
+  if (user?.role !== "member" && user?.role !== "admin") unauthorized();
+
+  // if (user?.role === "") unauthorized();
 
   const assistants = await getAssistantsFromDb() || []; 
 

@@ -45,7 +45,7 @@ export async function POST(req: Request) {
   const stream = await openai.beta.threads.runs.create(thread_id, {
     assistant_id: assistantId,
     stream: true,
-  });
+  }); 
 
   const encoder = new TextEncoder();
   const readable = new ReadableStream({

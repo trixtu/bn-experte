@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/xai": "^3.0.34",
     "@aws-sdk/client-s3": "^3.893.0",
     "@aws-sdk/lib-storage": "^3.893.0",
     "@aws-sdk/s3-request-presigner": "^3.893.0",
@@ -31,6 +32,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tabler/icons-react": "^3.34.1",
     "@tanstack/react-table": "^8.21.3",
+    "ai": "^6.0.49",
     "better-auth": "^1.3.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

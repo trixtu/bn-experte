@@ -32,7 +32,7 @@ export function FormAddNewProject({
   user,
   models,
 }: {
-  user: User;
+  user: User;  
   models: Model[];
 }) {
   const [status, setStatus] = useState<string | null>(null);

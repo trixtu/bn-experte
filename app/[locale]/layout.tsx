@@ -3,10 +3,11 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Outfit } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import "./globals.css";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
+
+import "./globals.css";
 
 const outfit = Outfit({
   variable: "--font-outfit",

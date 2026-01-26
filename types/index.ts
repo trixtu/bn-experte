@@ -50,6 +50,6 @@ export enum ModelType {
   FLASH = 'gemini-3-flash-preview',
   PRO = 'gemini-3-pro-preview',
   FLASH_2 = 'gemini-2.5-flash',
-  PRO_2 = 'gemini-1.5-pro-latest',
+  PRO_2 = 'gemini-2.0-flash-exp',
   FLASH_3 = 'gemini-2.0-flash'
 }

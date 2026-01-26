@@ -3,7 +3,9 @@
 import { Assistant } from '@/prisma/lib/generated/prisma';
 import { Message } from '@/types';
 import React, { useState, useRef, useEffect } from 'react';
-import { askAssistant } from '../actions/gemini-service';
+import { askAssistant } from '../actions/grok-service';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 interface ChatAreaProps {
   assistant: Assistant | null;
@@ -194,15 +196,15 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ assistant, onOpenMenu }) => 
       {/* Input */}
       <div className="px-4 py-4 md:p-6 bg-white border-t border-gray-100">
         <form onSubmit={handleSend} className="max-w-4xl mx-auto flex gap-2 md:gap-3">
-          <input
+          <Input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Întreabă ceva..."
             disabled={isLoading}
-            className="flex-1 px-4 py-2.5 md:py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all disabled:opacity-50 text-sm md:text-base"
+            className="flex-1 px-4 py-2.5 md:py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all disabled:opacity-50 text-base"
           />
-          <button
+          <Button
             type="submit"
             disabled={!input.trim() || isLoading}
             className="px-4 md:px-6 py-2.5 md:py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:bg-blue-400 shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center shrink-0 active:scale-95"
@@ -211,7 +213,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({ assistant, onOpenMenu }) => 
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
             </svg>
             <span className="hidden sm:inline ml-2 font-semibold text-sm">Trimite</span>
-          </button>
+          </Button>
         </form>
       </div>
     </div>
