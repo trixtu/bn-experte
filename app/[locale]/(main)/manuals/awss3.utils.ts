@@ -4,12 +4,22 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 
+export function getR2Endpoint() {
+  return process.env.R2_ENDPOINT ?? process.env.AWS_S3_API_URL ?? "";
+}
+
+export function getR2BucketName() {
+  return process.env.R2_BUCKET_NAME ?? process.env.AWS_S3_BUCKET_NAME ?? "";
+}
+
 export const s3 = new S3Client({
   region: "auto",
-  endpoint: process.env.AWS_S3_API_URL ?? "",
+  endpoint: getR2Endpoint(),
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "",
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? "",
+    accessKeyId:
+      process.env.R2_ACCESS_KEY_ID ?? process.env.AWS_ACCESS_KEY_ID ?? "",
+    secretAccessKey:
+      process.env.R2_SECRET_ACCESS_KEY ?? process.env.AWS_SECRET_ACCESS_KEY ?? "",
   },
 });
 
@@ -32,7 +42,7 @@ export async function uploadFileToS3(params: {
   const uniqueFileName = `${params.prefix}/${params.fileName}`;
 
   const command = new PutObjectCommand({
-    Bucket: process.env.AWS_S3_BUCKET_NAME ?? "",
+    Bucket: getR2BucketName(),
     Key: uniqueFileName,
     Body: buffer,
     ContentType: params.file.type,
@@ -50,7 +60,7 @@ export async function uploadFileToS3(params: {
 export async function deleteFileToS3(fileName: string, prefix: string) {
   try {
     const command = new DeleteObjectCommand({
-      Bucket: process.env.AWS_S3_BUCKET_NAME ?? "", // numele bucket-ului
+      Bucket: getR2BucketName(), // numele bucket-ului
       Key: prefix, // cheia / path-ul fișierulu
     });
 

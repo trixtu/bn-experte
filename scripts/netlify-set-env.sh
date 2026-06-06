@@ -12,15 +12,25 @@ required_keys=(
   OPENAI_ADMIN_KEY
   OPENAI_BILLING_CREDIT_LIMIT
   OPENAI_BILLING_CURRENCY
-  AWS_S3_BUCKET_NAME
-  AWS_S3_API_URL
-  AWS_ACCESS_KEY_ID
-  AWS_SECRET_ACCESS_KEY
+  R2_BUCKET_NAME
+  R2_ENDPOINT
+  R2_ACCESS_KEY_ID
+  R2_SECRET_ACCESS_KEY
   R2_URL
   GOOGLE_CLIENT_ID
   GOOGLE_CLIENT_SECRET
   RESEND_API_KEY
 )
+
+fallback_keys() {
+  case "$1" in
+    R2_BUCKET_NAME) echo "AWS_S3_BUCKET_NAME" ;;
+    R2_ENDPOINT) echo "AWS_S3_API_URL" ;;
+    R2_ACCESS_KEY_ID) echo "AWS_ACCESS_KEY_ID" ;;
+    R2_SECRET_ACCESS_KEY) echo "AWS_SECRET_ACCESS_KEY" ;;
+    *) echo "" ;;
+  esac
+}
 
 run_netlify() {
   if command -v netlify >/dev/null 2>&1; then
@@ -69,6 +79,14 @@ get_env_value() {
 
 for key in "${required_keys[@]}"; do
   value="$(get_env_value "$key" || true)"
+
+  if [[ -z "$value" ]]; then
+    fallback_key="$(fallback_keys "$key")"
+
+    if [[ -n "$fallback_key" ]]; then
+      value="$(get_env_value "$fallback_key" || true)"
+    fi
+  fi
 
   if [[ -z "$value" ]]; then
     echo "Skipping $key: not found in $ENV_FILE"

@@ -1,7 +1,10 @@
 import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { NextRequest, NextResponse } from "next/server";
 
-import { s3 } from "@/app/[locale]/(main)/manuals/awss3.utils";
+import {
+  getR2BucketName,
+  s3,
+} from "@/app/[locale]/(main)/manuals/awss3.utils";
 import { getServerSession } from "@/lib/get-session";
 import { prisma } from "@/lib/prisma";
 
@@ -72,7 +75,7 @@ export async function GET(
   try {
     const object = await s3.send(
       new GetObjectCommand({
-        Bucket: process.env.AWS_S3_BUCKET_NAME ?? "",
+        Bucket: getR2BucketName(),
         Key: storageKey,
       }),
     );
