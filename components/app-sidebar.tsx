@@ -3,7 +3,9 @@ import * as React from "react";
 import {
   BookOpen,
   Bot,
+  BrainCircuit,
   BrickWall,
+  CreditCard,
   Folder,
   FolderTree,
   Settings2,
@@ -55,8 +57,12 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
             url: "/dashboard/all-projects",
           },
           {
-            title: t("navMain.project.items.geminiAssistant"),
-            url: "/dashboard/gemini",
+            title: "Experiență tehnician",
+            url: "/experience",
+          },
+          {
+            title: "Tehnicieni AI",
+            url: "/technicians",
           }
         ],
       },
@@ -110,7 +116,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
           },
           {
             title: "Billing",
-            url: "#",
+            url: "/billing",
           },
           {
             title: "Limits",
@@ -134,6 +140,21 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
         name: "Users",
         url: "/admin",
         icon: Users,
+      },
+      {
+        name: "Experiență",
+        url: "/experience",
+        icon: BrainCircuit,
+      },
+      {
+        name: "Tehnicieni",
+        url: "/technicians",
+        icon: Bot,
+      },
+      {
+        name: "Billing",
+        url: "/billing",
+        icon: CreditCard,
       },
     ],
   };

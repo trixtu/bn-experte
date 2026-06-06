@@ -1,13 +1,13 @@
 "use client";
 
 import { AlertCircleIcon, ImageUpIcon, XIcon } from "lucide-react";
-
-import { useFileUpload } from "@/hooks/use-file-upload";
 import { toast } from "sonner";
 
-export function UploadImage(props:{ setImageFile: (file: File | null) => void}) {
-  const maxSizeMB = 2;
-  const maxSize = maxSizeMB * 1024 * 1024; // 5MB default
+import { useFileUpload } from "@/hooks/use-file-upload";
+
+export function UploadImage(props: { setImageFile: (file: File | null) => void }) {
+  const maxSizeMB = 6;
+  const maxSize = maxSizeMB * 1024 * 1024;
 
   const [
     { files, isDragging, errors },
@@ -21,45 +21,40 @@ export function UploadImage(props:{ setImageFile: (file: File | null) => void}) 
       getInputProps,
     },
   ] = useFileUpload({
-    accept: "image/*",
-    onFilesAdded: async (newFiles) =>  {
+    accept: "image/jpeg,image/png,image/webp",
+    maxFiles: 1,
+    maxSize,
+    onFilesAdded: async (newFiles) => {
       const file = newFiles[0]?.file;
 
-      if(!file) {
-        toast.error("No file added");
+      if (!file || !(file instanceof File)) {
+        toast.error("Nu a fost adăugată nicio imagine.");
         return;
       }
 
       if (file.size > maxSize) {
-        toast.error("File size exceeds 2MB");
+        toast.error(`Imaginea depășește limita de ${maxSizeMB} MB.`);
         return;
       }
 
-      // const formData = new FormData();
-      // formData.append("file", file as File);
-
-      // const url = await materialImageAction(formData);
-      // props.setImageUrl(url);
-
-      props.setImageFile(file as File);
+      props.setImageFile(file);
       return file;
-    }
-})
+    },
+  });
 
   const removeImage = (fileId: string) => {
     removeFile(fileId);
     props.setImageFile(null);
+  };
 
-  }
-
-  const previewUrl = files[0]?.preview || null;
+  const firstFile = files[0];
+  const previewUrl = firstFile?.preview || null;
 
   return (
     <div className="flex flex-col gap-2">
       <div className="relative">
-        {/* Drop area */}
         <div
-          className="relative flex min-h-52 flex-col items-center justify-center overflow-hidden rounded-xl border border-input border-dashed p-4 transition-colors hover:bg-accent/50 has-disabled:pointer-events-none has-[input:focus]:border-ring has-[img]:border-none has-disabled:opacity-50 has-[input:focus]:ring-[3px] has-[input:focus]:ring-ring/50 data-[dragging=true]:bg-accent/50"
+          className="relative flex aspect-[4/3] min-h-64 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-md border border-dashed border-input bg-background p-4 transition-colors hover:bg-accent/50 has-disabled:pointer-events-none has-[input:focus]:border-ring has-disabled:opacity-50 has-[input:focus]:ring-[3px] has-[input:focus]:ring-ring/50 data-[dragging=true]:bg-accent/50"
           data-dragging={isDragging || undefined}
           onClick={openFileDialog}
           onDragEnter={handleDragEnter}
@@ -71,13 +66,14 @@ export function UploadImage(props:{ setImageFile: (file: File | null) => void}) 
         >
           <input
             {...getInputProps()}
-            aria-label="Upload file"
+            aria-label="Încarcă imagine material"
             className="sr-only"
           />
           {previewUrl ? (
             <div className="absolute inset-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                alt={files[0]?.file?.name || "Uploaded image"}
+                alt={firstFile.file.name || "Imagine material"}
                 className="size-full object-cover"
                 src={previewUrl}
               />
@@ -90,38 +86,38 @@ export function UploadImage(props:{ setImageFile: (file: File | null) => void}) 
               >
                 <ImageUpIcon className="size-4 opacity-60" />
               </div>
-              <p className="mb-1.5 font-medium text-sm">
-                Drop your image here or click to browse
+              <p className="mb-1.5 text-sm font-medium">
+                Trage imaginea aici sau selectează din calculator
               </p>
-              <p className="text-muted-foreground text-xs">
-                Max size: {maxSizeMB}MB
+              <p className="text-xs text-muted-foreground">
+                JPG, PNG sau WebP, maxim {maxSizeMB} MB
               </p>
             </div>
           )}
         </div>
-        {previewUrl && (
-          <div className="absolute top-4 right-4">
+        {previewUrl && firstFile ? (
+          <div className="absolute right-4 top-4">
             <button
-              aria-label="Remove image"
+              aria-label="Elimină imaginea"
               className="z-50 flex size-8 cursor-pointer items-center justify-center rounded-full bg-black/60 text-white outline-none transition-[color,box-shadow] hover:bg-black/80 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
-              onClick={() => removeImage(files[0]?.id!)}
+              onClick={() => removeImage(firstFile.id)}
               type="button"
             >
               <XIcon aria-hidden="true" className="size-4" />
             </button>
           </div>
-        )}
+        ) : null}
       </div>
 
-      {errors.length > 0 && (
+      {errors.length > 0 ? (
         <div
-          className="flex items-center gap-1 text-destructive text-xs"
+          className="flex items-center gap-1 text-xs text-destructive"
           role="alert"
         >
           <AlertCircleIcon className="size-3 shrink-0" />
           <span>{errors[0]}</span>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

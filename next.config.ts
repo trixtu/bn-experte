@@ -3,7 +3,6 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  serverExternalPackages: ['pdfjs-dist'],
   experimental: {
     authInterrupts: true,
     serverActions: {
@@ -14,9 +13,15 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: 'trixtu.com',
-        port: '',
-        pathname: '/uploads/**',
+        hostname: "trixtu.com",
+        port: "",
+        pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "files.trixtu.com",
+        port: "",
+        pathname: "/**",
       },
     ],
   },

@@ -1,7 +1,14 @@
 "use client";
 
 import { LoadingButton } from "@/components/loading-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -22,19 +29,36 @@ import { Textarea } from "@/components/ui/textarea";
 import { redirect } from "@/i18n/routing";
 import { User } from "@/prisma/lib/generated/prisma";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Bot, Gauge, Sparkles } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { Model } from "openai/resources/models.mjs";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
-export function FormAddNewProject({
-  user,
-  models,
-}: {
-  user: User;  
-  models: Model[];
-}) {
+const modelPresets = [
+  {
+    id: "gpt-5.4-mini",
+    label: "Rapid",
+    description: "Răspunsuri rapide pentru întrebări uzuale din manuale.",
+    icon: Gauge,
+  },
+  {
+    id: "gpt-5.4",
+    label: "Precizie",
+    description: "Mai bun pentru manuale dense și răspunsuri tehnice lungi.",
+    icon: Bot,
+    adminOnly: true,
+  },
+  {
+    id: "gpt-5.5",
+    label: "Expert",
+    description: "Maxim de calitate pentru cazuri dificile.",
+    icon: Sparkles,
+    adminOnly: true,
+  },
+];
+
+export function FormAddNewProject({ user }: { user: User }) {
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const locale = useLocale();
@@ -56,7 +80,7 @@ export function FormAddNewProject({
     resolver: zodResolver(createAsistentSchema),
     defaultValues: {
       name: "",
-      model: "gpt-4o",
+      model: "gpt-5.4-mini",
       system_instructions: "",
     },
   });
@@ -79,29 +103,39 @@ export function FormAddNewProject({
       }),
       headers: { "Content-Type": "application/json" },
     });
-    const data = await res.json();
 
-    if (error) {
-      setError(error || "Failed to create project");
-    } else {
-      setStatus("The project was created successfully");
-      redirect({
-        href: `/dashboard/project/${data.assistant.id}`,
-        locale,
-      });
+    const data = await res.json().catch(() => null);
+
+    if (!res.ok) {
+      setError(data?.error || "Proiectul nu a putut fi creat.");
+      return;
     }
+
+    setStatus("Proiectul a fost creat.");
+    redirect({
+      href: `/dashboard/project/${data.assistant.id}`,
+      locale,
+    });
   }
 
   const loading = form.formState.isSubmitting;
 
   return (
-    <Card className="w-2xl">
-      <CardHeader>
-        <CardTitle>{t("title")}</CardTitle>
+    <Card className="w-full max-w-2xl rounded-lg">
+      <CardHeader className="gap-3">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <CardTitle className="text-xl">{t("title")}</CardTitle>
+            <CardDescription>
+              Creează un spațiu de lucru pentru manuale și întrebări tehnice.
+            </CardDescription>
+          </div>
+          <Badge variant="secondary">OpenAI</Badge>
+        </div>
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-5">
             <FormField
               control={form.control}
               name="name"
@@ -125,28 +159,41 @@ export function FormAddNewProject({
               name="model"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Models</FormLabel>
+                  <FormLabel>Model</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a model" />
+                      <SelectTrigger className="h-12">
+                        <SelectValue placeholder="Alege modelul" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {models.map((model) => (
+                      {modelPresets.map((model) => (
                         <SelectItem
                           key={model.id}
                           value={model.id}
-                          disabled={!admin}
+                          disabled={model.adminOnly && !admin}
                         >
-                          {model.id}
+                          <div className="flex items-center gap-2">
+                            <model.icon className="size-4" />
+                            <span>{model.label}</span>
+                            <span className="text-xs text-muted-foreground">
+                              {model.id}
+                            </span>
+                          </div>
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
+                  <p className="text-xs text-muted-foreground">
+                    {
+                      modelPresets.find(
+                        (preset) => preset.id === field.value,
+                      )?.description
+                    }
+                  </p>
 
                   <FormMessage />
                 </FormItem>
@@ -158,11 +205,11 @@ export function FormAddNewProject({
               name="system_instructions"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>System instructions</FormLabel>
+                  <FormLabel>Instrucțiuni</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="You are a helpful assistant..."
-                      className="resize-none"
+                      placeholder="Ex: răspunde scurt, păstrează codurile exact ca în manual..."
+                      className="min-h-28 resize-none"
                       disabled={!admin}
                       {...field}
                     />

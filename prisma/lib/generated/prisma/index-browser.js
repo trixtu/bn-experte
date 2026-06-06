@@ -226,6 +226,52 @@ exports.Prisma.AssistantScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.TechnicianExperienceScalarFieldEnum = {
+  id: 'id',
+  technicianId: 'technicianId',
+  projectId: 'projectId',
+  manualId: 'manualId',
+  manualName: 'manualName',
+  title: 'title',
+  question: 'question',
+  answer: 'answer',
+  symptoms: 'symptoms',
+  cause: 'cause',
+  solution: 'solution',
+  tags: 'tags',
+  source: 'source',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AiTechnicianScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  domain: 'domain',
+  brands: 'brands',
+  productTypes: 'productTypes',
+  instructions: 'instructions',
+  responseStyle: 'responseStyle',
+  webEnabled: 'webEnabled',
+  experienceEnabled: 'experienceEnabled',
+  active: 'active',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AiTechnicianManualScalarFieldEnum = {
+  id: 'id',
+  technicianId: 'technicianId',
+  projectId: 'projectId',
+  projectName: 'projectName',
+  vectorStoreId: 'vectorStoreId',
+  manualId: 'manualId',
+  manualName: 'manualName',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -262,7 +308,10 @@ exports.Prisma.ModelName = {
   Verification: 'Verification',
   Manual: 'Manual',
   Material: 'Material',
-  Assistant: 'Assistant'
+  Assistant: 'Assistant',
+  TechnicianExperience: 'TechnicianExperience',
+  AiTechnician: 'AiTechnician',
+  AiTechnicianManual: 'AiTechnicianManual'
 };
 
 /**

@@ -1,39 +1,5 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  FilterFn,
-  flexRender,
-  getCoreRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  PaginationState,
-  Row,
-  SortingState,
-  useReactTable,
-  VisibilityState,
-} from "@tanstack/react-table";
-import {
-  ChevronDownIcon,
-  ChevronFirstIcon,
-  ChevronLastIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronUpIcon,
-  CircleAlertIcon,
-  CircleXIcon,
-  FolderClosed,
-  ListFilterIcon,
-  Loader2,
-  Trash,
-  TrashIcon,
-} from "lucide-react";
-
-import { cn } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,16 +11,18 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from "@/components/ui/pagination";
-
 import {
   Select,
   SelectContent,
@@ -62,535 +30,520 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Assistant } from "openai/resources/beta/assistants.mjs";
+import { Textarea } from "@/components/ui/textarea";
 import { Link } from "@/i18n/routing";
-import { deleteAssistant } from "../actions";
+import { cn } from "@/lib/utils";
+import {
+  ArrowUpRight,
+  Bot,
+  CalendarDays,
+  CircleAlert,
+  Edit3,
+  FileText,
+  FolderOpen,
+  Loader2,
+  Plus,
+  Search,
+  SlidersHorizontal,
+  Trash2,
+} from "lucide-react";
+import { useMemo, useState } from "react";
+import { toast } from "sonner";
+import { deleteAssistant, updateProject } from "../actions";
 
-type Item = {
+export type ProjectSummary = {
   id: string;
   name: string;
+  model: string;
+  assistantModel: string;
+  instructions: string;
+  createdAt: number;
+  manualCount: number;
+  vectorStoreId?: string;
 };
 
-export default function AllAsistants({
-  assistants, 
-}: {
-  assistants: Assistant[];
-}) {
-  const [loading, setIsLoading] = useState(false);
-  const id = useId();
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10,
-  });
-  const inputRef = useRef<HTMLInputElement>(null);
+type SortKey = "recent" | "name" | "manuals";
 
-  // Custom filter function for multi-column searching
-  const multiColumnFilterFn: FilterFn<Item> = (row, columnId, filterValue) => {
-    const value =
-      row.getValue<string>(columnId)?.toString().toLowerCase() ?? "";
-    return value.includes((filterValue ?? "").toLowerCase());
-  };
+type ProjectDraft = {
+  id: string;
+  name: string;
+  model: string;
+  instructions: string;
+};
 
-  const columns: ColumnDef<Item>[] = [
-    {
-      id: "select",
-      header: ({ table }) => (
-        <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && "indeterminate")
-          }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
-      size: 20,
-      enableSorting: false,
-      enableHiding: false,
-    },
-    {
-      header: "Name",
-      accessorKey: "name",
-      cell: ({ row }) => (
-        <div className="font-medium">
-          <Link href={`project/${row.original.id}`}>
-            <div className="flex items-center gap-2">
-              <FolderClosed color="blue" />
-              {row.getValue("name")}
-            </div>
-          </Link>
-        </div>
-      ),
-      size: 180,
-      filterFn: multiColumnFilterFn,
-      enableHiding: false,
-    },
+const modelOptions = [
+  {
+    id: "gpt-5.4-mini",
+    label: "Rapid",
+    description: "Răspunsuri rapide pentru întrebări uzuale.",
+  },
+  {
+    id: "gpt-5.4",
+    label: "Precizie",
+    description: "Mai bun pentru manuale dense și răspunsuri lungi.",
+  },
+  {
+    id: "gpt-5.5",
+    label: "Expert",
+    description: "Maxim de calitate pentru cazuri dificile.",
+  },
+];
 
-    {
-      id: "actions",
-      header: () => <span className="sr-only">Actions</span>,
-      cell: ({ row }) => (
-        <RowActions
-          row={row}
-          onDeleted={(id) =>
-            setData((prev) => prev.filter((item) => item.id !== id))
-          }
-          setIsLoading={setIsLoading}
-        />
-      ),
-      size: 10,
-      enableHiding: false,
-    },
-  ];
-
-  const [sorting, setSorting] = useState<SortingState>([
-    {
-      id: "name",
-      desc: false,
-    },
-  ]);
-
-  const [data, setData] = useState<Item[]>(
-    assistants.map((assistant) => ({
-      id: assistant.id,
-      name: assistant.name ?? "No name",
-    }))
-  );
-
-  const handleDeleteRows = () => {
-    const selectedRows = table.getSelectedRowModel().rows;
-    const updatedData = data.filter(
-      (item) => !selectedRows.some((row) => row.original.id === item.id)
-    );
-    setData(updatedData);
-    table.resetRowSelection();
-  };
-
-  const table = useReactTable({
-    data,
-    columns,
-    filterFns: {
-      multi: multiColumnFilterFn,
-    },
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    onSortingChange: setSorting,
-    enableSortingRemoval: false,
-    getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
-    onColumnFiltersChange: setColumnFilters,
-    onColumnVisibilityChange: setColumnVisibility,
-    getFilteredRowModel: getFilteredRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-    state: {
-      sorting,
-      pagination,
-      columnFilters,
-      columnVisibility,
-    },
-  });
-
-  if (loading) {
-    return (
-      <div className="flex min-h-svh items-center justify-center">
-        <Loader2 className="text-muted-foreground size-8 animate-spin" />
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-4 max-w-2xl ">
-      {/* Filters */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          {/* Filter by name */}
-          <div className="relative">
-            <Input
-              id={`${id}-input`}
-              ref={inputRef}
-              className={cn(
-                "peer min-w-60 ps-9",
-                Boolean(table.getColumn("name")?.getFilterValue()) && "pe-9"
-              )}
-              value={
-                (table.getColumn("name")?.getFilterValue() ?? "") as string
-              }
-              onChange={(e) =>
-                table.getColumn("name")?.setFilterValue(e.target.value)
-              }
-              placeholder="Filter by name ..."
-              type="text"
-              aria-label="Filter by name"
-            />
-            <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
-              <ListFilterIcon size={16} aria-hidden="true" />
-            </div>
-            {Boolean(table.getColumn("name")?.getFilterValue()) && (
-              <button
-                className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
-                aria-label="Clear filter"
-                onClick={() => {
-                  table.getColumn("name")?.setFilterValue("");
-                  if (inputRef.current) {
-                    inputRef.current.focus();
-                  }
-                }}
-              >
-                <CircleXIcon size={16} aria-hidden="true" />
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          {/* Delete button */}
-          {table.getSelectedRowModel().rows.length > 0 && (
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button className="ml-auto" variant="outline">
-                  <TrashIcon
-                    className="-ms-1 opacity-60"
-                    size={16}
-                    aria-hidden="true"
-                  />
-                  Delete
-                  <span className="bg-background text-muted-foreground/70 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
-                    {table.getSelectedRowModel().rows.length}
-                  </span>
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <div className="flex flex-col gap-2 max-sm:items-center sm:flex-row sm:gap-4">
-                  <div
-                    className="flex size-9 shrink-0 items-center justify-center rounded-full border"
-                    aria-hidden="true"
-                  >
-                    <CircleAlertIcon className="opacity-80" size={16} />
-                  </div>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you absolutely sure?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete{" "}
-                      {table.getSelectedRowModel().rows.length} selected{" "}
-                      {table.getSelectedRowModel().rows.length === 1
-                        ? "row"
-                        : "rows"}
-                      .
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                </div>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleDeleteRows}>
-                    Delete
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          )}
-        </div>
-      </div>
-
-      {/* Table */}
-      <div className="bg-background overflow-hidden rounded-md border">
-        <Table className="table-fixed">
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="hover:bg-transparent">
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      style={{ width: `${header.getSize()}px` }}
-                      className="h-11"
-                    >
-                      {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                        <div
-                          className={cn(
-                            header.column.getCanSort() &&
-                              "flex h-full cursor-pointer items-center justify-between gap-2 select-none"
-                          )}
-                          onClick={header.column.getToggleSortingHandler()}
-                          onKeyDown={(e) => {
-                            // Enhanced keyboard handling for sorting
-                            if (
-                              header.column.getCanSort() &&
-                              (e.key === "Enter" || e.key === " ")
-                            ) {
-                              e.preventDefault();
-                              header.column.getToggleSortingHandler()?.(e);
-                            }
-                          }}
-                          tabIndex={header.column.getCanSort() ? 0 : undefined}
-                        >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                          {{
-                            asc: (
-                              <ChevronUpIcon
-                                className="shrink-0 opacity-60"
-                                size={16}
-                                aria-hidden="true"
-                              />
-                            ),
-                            desc: (
-                              <ChevronDownIcon
-                                className="shrink-0 opacity-60"
-                                size={16}
-                                aria-hidden="true"
-                              />
-                            ),
-                          }[header.column.getIsSorted() as string] ?? null}
-                        </div>
-                      ) : (
-                        flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )
-                      )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="last:py-0">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-
-      {/* Pagination */}
-      <div className="flex items-center justify-between gap-8">
-        {/* Results per page */}
-        <div className="flex items-center gap-3">
-          <Label htmlFor={id} className="max-sm:sr-only">
-            Rows per page
-          </Label>
-          <Select
-            value={table.getState().pagination.pageSize.toString()}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value));
-            }}
-          >
-            <SelectTrigger id={id} className="w-fit whitespace-nowrap">
-              <SelectValue placeholder="Select number of results" />
-            </SelectTrigger>
-            <SelectContent className="[&_*[role=option]]:ps-2 [&_*[role=option]]:pe-8 [&_*[role=option]>span]:start-auto [&_*[role=option]>span]:end-2">
-              {[5, 10, 25, 50].map((pageSize) => (
-                <SelectItem key={pageSize} value={pageSize.toString()}>
-                  {pageSize}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        {/* Page number information */}
-        <div className="text-muted-foreground flex grow justify-end text-sm whitespace-nowrap">
-          <p
-            className="text-muted-foreground text-sm whitespace-nowrap"
-            aria-live="polite"
-          >
-            <span className="text-foreground">
-              {table.getState().pagination.pageIndex *
-                table.getState().pagination.pageSize +
-                1}
-              -
-              {Math.min(
-                Math.max(
-                  table.getState().pagination.pageIndex *
-                    table.getState().pagination.pageSize +
-                    table.getState().pagination.pageSize,
-                  0
-                ),
-                table.getRowCount()
-              )}
-            </span>{" "}
-            of{" "}
-            <span className="text-foreground">
-              {table.getRowCount().toString()}
-            </span>
-          </p>
-        </div>
-
-        {/* Pagination buttons */}
-        <div>
-          <Pagination>
-            <PaginationContent>
-              {/* First page button */}
-              <PaginationItem>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="disabled:pointer-events-none disabled:opacity-50"
-                  onClick={() => table.firstPage()}
-                  disabled={!table.getCanPreviousPage()}
-                  aria-label="Go to first page"
-                >
-                  <ChevronFirstIcon size={16} aria-hidden="true" />
-                </Button>
-              </PaginationItem>
-              {/* Previous page button */}
-              <PaginationItem>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="disabled:pointer-events-none disabled:opacity-50"
-                  onClick={() => table.previousPage()}
-                  disabled={!table.getCanPreviousPage()}
-                  aria-label="Go to previous page"
-                >
-                  <ChevronLeftIcon size={16} aria-hidden="true" />
-                </Button>
-              </PaginationItem>
-              {/* Next page button */}
-              <PaginationItem>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="disabled:pointer-events-none disabled:opacity-50"
-                  onClick={() => table.nextPage()}
-                  disabled={!table.getCanNextPage()}
-                  aria-label="Go to next page"
-                >
-                  <ChevronRightIcon size={16} aria-hidden="true" />
-                </Button>
-              </PaginationItem>
-              {/* Last page button */}
-              <PaginationItem>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="disabled:pointer-events-none disabled:opacity-50"
-                  onClick={() => table.lastPage()}
-                  disabled={!table.getCanNextPage()}
-                  aria-label="Go to last page"
-                >
-                  <ChevronLastIcon size={16} aria-hidden="true" />
-                </Button>
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
-      </div>
-      <p className="text-muted-foreground mt-4 text-center text-sm">
-        Example of a more complex table made with{" "}
-        <a
-          className="hover:text-foreground underline"
-          href="https://tanstack.com/table"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          TanStack Table
-        </a>
-      </p>
-    </div>
-  );
+function formatDate(timestamp: number) {
+  return new Intl.DateTimeFormat("ro-RO", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(new Date(timestamp * 1000));
 }
 
-function RowActions({
-  row,
-  onDeleted,
-  setIsLoading,
+export default function AllAsistants({
+  projects,
+  canEdit,
+  canDelete,
 }: {
-  row: Row<Item>;
-  onDeleted: (id: string) => void;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  projects: ProjectSummary[];
+  canEdit: boolean;
+  canDelete: boolean;
 }) {
-  const handleDeleteRow = async () => {
-    setIsLoading(true);
-    const result = await deleteAssistant(row.original.id);
+  const [items, setItems] = useState(projects);
+  const [query, setQuery] = useState("");
+  const [sort, setSort] = useState<SortKey>("recent");
+  const [editingProject, setEditingProject] = useState<ProjectDraft | null>(
+    null,
+  );
+  const [savingEdit, setSavingEdit] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
-    if (result.success) {
-      console.log("✅ Deleted:", result.message);
+  const visibleProjects = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
+    const filtered = normalizedQuery
+      ? items.filter((project) =>
+          [project.name, project.model, project.assistantModel]
+            .join(" ")
+            .toLowerCase()
+            .includes(normalizedQuery),
+        )
+      : items;
 
-      // Scoatem direct din state, fără să mai chemăm din nou API-ul
-      onDeleted(row.original.id);
-      setIsLoading(false);
-    } else {
-      console.error("❌ Error:", result.message);
+    return [...filtered].sort((a, b) => {
+      if (sort === "name") return a.name.localeCompare(b.name);
+      if (sort === "manuals") return b.manualCount - a.manualCount;
+      return b.createdAt - a.createdAt;
+    });
+  }, [items, query, sort]);
+
+  const totalManuals = items.reduce(
+    (total, project) => total + project.manualCount,
+    0,
+  );
+  const indexedProjects = items.filter((project) => project.manualCount > 0);
+
+  const handleDelete = async (project: ProjectSummary) => {
+    setDeletingId(project.id);
+
+    try {
+      const result = await deleteAssistant(project.id);
+
+      if (!result.success) {
+        toast.error(result.message || "Proiectul nu a putut fi șters.");
+        return;
+      }
+
+      setItems((current) => current.filter((item) => item.id !== project.id));
+      toast.success("Proiect șters.");
+    } catch (error) {
+      console.error(error);
+      toast.error("A apărut o eroare la ștergere.");
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  const openEditDialog = (project: ProjectSummary) => {
+    setEditingProject({
+      id: project.id,
+      name: project.name,
+      model: project.model,
+      instructions: project.instructions,
+    });
+  };
+
+  const handleUpdate = async () => {
+    if (!editingProject || savingEdit) return;
+
+    setSavingEdit(true);
+
+    try {
+      const result = await updateProject(editingProject);
+
+      if (!result.success || !result.project) {
+        toast.error(result.message || "Proiectul nu a putut fi actualizat.");
+        return;
+      }
+
+      setItems((current) =>
+        current.map((item) =>
+          item.id === editingProject.id
+            ? {
+                ...item,
+                name: result.project.name,
+                model: result.project.model,
+                assistantModel: result.project.assistantModel,
+                instructions: result.project.instructions,
+              }
+            : item,
+        ),
+      );
+      setEditingProject(null);
+      toast.success("Proiect actualizat.");
+    } catch (error) {
+      console.error(error);
+      toast.error("A apărut o eroare la actualizare.");
+    } finally {
+      setSavingEdit(false);
     }
   };
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild className="cursor-pointer">
-        <button className="float-end m-4 text-red-600 hover:bg-neutral-100 rounded">
-          <Trash className="w-5 h-5" />
-        </button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <div className="flex flex-col gap-2 max-sm:items-center sm:flex-row sm:gap-4">
-          <div
-            className="flex size-9 shrink-0 items-center justify-center rounded-full border"
-            aria-hidden="true"
-          >
-            <CircleAlertIcon className="opacity-80" size={16} />
+    <main className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-3 py-4 sm:px-5 lg:px-8">
+      <section className="rounded-lg border bg-background px-4 py-4 shadow-xs sm:px-5">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex size-11 shrink-0 items-center justify-center rounded-md border bg-muted">
+              <FolderOpen className="size-5" />
+            </div>
+            <div className="min-w-0">
+              <h1 className="text-xl font-semibold tracking-normal">
+                Toate proiectele
+              </h1>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {items.length} proiecte, {totalManuals} manuale indexate
+              </p>
+            </div>
           </div>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            {/* <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete{" "}
-                      {table.getSelectedRowModel().rows.length} selected{" "}
-                      {table.getSelectedRowModel().rows.length === 1
-                        ? "row"
-                        : "rows"}
-                      .
-                    </AlertDialogDescription> */}
-          </AlertDialogHeader>
+
+          <Button asChild className="w-full justify-center sm:w-auto">
+            <Link href="/dashboard/add-new">
+              <Plus className="size-4" />
+              Adaugă proiect
+            </Link>
+          </Button>
         </div>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDeleteRow}>
-            Delete
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+
+        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-md border bg-muted/30 p-3">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <FolderOpen className="size-3.5" />
+              Proiecte
+            </div>
+            <p className="mt-2 text-2xl font-semibold">{items.length}</p>
+          </div>
+          <div className="rounded-md border bg-muted/30 p-3">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <FileText className="size-3.5" />
+              Manuale
+            </div>
+            <p className="mt-2 text-2xl font-semibold">{totalManuals}</p>
+          </div>
+          <div className="rounded-md border bg-muted/30 p-3">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <Bot className="size-3.5" />
+              Cu documente
+            </div>
+            <p className="mt-2 text-2xl font-semibold">
+              {indexedProjects.length}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="flex flex-col gap-3 rounded-lg border bg-background p-3 shadow-xs sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative w-full sm:max-w-md">
+          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Caută proiect..."
+            className="pl-9"
+          />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <SlidersHorizontal className="size-4 text-muted-foreground" />
+          <Select value={sort} onValueChange={(value) => setSort(value as SortKey)}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="recent">Cele mai recente</SelectItem>
+              <SelectItem value="name">Nume A-Z</SelectItem>
+              <SelectItem value="manuals">Cele mai multe manuale</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </section>
+
+      {visibleProjects.length === 0 ? (
+        <section className="flex min-h-[360px] items-center justify-center rounded-lg border border-dashed bg-background p-8 text-center">
+          <div className="max-w-sm">
+            <div className="mx-auto flex size-12 items-center justify-center rounded-md border bg-muted">
+              <FolderOpen className="size-5 text-muted-foreground" />
+            </div>
+            <h2 className="mt-4 text-base font-semibold">
+              Nu există proiecte găsite
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Schimbă căutarea sau creează un proiect nou.
+            </p>
+            <Button asChild className="mt-4">
+              <Link href="/dashboard/add-new">
+                <Plus className="size-4" />
+                Adaugă proiect
+              </Link>
+            </Button>
+          </div>
+        </section>
+      ) : (
+        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {visibleProjects.map((project) => (
+            <article
+              key={project.id}
+              className="group flex min-h-56 flex-col justify-between rounded-lg border bg-background p-4 shadow-xs transition-colors hover:border-foreground/20"
+            >
+              <div>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex min-w-0 items-start gap-3">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-md border bg-muted">
+                      <FolderOpen className="size-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <h2 className="truncate text-base font-semibold">
+                        {project.name}
+                      </h2>
+                      <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                        <span className="inline-flex items-center gap-1">
+                          <CalendarDays className="size-3.5" />
+                          {formatDate(project.createdAt)}
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          <FileText className="size-3.5" />
+                          {project.manualCount} manuale
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Badge variant="secondary" className="shrink-0">
+                    {project.model}
+                  </Badge>
+                </div>
+
+                <div className="mt-4 grid gap-2">
+                  <ProjectInfoRow
+                    label="Vector store"
+                    value={project.vectorStoreId ? "Configurat" : "Lipsește"}
+                  />
+                  <ProjectInfoRow
+                    label="Model assistant"
+                    value={project.assistantModel}
+                  />
+                </div>
+              </div>
+
+              <div className="mt-5 flex items-center justify-between gap-2 border-t pt-3">
+                <Button asChild variant="outline" size="sm">
+                  <Link href={`/dashboard/project/${project.id}`}>
+                    Deschide
+                    <ArrowUpRight className="size-4" />
+                  </Link>
+                </Button>
+
+                <div className="flex items-center gap-1">
+                  {canEdit && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="text-muted-foreground hover:text-foreground"
+                      onClick={() => openEditDialog(project)}
+                      aria-label="Editează proiect"
+                    >
+                      <Edit3 className="size-4" />
+                    </Button>
+                  )}
+
+                  {canDelete && (
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-muted-foreground hover:text-destructive"
+                          disabled={deletingId === project.id}
+                          aria-label="Șterge proiect"
+                        >
+                          {deletingId === project.id ? (
+                            <Loader2 className="size-4 animate-spin" />
+                          ) : (
+                            <Trash2 className="size-4" />
+                          )}
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <div className="flex flex-col gap-2 max-sm:items-center sm:flex-row sm:gap-4">
+                          <div
+                            className="flex size-9 shrink-0 items-center justify-center rounded-full border"
+                            aria-hidden="true"
+                          >
+                            <CircleAlert className="size-4 opacity-80" />
+                          </div>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Ștergi proiectul?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Proiectul „{project.name}” și manualele indexate
+                              din vector store vor fi șterse.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                        </div>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Anulează</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => handleDelete(project)}
+                            className={cn(
+                              "bg-destructive text-white hover:bg-destructive/90",
+                            )}
+                          >
+                            Șterge
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </section>
+      )}
+
+      <Dialog
+        open={Boolean(editingProject)}
+        onOpenChange={(open) => {
+          if (!open && !savingEdit) setEditingProject(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Editează proiect</DialogTitle>
+            <DialogDescription>
+              Actualizează numele, modelul de răspuns și instrucțiunile de bază.
+            </DialogDescription>
+          </DialogHeader>
+
+          {editingProject && (
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="project-name">Nume proiect</Label>
+                <Input
+                  id="project-name"
+                  value={editingProject.name}
+                  onChange={(event) =>
+                    setEditingProject((current) =>
+                      current
+                        ? { ...current, name: event.target.value }
+                        : current,
+                    )
+                  }
+                />
+              </div>
+
+              <div className="grid gap-2">
+                <Label>Model chat</Label>
+                <Select
+                  value={editingProject.model}
+                  onValueChange={(value) =>
+                    setEditingProject((current) =>
+                      current ? { ...current, model: value } : current,
+                    )
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Alege modelul" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {modelOptions.map((model) => (
+                      <SelectItem key={model.id} value={model.id}>
+                        <div className="flex items-center gap-2">
+                          <span>{model.label}</span>
+                          <span className="text-xs text-muted-foreground">
+                            {model.id}
+                          </span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">
+                  {
+                    modelOptions.find(
+                      (model) => model.id === editingProject.model,
+                    )?.description
+                  }
+                </p>
+              </div>
+
+              <div className="grid gap-2">
+                <Label htmlFor="project-instructions">Instrucțiuni</Label>
+                <Textarea
+                  id="project-instructions"
+                  value={editingProject.instructions}
+                  rows={8}
+                  className="resize-none"
+                  placeholder="Ex: răspunde tehnic, menționează cauza, verificările și avertizările..."
+                  onChange={(event) =>
+                    setEditingProject((current) =>
+                      current
+                        ? { ...current, instructions: event.target.value }
+                        : current,
+                    )
+                  }
+                />
+              </div>
+            </div>
+          )}
+
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={savingEdit}
+              onClick={() => setEditingProject(null)}
+            >
+              Anulează
+            </Button>
+            <Button
+              type="button"
+              disabled={savingEdit || !editingProject?.name.trim()}
+              onClick={handleUpdate}
+            >
+              {savingEdit && <Loader2 className="size-4 animate-spin" />}
+              Salvează
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </main>
+  );
+}
+
+function ProjectInfoRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between gap-3 rounded-md bg-muted/40 px-3 py-2 text-sm">
+      <span className="text-muted-foreground">{label}</span>
+      <span className="truncate font-medium">{value}</span>
+    </div>
   );
 }

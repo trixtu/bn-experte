@@ -13,6 +13,14 @@ export const s3 = new S3Client({
   },
 });
 
+export function getPublicFileUrl(key: string) {
+  const baseUrl = process.env.R2_URL?.replace(/\/+$/, "");
+
+  if (!baseUrl) return undefined;
+
+  return `${baseUrl}/${key.replace(/^\/+/, "")}`;
+}
+
 export async function uploadFileToS3(params: {
   file: File;
   prefix: string;
@@ -33,7 +41,7 @@ export async function uploadFileToS3(params: {
   try {
     await s3.send(command);
 
-    return `${process.env.R2_URL}/${uniqueFileName}`;
+    return getPublicFileUrl(uniqueFileName);
   } catch (error) {
     console.log(error);
   }

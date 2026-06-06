@@ -75,6 +75,8 @@ model User {
   banExpires  DateTime?
   members     Member[]
   invitations Invitation[] @relation("UserInvitations")
+  technicianExperiences TechnicianExperience[]
+  aiTechnicians AiTechnician[]
 
   @@map("user")
 }
@@ -150,4 +152,69 @@ model Assistant {
   charCount     Int
   pageCount     Int
   createdAt     DateTime    @default(now())
+}
+
+model TechnicianExperience {
+  id          String   @id @default(cuid())
+  technicianId String?
+  projectId   String?
+  manualId    String?
+  manualName  String?
+  title       String
+  question    String   @db.Text
+  answer      String   @db.Text
+  symptoms    String?  @db.Text
+  cause       String?  @db.Text
+  solution    String?  @db.Text
+  tags        String?
+  source      String   @default("chat")
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  technician  AiTechnician? @relation(fields: [technicianId], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([technicianId])
+  @@index([projectId])
+  @@index([manualId])
+  @@index([createdAt])
+}
+
+model AiTechnician {
+  id                String   @id @default(cuid())
+  name              String
+  domain            String
+  brands            String?
+  productTypes      String?
+  instructions      String   @db.Text
+  responseStyle     String   @default("diagnostic")
+  webEnabled        Boolean  @default(true)
+  experienceEnabled Boolean  @default(true)
+  active            Boolean  @default(true)
+  createdById       String?
+  createdBy         User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  manuals           AiTechnicianManual[]
+  experiences       TechnicianExperience[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([domain])
+  @@index([active])
+  @@index([createdAt])
+}
+
+model AiTechnicianManual {
+  id            String   @id @default(cuid())
+  technicianId  String
+  technician    AiTechnician @relation(fields: [technicianId], references: [id], onDelete: Cascade)
+  projectId     String
+  projectName   String
+  vectorStoreId String
+  manualId      String
+  manualName    String
+  createdAt     DateTime @default(now())
+
+  @@unique([technicianId, projectId, manualId])
+  @@index([projectId])
+  @@index([manualId])
 }

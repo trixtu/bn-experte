@@ -1,125 +1,131 @@
 "use client";
 
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeft, ImagePlus, PackagePlus } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
+
 import { LoadingButton } from "@/components/loading-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { redirect } from "@/i18n/routing";
-import { Material, User } from "@/prisma/lib/generated/prisma";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useLocale, useTranslations } from "next-intl";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
-import { UploadImage } from "../_components/upload-image";
-import { toast } from "sonner";
+import { Link, useRouter } from "@/i18n/routing";
 import { createMaterialAction } from "../create-material.action";
-import { useRouter } from "next/navigation";
+import { UploadImage } from "./upload-image";
 
-export function FormAddNewMaterial({
-  user,
-  materials,
-}: {
-  user: User;
-  materials: Material[];
-}) {
-  const [status, setStatus] = useState<string | null>(null);
+const createMaterialSchema = z.object({
+  name: z.string().trim().min(2, "Introdu cel puțin 2 caractere."),
+  artNummer: z.string().trim().min(2, "Introdu codul articolului."),
+});
+
+type CreateMaterialValues = z.infer<typeof createMaterialSchema>;
+
+export function FormAddNewMaterial() {
   const [error, setError] = useState<string | null>(null);
-  const locale = useLocale();
-
   const [imageFile, setImageFile] = useState<File | null>(null);
-
-  const t = useTranslations("AddProject");
-  const validations = useTranslations("Validation");
-
-  const admin = user.role === "admin";
-
-  const createMaterialSchema = z.object({
-    name: z.string().min(2, validations("name.min")),
-    artNummer: z.string().min(2),
-  });
-
+  const [uploadKey, setUploadKey] = useState(0);
   const router = useRouter();
-
-  type CreateMaterialValues = z.infer<typeof createMaterialSchema>;
 
   const form = useForm<CreateMaterialValues>({
     resolver: zodResolver(createMaterialSchema),
     defaultValues: {
-        name: "",
-        artNummer: "",  
+      name: "",
+      artNummer: "",
     },
   });
 
-  async function onSubmit({
-    name,
-    artNummer,
-  }: CreateMaterialValues) {
-    setStatus("loading");
+  async function onSubmit({ name, artNummer }: CreateMaterialValues) {
     setError(null);
 
-    try {  
-        const formData = new FormData();
-        formData.append("name", name);
-        formData.append("artNummer", artNummer);
-
-        // imageFile este cel stocat în state din onFilesAdded
-        if (imageFile) {
-            formData.append("file", imageFile);
-        } else {
-            toast.error("Te rugăm să adaugi o imagine!");
-        return;
-        }
-
-        // 2. Trimitem către Server Action
-        const result = await createMaterialAction(formData);
-
-        form.reset();
-
-        setImageFile(null);
-        router.refresh();
-
-        toast.success("Material creat cu succes!");
-        setStatus("success");
-        
-    }
-    catch (err) {
-        console.error(err);
-        setError("A apărut o eroare la salvare.");
-        setStatus("error");
+    if (!imageFile) {
+      toast.error("Adaugă o imagine pentru material.");
+      setError("Imaginea materialului este obligatorie.");
+      return;
     }
 
-    console.log("Submitted:", { name, artNummer, imageFile });
-    
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("artNummer", artNummer);
+      formData.append("file", imageFile);
+
+      await createMaterialAction(formData);
+
+      form.reset();
+      setImageFile(null);
+      setUploadKey((current) => current + 1);
+      toast.success("Material creat cu succes.");
+      router.push("/materials");
+      router.refresh();
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "A apărut o eroare la salvare.";
+      setError(message);
+      toast.error(message);
+    }
   }
 
   const loading = form.formState.isSubmitting;
 
   return (
-    <Card className="w-2xl">
-      <CardHeader>
-        <CardTitle>{t("title")}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+    <section className="rounded-md border bg-background shadow-sm">
+      <div className="flex flex-col gap-4 border-b p-5 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="flex size-11 shrink-0 items-center justify-center rounded-md border bg-muted">
+            <ImagePlus className="size-5" />
+          </div>
+          <div className="min-w-0">
+            <h1 className="text-2xl font-semibold tracking-tight">
+              Adaugă material
+            </h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Încarcă imaginea și salvează codul articolului pentru biblioteca
+              tehnică.
+            </p>
+          </div>
+        </div>
+
+        <Button asChild variant="outline">
+          <Link href="/materials">
+            <ArrowLeft className="size-4" />
+            Înapoi
+          </Link>
+        </Button>
+      </div>
+
+      <Form {...form}>
+        <form
+          className="grid gap-6 p-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(360px,1.1fr)]"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <div className="space-y-5">
+            <div>
+              <h2 className="text-base font-semibold">Date material</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Folosește denumiri clare și codul exact de comandă.
+              </p>
+            </div>
+
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("name")}</FormLabel>
+                  <FormLabel>Denumire</FormLabel>
                   <FormControl>
                     <Input
+                      placeholder="Ex: Fotocelulă FEIG, arc barieră..."
                       type="text"
-                      placeholder={t("placeHolder")}
                       {...field}
                     />
                   </FormControl>
@@ -133,37 +139,48 @@ export function FormAddNewMaterial({
               name="artNummer"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Art.Nummer</FormLabel>
+                  <FormLabel>Art. Nummer</FormLabel>
                   <FormControl>
                     <Input
+                      placeholder="Ex: 123456 / FEIG-..."
                       type="text"
-                      placeholder={ "Art.Nummer" }
                       {...field}
                     />
                   </FormControl>
+                  <FormDescription>
+                    Codul trebuie să fie unic în biblioteca de materiale.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <UploadImage setImageFile={setImageFile} />
-
-            {error && (
-              <div role="alert" className="text-sm text-red-600">
+            {error ? (
+              <div className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
                 {error}
               </div>
-            )}
-            {status && (
-              <div role="status" className="text-sm text-green-600">
-                {status}
-              </div>
-            )}
-            <LoadingButton type="submit" loading={loading}>
-              {t("button")}
-            </LoadingButton>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+            ) : null}
+          </div>
+
+          <div className="space-y-5">
+            <div>
+              <h2 className="text-base font-semibold">Imagine material</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Imaginea va fi salvată în Cloudflare R2 și afișată în listă.
+              </p>
+            </div>
+
+            <UploadImage key={uploadKey} setImageFile={setImageFile} />
+
+            <div className="flex justify-end">
+              <LoadingButton loading={loading} type="submit">
+                <PackagePlus className="size-4" />
+                Salvează material
+              </LoadingButton>
+            </div>
+          </div>
+        </form>
+      </Form>
+    </section>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "./ui/button";
-import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { User } from "@/lib/auth";
 
@@ -10,7 +9,7 @@ interface AllUsersProps {
 }
 
 export default function AllUsers({ users }: AllUsersProps) {
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoading = false;
   // const router = useRouter();
 
   // const handleInviteMember = async (user: User) => {

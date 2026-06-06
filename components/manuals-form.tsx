@@ -105,7 +105,6 @@ export default function ManualsForm(props: { manuals: Manual[] }) {
       handleDrop,
       openFileDialog,
       removeFile,
-      clearFiles,
       getInputProps,
     },
   ] = useFileUpload({

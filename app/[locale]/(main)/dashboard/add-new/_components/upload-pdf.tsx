@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -6,60 +8,65 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useEffect, useState } from "react";
-import { IoDocumentOutline } from "react-icons/io5";
-import { FaFolderPlus } from "react-icons/fa6";
-import { CiFolderOn } from "react-icons/ci";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { useTranslations } from "next-intl";
+import { formatBytes } from "@/hooks/use-file-upload";
+import {
+  CheckCircle2,
+  FilePlus2,
+  FileText,
+  Loader2,
+  Trash2,
+  UploadCloud,
+  XCircle,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 
-type UploadFile = {
+type ProjectManual = {
   id: string;
+  manualId: string;
   filename: string;
+  originalUrl?: string;
+  originalKey?: string;
+  status: "in_progress" | "completed" | "cancelled" | "failed";
+  createdAt: number;
+  usageBytes: number;
 };
+
+function StatusIcon({ status }: { status: ProjectManual["status"] }) {
+  if (status === "completed") {
+    return <CheckCircle2 className="size-4 text-emerald-600" />;
+  }
+
+  if (status === "failed" || status === "cancelled") {
+    return <XCircle className="size-4 text-red-600" />;
+  }
+
+  return <Loader2 className="size-4 animate-spin text-muted-foreground" />;
+}
 
 export default function UploadPdf({
   id,
   vectorId,
+  manuals,
 }: {
   id: string;
-  vectorId?: string[];
+  vectorId?: string;
+  manuals: ProjectManual[];
 }) {
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
-  const [fileData, setFileData] = useState<UploadFile>();
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const t = useTranslations("UploadPdf");
-  useEffect(() => {
-    if (!vectorId || vectorId.length === 0) return;
-
-    const fetchFile = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(
-          `/api/vector-file?vectorId=${vectorId.join(",")}`
-        );
-        const data = await res.json();
-        setFileData(data.file); // presupunem că backend trimite textul PDF-ului
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFile();
-  }, [vectorId]);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleUpload = async () => {
     if (!file) {
-      setMessage(t("Warnings.incarca"));
+      toast.error("Alege un PDF înainte de upload.");
       return;
     }
 
     setLoading(true);
-    setMessage("");
 
     const formData = new FormData();
     formData.append("file", file);
@@ -72,104 +79,159 @@ export default function UploadPdf({
       });
 
       const data = await res.json();
-      if (data.success) {
-        setMessage(t("Warnings.success"));
-      } else {
-        setMessage(t("Warnings.error") + data.error);
+
+      if (!res.ok || !data.success) {
+        toast.error(data.error || "PDF-ul nu a putut fi încărcat.");
+        return;
       }
-    } catch (err) {
-      console.log(err);
-      setMessage(t("Warnings.error"));
+
+      toast.success("Manualul a fost indexat.");
+      setFile(null);
+      setOpen(false);
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      toast.error("A apărut o eroare la upload.");
     } finally {
       setLoading(false);
-      setOpen(false);
-      setFile(null);
     }
   };
 
-  const handleDelete = () => {};
+  const handleDelete = async (manual: ProjectManual) => {
+    if (!vectorId) return;
 
-  console.log(fileData);
+    setDeletingId(manual.id);
+
+    try {
+      const res = await fetch("/api/vector-file", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ vectorId, fileId: manual.id }),
+      });
+
+      if (!res.ok) {
+        toast.error("Manualul nu a putut fi șters.");
+        return;
+      }
+
+      toast.success("Manual șters.");
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      toast.error("A apărut o eroare la ștergere.");
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="text-md text-foreground py-1 border rounded-full px-4 cursor-pointer flex items-center gap-2">
-          <div className="bg-red-500 py-1 px-[2px] rounded">
-            <IoDocumentOutline className="w-3 h-3" color="white" />
-          </div>
-          <span>
-            {vectorId && vectorId.length > 0
-              ? `${vectorId.length} ${t("files")}${
-                  vectorId.length > 1 ? "e" : ""
-                }`
-              : t("addFile")}
+        <Button className="w-full justify-center sm:w-auto">
+          <FilePlus2 className="size-4" />
+          Manuale
+          <span className="rounded bg-primary-foreground/15 px-1.5 py-0.5 text-xs">
+            {manuals.length}
           </span>
-        </button>
+        </Button>
       </DialogTrigger>
 
-      <DialogContent>
-        <DialogHeader className="mt-4">
-          <DialogTitle className="flex items-center justify-between">
-            <span>{t("foldersProject")}</span>
-          </DialogTitle>
+      <DialogContent className="max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>Manualele proiectului</DialogTitle>
         </DialogHeader>
-        {fileData && (
-          <div className="border px-4 py-1 rounded flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="bg-red-500 px-2 py-2 rounded text-white">
-                <CiFolderOn />
-              </span>
-              <div className="flex flex-col">
-                <span>{fileData.filename}</span>
-                <span>PDF</span>
+
+        <div className="grid gap-4">
+          <div className="grid gap-2">
+            {manuals.length === 0 ? (
+              <div className="rounded-md border border-dashed p-5 text-center text-sm text-muted-foreground">
+                Nu există manuale încărcate.
               </div>
-              <a
-                href={`/api/vector-file/original?fileId=${fileData.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Vezi PDF original
-              </a>
-            </div>
-            <button
-              className="hover:bg-gray-200 p-1 rounded cursor-pointer"
-              onClick={handleDelete}
-            >
-              <RiDeleteBin6Line className="w-5 h-5 text-gray-700" />
-            </button>
+            ) : (
+              manuals.map((manual) => (
+                <div
+                  key={manual.id}
+                  className="flex items-center justify-between gap-3 rounded-md border bg-background p-3"
+                >
+                  <div className="flex min-w-0 flex-1 items-center gap-3">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-md border bg-red-50 text-red-600">
+                      <FileText className="size-5" />
+                    </div>
+                    <div className="min-w-0">
+                      {manual.originalUrl ? (
+                        <a
+                          href={manual.originalUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="truncate text-sm font-medium hover:underline"
+                        >
+                          {manual.filename}
+                        </a>
+                      ) : (
+                        <p className="truncate text-sm font-medium">
+                          {manual.filename}
+                        </p>
+                      )}
+                      <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                        <StatusIcon status={manual.status} />
+                        <span>{manual.status}</span>
+                        <span>{formatBytes(manual.usageBytes || 0)}</span>
+                        {!manual.originalUrl && (
+                          <span className="text-amber-700">
+                            reîncarcă pentru PDF
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleDelete(manual)}
+                    disabled={deletingId === manual.id}
+                    aria-label="Șterge manual"
+                  >
+                    {deletingId === manual.id ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                      <Trash2 className="size-4" />
+                    )}
+                  </Button>
+                </div>
+              ))
+            )}
           </div>
-        )}
-        {/* Input pentru fișier */}
-        <label className="w-full cursor-pointer h-20 rounded">
-          <div className="h-full border-2 border-dashed">
-            <div className="h-full flex items-center justify-center mb-4">
-              <FaFolderPlus className="w-8 h-8" />
+
+          <label className="block cursor-pointer rounded-md border border-dashed bg-muted/30 p-5 transition-colors hover:bg-muted/50">
+            <div className="flex flex-col items-center justify-center gap-2 text-center">
+              <UploadCloud className="size-8 text-muted-foreground" />
+              <div>
+                <p className="text-sm font-medium">
+                  {file ? file.name : "Încarcă un PDF"}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  PDF-ul va fi indexat pentru întrebări în proiect.
+                </p>
+              </div>
             </div>
-          </div>
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              hidden
+            />
+          </label>
 
-          <input
-            type="file"
-            accept="application/pdf"
-            onChange={(e) => setFile(e.target.files?.[0] || null)}
-            hidden
-          />
-        </label>
-
-        {/* Buton de upload */}
-        {file && (
-          <p className="text-sm text-center">📄 Fișier selectat: {file.name}</p>
-        )}
-        <button
-          onClick={handleUpload}
-          disabled={loading}
-          className="px-4 py-2 bg-blue-500 text-white rounded-full disabled:opacity-50 cursor-pointer"
-        >
-          {loading ? t("buttonLoading") : t("button")}
-        </button>
-
-        {/* Mesaj */}
-        {message && <p className="mt-2 text-center">{message}</p>}
+          <Button onClick={handleUpload} disabled={loading || !file}>
+            {loading ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <UploadCloud className="size-4" />
+            )}
+            {loading ? "Se indexează..." : "Încarcă manual"}
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );

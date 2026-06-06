@@ -63,6 +63,21 @@ export type Material = $Result.DefaultSelection<Prisma.$MaterialPayload>
  * 
  */
 export type Assistant = $Result.DefaultSelection<Prisma.$AssistantPayload>
+/**
+ * Model TechnicianExperience
+ * 
+ */
+export type TechnicianExperience = $Result.DefaultSelection<Prisma.$TechnicianExperiencePayload>
+/**
+ * Model AiTechnician
+ * 
+ */
+export type AiTechnician = $Result.DefaultSelection<Prisma.$AiTechnicianPayload>
+/**
+ * Model AiTechnicianManual
+ * 
+ */
+export type AiTechnicianManual = $Result.DefaultSelection<Prisma.$AiTechnicianManualPayload>
 
 /**
  * Enums
@@ -312,6 +327,36 @@ export class PrismaClient<
     * ```
     */
   get assistant(): Prisma.AssistantDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.technicianExperience`: Exposes CRUD operations for the **TechnicianExperience** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TechnicianExperiences
+    * const technicianExperiences = await prisma.technicianExperience.findMany()
+    * ```
+    */
+  get technicianExperience(): Prisma.TechnicianExperienceDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.aiTechnician`: Exposes CRUD operations for the **AiTechnician** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AiTechnicians
+    * const aiTechnicians = await prisma.aiTechnician.findMany()
+    * ```
+    */
+  get aiTechnician(): Prisma.AiTechnicianDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.aiTechnicianManual`: Exposes CRUD operations for the **AiTechnicianManual** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AiTechnicianManuals
+    * const aiTechnicianManuals = await prisma.aiTechnicianManual.findMany()
+    * ```
+    */
+  get aiTechnicianManual(): Prisma.AiTechnicianManualDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -761,7 +806,10 @@ export namespace Prisma {
     Verification: 'Verification',
     Manual: 'Manual',
     Material: 'Material',
-    Assistant: 'Assistant'
+    Assistant: 'Assistant',
+    TechnicianExperience: 'TechnicianExperience',
+    AiTechnician: 'AiTechnician',
+    AiTechnicianManual: 'AiTechnicianManual'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -780,7 +828,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "organization" | "member" | "invitation" | "user" | "session" | "account" | "verification" | "manual" | "material" | "assistant"
+      modelProps: "organization" | "member" | "invitation" | "user" | "session" | "account" | "verification" | "manual" | "material" | "assistant" | "technicianExperience" | "aiTechnician" | "aiTechnicianManual"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1524,6 +1572,228 @@ export namespace Prisma {
           }
         }
       }
+      TechnicianExperience: {
+        payload: Prisma.$TechnicianExperiencePayload<ExtArgs>
+        fields: Prisma.TechnicianExperienceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TechnicianExperienceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TechnicianExperiencePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TechnicianExperienceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TechnicianExperiencePayload>
+          }
+          findFirst: {
+            args: Prisma.TechnicianExperienceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TechnicianExperiencePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TechnicianExperienceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TechnicianExperiencePayload>
+          }
+          findMany: {
+            args: Prisma.TechnicianExperienceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TechnicianExperiencePayload>[]
+          }
+          create: {
+            args: Prisma.TechnicianExperienceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TechnicianExperiencePayload>
+          }
+          createMany: {
+            args: Prisma.TechnicianExperienceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TechnicianExperienceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TechnicianExperiencePayload>[]
+          }
+          delete: {
+            args: Prisma.TechnicianExperienceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TechnicianExperiencePayload>
+          }
+          update: {
+            args: Prisma.TechnicianExperienceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TechnicianExperiencePayload>
+          }
+          deleteMany: {
+            args: Prisma.TechnicianExperienceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TechnicianExperienceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TechnicianExperienceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TechnicianExperiencePayload>[]
+          }
+          upsert: {
+            args: Prisma.TechnicianExperienceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TechnicianExperiencePayload>
+          }
+          aggregate: {
+            args: Prisma.TechnicianExperienceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTechnicianExperience>
+          }
+          groupBy: {
+            args: Prisma.TechnicianExperienceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TechnicianExperienceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TechnicianExperienceCountArgs<ExtArgs>
+            result: $Utils.Optional<TechnicianExperienceCountAggregateOutputType> | number
+          }
+        }
+      }
+      AiTechnician: {
+        payload: Prisma.$AiTechnicianPayload<ExtArgs>
+        fields: Prisma.AiTechnicianFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AiTechnicianFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AiTechnicianFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianPayload>
+          }
+          findFirst: {
+            args: Prisma.AiTechnicianFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AiTechnicianFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianPayload>
+          }
+          findMany: {
+            args: Prisma.AiTechnicianFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianPayload>[]
+          }
+          create: {
+            args: Prisma.AiTechnicianCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianPayload>
+          }
+          createMany: {
+            args: Prisma.AiTechnicianCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AiTechnicianCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianPayload>[]
+          }
+          delete: {
+            args: Prisma.AiTechnicianDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianPayload>
+          }
+          update: {
+            args: Prisma.AiTechnicianUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianPayload>
+          }
+          deleteMany: {
+            args: Prisma.AiTechnicianDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AiTechnicianUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AiTechnicianUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianPayload>[]
+          }
+          upsert: {
+            args: Prisma.AiTechnicianUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianPayload>
+          }
+          aggregate: {
+            args: Prisma.AiTechnicianAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAiTechnician>
+          }
+          groupBy: {
+            args: Prisma.AiTechnicianGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AiTechnicianGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AiTechnicianCountArgs<ExtArgs>
+            result: $Utils.Optional<AiTechnicianCountAggregateOutputType> | number
+          }
+        }
+      }
+      AiTechnicianManual: {
+        payload: Prisma.$AiTechnicianManualPayload<ExtArgs>
+        fields: Prisma.AiTechnicianManualFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AiTechnicianManualFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianManualPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AiTechnicianManualFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianManualPayload>
+          }
+          findFirst: {
+            args: Prisma.AiTechnicianManualFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianManualPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AiTechnicianManualFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianManualPayload>
+          }
+          findMany: {
+            args: Prisma.AiTechnicianManualFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianManualPayload>[]
+          }
+          create: {
+            args: Prisma.AiTechnicianManualCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianManualPayload>
+          }
+          createMany: {
+            args: Prisma.AiTechnicianManualCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AiTechnicianManualCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianManualPayload>[]
+          }
+          delete: {
+            args: Prisma.AiTechnicianManualDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianManualPayload>
+          }
+          update: {
+            args: Prisma.AiTechnicianManualUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianManualPayload>
+          }
+          deleteMany: {
+            args: Prisma.AiTechnicianManualDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AiTechnicianManualUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AiTechnicianManualUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianManualPayload>[]
+          }
+          upsert: {
+            args: Prisma.AiTechnicianManualUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTechnicianManualPayload>
+          }
+          aggregate: {
+            args: Prisma.AiTechnicianManualAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAiTechnicianManual>
+          }
+          groupBy: {
+            args: Prisma.AiTechnicianManualGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AiTechnicianManualGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AiTechnicianManualCountArgs<ExtArgs>
+            result: $Utils.Optional<AiTechnicianManualCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1630,6 +1900,9 @@ export namespace Prisma {
     manual?: ManualOmit
     material?: MaterialOmit
     assistant?: AssistantOmit
+    technicianExperience?: TechnicianExperienceOmit
+    aiTechnician?: AiTechnicianOmit
+    aiTechnicianManual?: AiTechnicianManualOmit
   }
 
   /* Types for Logging */
@@ -1754,6 +2027,8 @@ export namespace Prisma {
     accounts: number
     members: number
     invitations: number
+    technicianExperiences: number
+    aiTechnicians: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1761,6 +2036,8 @@ export namespace Prisma {
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     members?: boolean | UserCountOutputTypeCountMembersArgs
     invitations?: boolean | UserCountOutputTypeCountInvitationsArgs
+    technicianExperiences?: boolean | UserCountOutputTypeCountTechnicianExperiencesArgs
+    aiTechnicians?: boolean | UserCountOutputTypeCountAiTechniciansArgs
   }
 
   // Custom InputTypes
@@ -1800,6 +2077,60 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: InvitationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTechnicianExperiencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TechnicianExperienceWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAiTechniciansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AiTechnicianWhereInput
+  }
+
+
+  /**
+   * Count Type AiTechnicianCountOutputType
+   */
+
+  export type AiTechnicianCountOutputType = {
+    manuals: number
+    experiences: number
+  }
+
+  export type AiTechnicianCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    manuals?: boolean | AiTechnicianCountOutputTypeCountManualsArgs
+    experiences?: boolean | AiTechnicianCountOutputTypeCountExperiencesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AiTechnicianCountOutputType without action
+   */
+  export type AiTechnicianCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianCountOutputType
+     */
+    select?: AiTechnicianCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AiTechnicianCountOutputType without action
+   */
+  export type AiTechnicianCountOutputTypeCountManualsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AiTechnicianManualWhereInput
+  }
+
+  /**
+   * AiTechnicianCountOutputType without action
+   */
+  export type AiTechnicianCountOutputTypeCountExperiencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TechnicianExperienceWhereInput
   }
 
 
@@ -5300,6 +5631,8 @@ export namespace Prisma {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     members?: boolean | User$membersArgs<ExtArgs>
     invitations?: boolean | User$invitationsArgs<ExtArgs>
+    technicianExperiences?: boolean | User$technicianExperiencesArgs<ExtArgs>
+    aiTechnicians?: boolean | User$aiTechniciansArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -5354,6 +5687,8 @@ export namespace Prisma {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     members?: boolean | User$membersArgs<ExtArgs>
     invitations?: boolean | User$invitationsArgs<ExtArgs>
+    technicianExperiences?: boolean | User$technicianExperiencesArgs<ExtArgs>
+    aiTechnicians?: boolean | User$aiTechniciansArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5366,6 +5701,8 @@ export namespace Prisma {
       accounts: Prisma.$AccountPayload<ExtArgs>[]
       members: Prisma.$MemberPayload<ExtArgs>[]
       invitations: Prisma.$InvitationPayload<ExtArgs>[]
+      technicianExperiences: Prisma.$TechnicianExperiencePayload<ExtArgs>[]
+      aiTechnicians: Prisma.$AiTechnicianPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5778,6 +6115,8 @@ export namespace Prisma {
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     members<T extends User$membersArgs<ExtArgs> = {}>(args?: Subset<T, User$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     invitations<T extends User$invitationsArgs<ExtArgs> = {}>(args?: Subset<T, User$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    technicianExperiences<T extends User$technicianExperiencesArgs<ExtArgs> = {}>(args?: Subset<T, User$technicianExperiencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TechnicianExperiencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    aiTechnicians<T extends User$aiTechniciansArgs<ExtArgs> = {}>(args?: Subset<T, User$aiTechniciansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6300,6 +6639,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: InvitationScalarFieldEnum | InvitationScalarFieldEnum[]
+  }
+
+  /**
+   * User.technicianExperiences
+   */
+  export type User$technicianExperiencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceInclude<ExtArgs> | null
+    where?: TechnicianExperienceWhereInput
+    orderBy?: TechnicianExperienceOrderByWithRelationInput | TechnicianExperienceOrderByWithRelationInput[]
+    cursor?: TechnicianExperienceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TechnicianExperienceScalarFieldEnum | TechnicianExperienceScalarFieldEnum[]
+  }
+
+  /**
+   * User.aiTechnicians
+   */
+  export type User$aiTechniciansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianInclude<ExtArgs> | null
+    where?: AiTechnicianWhereInput
+    orderBy?: AiTechnicianOrderByWithRelationInput | AiTechnicianOrderByWithRelationInput[]
+    cursor?: AiTechnicianWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AiTechnicianScalarFieldEnum | AiTechnicianScalarFieldEnum[]
   }
 
   /**
@@ -12732,6 +13119,3589 @@ export namespace Prisma {
 
 
   /**
+   * Model TechnicianExperience
+   */
+
+  export type AggregateTechnicianExperience = {
+    _count: TechnicianExperienceCountAggregateOutputType | null
+    _min: TechnicianExperienceMinAggregateOutputType | null
+    _max: TechnicianExperienceMaxAggregateOutputType | null
+  }
+
+  export type TechnicianExperienceMinAggregateOutputType = {
+    id: string | null
+    technicianId: string | null
+    projectId: string | null
+    manualId: string | null
+    manualName: string | null
+    title: string | null
+    question: string | null
+    answer: string | null
+    symptoms: string | null
+    cause: string | null
+    solution: string | null
+    tags: string | null
+    source: string | null
+    createdById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TechnicianExperienceMaxAggregateOutputType = {
+    id: string | null
+    technicianId: string | null
+    projectId: string | null
+    manualId: string | null
+    manualName: string | null
+    title: string | null
+    question: string | null
+    answer: string | null
+    symptoms: string | null
+    cause: string | null
+    solution: string | null
+    tags: string | null
+    source: string | null
+    createdById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TechnicianExperienceCountAggregateOutputType = {
+    id: number
+    technicianId: number
+    projectId: number
+    manualId: number
+    manualName: number
+    title: number
+    question: number
+    answer: number
+    symptoms: number
+    cause: number
+    solution: number
+    tags: number
+    source: number
+    createdById: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TechnicianExperienceMinAggregateInputType = {
+    id?: true
+    technicianId?: true
+    projectId?: true
+    manualId?: true
+    manualName?: true
+    title?: true
+    question?: true
+    answer?: true
+    symptoms?: true
+    cause?: true
+    solution?: true
+    tags?: true
+    source?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TechnicianExperienceMaxAggregateInputType = {
+    id?: true
+    technicianId?: true
+    projectId?: true
+    manualId?: true
+    manualName?: true
+    title?: true
+    question?: true
+    answer?: true
+    symptoms?: true
+    cause?: true
+    solution?: true
+    tags?: true
+    source?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TechnicianExperienceCountAggregateInputType = {
+    id?: true
+    technicianId?: true
+    projectId?: true
+    manualId?: true
+    manualName?: true
+    title?: true
+    question?: true
+    answer?: true
+    symptoms?: true
+    cause?: true
+    solution?: true
+    tags?: true
+    source?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TechnicianExperienceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TechnicianExperience to aggregate.
+     */
+    where?: TechnicianExperienceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TechnicianExperiences to fetch.
+     */
+    orderBy?: TechnicianExperienceOrderByWithRelationInput | TechnicianExperienceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TechnicianExperienceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TechnicianExperiences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TechnicianExperiences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TechnicianExperiences
+    **/
+    _count?: true | TechnicianExperienceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TechnicianExperienceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TechnicianExperienceMaxAggregateInputType
+  }
+
+  export type GetTechnicianExperienceAggregateType<T extends TechnicianExperienceAggregateArgs> = {
+        [P in keyof T & keyof AggregateTechnicianExperience]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTechnicianExperience[P]>
+      : GetScalarType<T[P], AggregateTechnicianExperience[P]>
+  }
+
+
+
+
+  export type TechnicianExperienceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TechnicianExperienceWhereInput
+    orderBy?: TechnicianExperienceOrderByWithAggregationInput | TechnicianExperienceOrderByWithAggregationInput[]
+    by: TechnicianExperienceScalarFieldEnum[] | TechnicianExperienceScalarFieldEnum
+    having?: TechnicianExperienceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TechnicianExperienceCountAggregateInputType | true
+    _min?: TechnicianExperienceMinAggregateInputType
+    _max?: TechnicianExperienceMaxAggregateInputType
+  }
+
+  export type TechnicianExperienceGroupByOutputType = {
+    id: string
+    technicianId: string | null
+    projectId: string | null
+    manualId: string | null
+    manualName: string | null
+    title: string
+    question: string
+    answer: string
+    symptoms: string | null
+    cause: string | null
+    solution: string | null
+    tags: string | null
+    source: string
+    createdById: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: TechnicianExperienceCountAggregateOutputType | null
+    _min: TechnicianExperienceMinAggregateOutputType | null
+    _max: TechnicianExperienceMaxAggregateOutputType | null
+  }
+
+  type GetTechnicianExperienceGroupByPayload<T extends TechnicianExperienceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TechnicianExperienceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TechnicianExperienceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TechnicianExperienceGroupByOutputType[P]>
+            : GetScalarType<T[P], TechnicianExperienceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TechnicianExperienceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    technicianId?: boolean
+    projectId?: boolean
+    manualId?: boolean
+    manualName?: boolean
+    title?: boolean
+    question?: boolean
+    answer?: boolean
+    symptoms?: boolean
+    cause?: boolean
+    solution?: boolean
+    tags?: boolean
+    source?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | TechnicianExperience$createdByArgs<ExtArgs>
+    technician?: boolean | TechnicianExperience$technicianArgs<ExtArgs>
+  }, ExtArgs["result"]["technicianExperience"]>
+
+  export type TechnicianExperienceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    technicianId?: boolean
+    projectId?: boolean
+    manualId?: boolean
+    manualName?: boolean
+    title?: boolean
+    question?: boolean
+    answer?: boolean
+    symptoms?: boolean
+    cause?: boolean
+    solution?: boolean
+    tags?: boolean
+    source?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | TechnicianExperience$createdByArgs<ExtArgs>
+    technician?: boolean | TechnicianExperience$technicianArgs<ExtArgs>
+  }, ExtArgs["result"]["technicianExperience"]>
+
+  export type TechnicianExperienceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    technicianId?: boolean
+    projectId?: boolean
+    manualId?: boolean
+    manualName?: boolean
+    title?: boolean
+    question?: boolean
+    answer?: boolean
+    symptoms?: boolean
+    cause?: boolean
+    solution?: boolean
+    tags?: boolean
+    source?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | TechnicianExperience$createdByArgs<ExtArgs>
+    technician?: boolean | TechnicianExperience$technicianArgs<ExtArgs>
+  }, ExtArgs["result"]["technicianExperience"]>
+
+  export type TechnicianExperienceSelectScalar = {
+    id?: boolean
+    technicianId?: boolean
+    projectId?: boolean
+    manualId?: boolean
+    manualName?: boolean
+    title?: boolean
+    question?: boolean
+    answer?: boolean
+    symptoms?: boolean
+    cause?: boolean
+    solution?: boolean
+    tags?: boolean
+    source?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TechnicianExperienceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "technicianId" | "projectId" | "manualId" | "manualName" | "title" | "question" | "answer" | "symptoms" | "cause" | "solution" | "tags" | "source" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["technicianExperience"]>
+  export type TechnicianExperienceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | TechnicianExperience$createdByArgs<ExtArgs>
+    technician?: boolean | TechnicianExperience$technicianArgs<ExtArgs>
+  }
+  export type TechnicianExperienceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | TechnicianExperience$createdByArgs<ExtArgs>
+    technician?: boolean | TechnicianExperience$technicianArgs<ExtArgs>
+  }
+  export type TechnicianExperienceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | TechnicianExperience$createdByArgs<ExtArgs>
+    technician?: boolean | TechnicianExperience$technicianArgs<ExtArgs>
+  }
+
+  export type $TechnicianExperiencePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TechnicianExperience"
+    objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs> | null
+      technician: Prisma.$AiTechnicianPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      technicianId: string | null
+      projectId: string | null
+      manualId: string | null
+      manualName: string | null
+      title: string
+      question: string
+      answer: string
+      symptoms: string | null
+      cause: string | null
+      solution: string | null
+      tags: string | null
+      source: string
+      createdById: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["technicianExperience"]>
+    composites: {}
+  }
+
+  type TechnicianExperienceGetPayload<S extends boolean | null | undefined | TechnicianExperienceDefaultArgs> = $Result.GetResult<Prisma.$TechnicianExperiencePayload, S>
+
+  type TechnicianExperienceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TechnicianExperienceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TechnicianExperienceCountAggregateInputType | true
+    }
+
+  export interface TechnicianExperienceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TechnicianExperience'], meta: { name: 'TechnicianExperience' } }
+    /**
+     * Find zero or one TechnicianExperience that matches the filter.
+     * @param {TechnicianExperienceFindUniqueArgs} args - Arguments to find a TechnicianExperience
+     * @example
+     * // Get one TechnicianExperience
+     * const technicianExperience = await prisma.technicianExperience.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TechnicianExperienceFindUniqueArgs>(args: SelectSubset<T, TechnicianExperienceFindUniqueArgs<ExtArgs>>): Prisma__TechnicianExperienceClient<$Result.GetResult<Prisma.$TechnicianExperiencePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TechnicianExperience that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TechnicianExperienceFindUniqueOrThrowArgs} args - Arguments to find a TechnicianExperience
+     * @example
+     * // Get one TechnicianExperience
+     * const technicianExperience = await prisma.technicianExperience.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TechnicianExperienceFindUniqueOrThrowArgs>(args: SelectSubset<T, TechnicianExperienceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TechnicianExperienceClient<$Result.GetResult<Prisma.$TechnicianExperiencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TechnicianExperience that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TechnicianExperienceFindFirstArgs} args - Arguments to find a TechnicianExperience
+     * @example
+     * // Get one TechnicianExperience
+     * const technicianExperience = await prisma.technicianExperience.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TechnicianExperienceFindFirstArgs>(args?: SelectSubset<T, TechnicianExperienceFindFirstArgs<ExtArgs>>): Prisma__TechnicianExperienceClient<$Result.GetResult<Prisma.$TechnicianExperiencePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TechnicianExperience that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TechnicianExperienceFindFirstOrThrowArgs} args - Arguments to find a TechnicianExperience
+     * @example
+     * // Get one TechnicianExperience
+     * const technicianExperience = await prisma.technicianExperience.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TechnicianExperienceFindFirstOrThrowArgs>(args?: SelectSubset<T, TechnicianExperienceFindFirstOrThrowArgs<ExtArgs>>): Prisma__TechnicianExperienceClient<$Result.GetResult<Prisma.$TechnicianExperiencePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TechnicianExperiences that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TechnicianExperienceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TechnicianExperiences
+     * const technicianExperiences = await prisma.technicianExperience.findMany()
+     * 
+     * // Get first 10 TechnicianExperiences
+     * const technicianExperiences = await prisma.technicianExperience.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const technicianExperienceWithIdOnly = await prisma.technicianExperience.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TechnicianExperienceFindManyArgs>(args?: SelectSubset<T, TechnicianExperienceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TechnicianExperiencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TechnicianExperience.
+     * @param {TechnicianExperienceCreateArgs} args - Arguments to create a TechnicianExperience.
+     * @example
+     * // Create one TechnicianExperience
+     * const TechnicianExperience = await prisma.technicianExperience.create({
+     *   data: {
+     *     // ... data to create a TechnicianExperience
+     *   }
+     * })
+     * 
+     */
+    create<T extends TechnicianExperienceCreateArgs>(args: SelectSubset<T, TechnicianExperienceCreateArgs<ExtArgs>>): Prisma__TechnicianExperienceClient<$Result.GetResult<Prisma.$TechnicianExperiencePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TechnicianExperiences.
+     * @param {TechnicianExperienceCreateManyArgs} args - Arguments to create many TechnicianExperiences.
+     * @example
+     * // Create many TechnicianExperiences
+     * const technicianExperience = await prisma.technicianExperience.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TechnicianExperienceCreateManyArgs>(args?: SelectSubset<T, TechnicianExperienceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TechnicianExperiences and returns the data saved in the database.
+     * @param {TechnicianExperienceCreateManyAndReturnArgs} args - Arguments to create many TechnicianExperiences.
+     * @example
+     * // Create many TechnicianExperiences
+     * const technicianExperience = await prisma.technicianExperience.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TechnicianExperiences and only return the `id`
+     * const technicianExperienceWithIdOnly = await prisma.technicianExperience.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TechnicianExperienceCreateManyAndReturnArgs>(args?: SelectSubset<T, TechnicianExperienceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TechnicianExperiencePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TechnicianExperience.
+     * @param {TechnicianExperienceDeleteArgs} args - Arguments to delete one TechnicianExperience.
+     * @example
+     * // Delete one TechnicianExperience
+     * const TechnicianExperience = await prisma.technicianExperience.delete({
+     *   where: {
+     *     // ... filter to delete one TechnicianExperience
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TechnicianExperienceDeleteArgs>(args: SelectSubset<T, TechnicianExperienceDeleteArgs<ExtArgs>>): Prisma__TechnicianExperienceClient<$Result.GetResult<Prisma.$TechnicianExperiencePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TechnicianExperience.
+     * @param {TechnicianExperienceUpdateArgs} args - Arguments to update one TechnicianExperience.
+     * @example
+     * // Update one TechnicianExperience
+     * const technicianExperience = await prisma.technicianExperience.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TechnicianExperienceUpdateArgs>(args: SelectSubset<T, TechnicianExperienceUpdateArgs<ExtArgs>>): Prisma__TechnicianExperienceClient<$Result.GetResult<Prisma.$TechnicianExperiencePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TechnicianExperiences.
+     * @param {TechnicianExperienceDeleteManyArgs} args - Arguments to filter TechnicianExperiences to delete.
+     * @example
+     * // Delete a few TechnicianExperiences
+     * const { count } = await prisma.technicianExperience.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TechnicianExperienceDeleteManyArgs>(args?: SelectSubset<T, TechnicianExperienceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TechnicianExperiences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TechnicianExperienceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TechnicianExperiences
+     * const technicianExperience = await prisma.technicianExperience.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TechnicianExperienceUpdateManyArgs>(args: SelectSubset<T, TechnicianExperienceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TechnicianExperiences and returns the data updated in the database.
+     * @param {TechnicianExperienceUpdateManyAndReturnArgs} args - Arguments to update many TechnicianExperiences.
+     * @example
+     * // Update many TechnicianExperiences
+     * const technicianExperience = await prisma.technicianExperience.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TechnicianExperiences and only return the `id`
+     * const technicianExperienceWithIdOnly = await prisma.technicianExperience.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TechnicianExperienceUpdateManyAndReturnArgs>(args: SelectSubset<T, TechnicianExperienceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TechnicianExperiencePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TechnicianExperience.
+     * @param {TechnicianExperienceUpsertArgs} args - Arguments to update or create a TechnicianExperience.
+     * @example
+     * // Update or create a TechnicianExperience
+     * const technicianExperience = await prisma.technicianExperience.upsert({
+     *   create: {
+     *     // ... data to create a TechnicianExperience
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TechnicianExperience we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TechnicianExperienceUpsertArgs>(args: SelectSubset<T, TechnicianExperienceUpsertArgs<ExtArgs>>): Prisma__TechnicianExperienceClient<$Result.GetResult<Prisma.$TechnicianExperiencePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TechnicianExperiences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TechnicianExperienceCountArgs} args - Arguments to filter TechnicianExperiences to count.
+     * @example
+     * // Count the number of TechnicianExperiences
+     * const count = await prisma.technicianExperience.count({
+     *   where: {
+     *     // ... the filter for the TechnicianExperiences we want to count
+     *   }
+     * })
+    **/
+    count<T extends TechnicianExperienceCountArgs>(
+      args?: Subset<T, TechnicianExperienceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TechnicianExperienceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TechnicianExperience.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TechnicianExperienceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TechnicianExperienceAggregateArgs>(args: Subset<T, TechnicianExperienceAggregateArgs>): Prisma.PrismaPromise<GetTechnicianExperienceAggregateType<T>>
+
+    /**
+     * Group by TechnicianExperience.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TechnicianExperienceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TechnicianExperienceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TechnicianExperienceGroupByArgs['orderBy'] }
+        : { orderBy?: TechnicianExperienceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TechnicianExperienceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTechnicianExperienceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TechnicianExperience model
+   */
+  readonly fields: TechnicianExperienceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TechnicianExperience.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TechnicianExperienceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdBy<T extends TechnicianExperience$createdByArgs<ExtArgs> = {}>(args?: Subset<T, TechnicianExperience$createdByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    technician<T extends TechnicianExperience$technicianArgs<ExtArgs> = {}>(args?: Subset<T, TechnicianExperience$technicianArgs<ExtArgs>>): Prisma__AiTechnicianClient<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TechnicianExperience model
+   */
+  interface TechnicianExperienceFieldRefs {
+    readonly id: FieldRef<"TechnicianExperience", 'String'>
+    readonly technicianId: FieldRef<"TechnicianExperience", 'String'>
+    readonly projectId: FieldRef<"TechnicianExperience", 'String'>
+    readonly manualId: FieldRef<"TechnicianExperience", 'String'>
+    readonly manualName: FieldRef<"TechnicianExperience", 'String'>
+    readonly title: FieldRef<"TechnicianExperience", 'String'>
+    readonly question: FieldRef<"TechnicianExperience", 'String'>
+    readonly answer: FieldRef<"TechnicianExperience", 'String'>
+    readonly symptoms: FieldRef<"TechnicianExperience", 'String'>
+    readonly cause: FieldRef<"TechnicianExperience", 'String'>
+    readonly solution: FieldRef<"TechnicianExperience", 'String'>
+    readonly tags: FieldRef<"TechnicianExperience", 'String'>
+    readonly source: FieldRef<"TechnicianExperience", 'String'>
+    readonly createdById: FieldRef<"TechnicianExperience", 'String'>
+    readonly createdAt: FieldRef<"TechnicianExperience", 'DateTime'>
+    readonly updatedAt: FieldRef<"TechnicianExperience", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TechnicianExperience findUnique
+   */
+  export type TechnicianExperienceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceInclude<ExtArgs> | null
+    /**
+     * Filter, which TechnicianExperience to fetch.
+     */
+    where: TechnicianExperienceWhereUniqueInput
+  }
+
+  /**
+   * TechnicianExperience findUniqueOrThrow
+   */
+  export type TechnicianExperienceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceInclude<ExtArgs> | null
+    /**
+     * Filter, which TechnicianExperience to fetch.
+     */
+    where: TechnicianExperienceWhereUniqueInput
+  }
+
+  /**
+   * TechnicianExperience findFirst
+   */
+  export type TechnicianExperienceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceInclude<ExtArgs> | null
+    /**
+     * Filter, which TechnicianExperience to fetch.
+     */
+    where?: TechnicianExperienceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TechnicianExperiences to fetch.
+     */
+    orderBy?: TechnicianExperienceOrderByWithRelationInput | TechnicianExperienceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TechnicianExperiences.
+     */
+    cursor?: TechnicianExperienceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TechnicianExperiences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TechnicianExperiences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TechnicianExperiences.
+     */
+    distinct?: TechnicianExperienceScalarFieldEnum | TechnicianExperienceScalarFieldEnum[]
+  }
+
+  /**
+   * TechnicianExperience findFirstOrThrow
+   */
+  export type TechnicianExperienceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceInclude<ExtArgs> | null
+    /**
+     * Filter, which TechnicianExperience to fetch.
+     */
+    where?: TechnicianExperienceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TechnicianExperiences to fetch.
+     */
+    orderBy?: TechnicianExperienceOrderByWithRelationInput | TechnicianExperienceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TechnicianExperiences.
+     */
+    cursor?: TechnicianExperienceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TechnicianExperiences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TechnicianExperiences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TechnicianExperiences.
+     */
+    distinct?: TechnicianExperienceScalarFieldEnum | TechnicianExperienceScalarFieldEnum[]
+  }
+
+  /**
+   * TechnicianExperience findMany
+   */
+  export type TechnicianExperienceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceInclude<ExtArgs> | null
+    /**
+     * Filter, which TechnicianExperiences to fetch.
+     */
+    where?: TechnicianExperienceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TechnicianExperiences to fetch.
+     */
+    orderBy?: TechnicianExperienceOrderByWithRelationInput | TechnicianExperienceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TechnicianExperiences.
+     */
+    cursor?: TechnicianExperienceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TechnicianExperiences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TechnicianExperiences.
+     */
+    skip?: number
+    distinct?: TechnicianExperienceScalarFieldEnum | TechnicianExperienceScalarFieldEnum[]
+  }
+
+  /**
+   * TechnicianExperience create
+   */
+  export type TechnicianExperienceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TechnicianExperience.
+     */
+    data: XOR<TechnicianExperienceCreateInput, TechnicianExperienceUncheckedCreateInput>
+  }
+
+  /**
+   * TechnicianExperience createMany
+   */
+  export type TechnicianExperienceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TechnicianExperiences.
+     */
+    data: TechnicianExperienceCreateManyInput | TechnicianExperienceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TechnicianExperience createManyAndReturn
+   */
+  export type TechnicianExperienceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * The data used to create many TechnicianExperiences.
+     */
+    data: TechnicianExperienceCreateManyInput | TechnicianExperienceCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TechnicianExperience update
+   */
+  export type TechnicianExperienceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TechnicianExperience.
+     */
+    data: XOR<TechnicianExperienceUpdateInput, TechnicianExperienceUncheckedUpdateInput>
+    /**
+     * Choose, which TechnicianExperience to update.
+     */
+    where: TechnicianExperienceWhereUniqueInput
+  }
+
+  /**
+   * TechnicianExperience updateMany
+   */
+  export type TechnicianExperienceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TechnicianExperiences.
+     */
+    data: XOR<TechnicianExperienceUpdateManyMutationInput, TechnicianExperienceUncheckedUpdateManyInput>
+    /**
+     * Filter which TechnicianExperiences to update
+     */
+    where?: TechnicianExperienceWhereInput
+    /**
+     * Limit how many TechnicianExperiences to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TechnicianExperience updateManyAndReturn
+   */
+  export type TechnicianExperienceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * The data used to update TechnicianExperiences.
+     */
+    data: XOR<TechnicianExperienceUpdateManyMutationInput, TechnicianExperienceUncheckedUpdateManyInput>
+    /**
+     * Filter which TechnicianExperiences to update
+     */
+    where?: TechnicianExperienceWhereInput
+    /**
+     * Limit how many TechnicianExperiences to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TechnicianExperience upsert
+   */
+  export type TechnicianExperienceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TechnicianExperience to update in case it exists.
+     */
+    where: TechnicianExperienceWhereUniqueInput
+    /**
+     * In case the TechnicianExperience found by the `where` argument doesn't exist, create a new TechnicianExperience with this data.
+     */
+    create: XOR<TechnicianExperienceCreateInput, TechnicianExperienceUncheckedCreateInput>
+    /**
+     * In case the TechnicianExperience was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TechnicianExperienceUpdateInput, TechnicianExperienceUncheckedUpdateInput>
+  }
+
+  /**
+   * TechnicianExperience delete
+   */
+  export type TechnicianExperienceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceInclude<ExtArgs> | null
+    /**
+     * Filter which TechnicianExperience to delete.
+     */
+    where: TechnicianExperienceWhereUniqueInput
+  }
+
+  /**
+   * TechnicianExperience deleteMany
+   */
+  export type TechnicianExperienceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TechnicianExperiences to delete
+     */
+    where?: TechnicianExperienceWhereInput
+    /**
+     * Limit how many TechnicianExperiences to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TechnicianExperience.createdBy
+   */
+  export type TechnicianExperience$createdByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * TechnicianExperience.technician
+   */
+  export type TechnicianExperience$technicianArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianInclude<ExtArgs> | null
+    where?: AiTechnicianWhereInput
+  }
+
+  /**
+   * TechnicianExperience without action
+   */
+  export type TechnicianExperienceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AiTechnician
+   */
+
+  export type AggregateAiTechnician = {
+    _count: AiTechnicianCountAggregateOutputType | null
+    _min: AiTechnicianMinAggregateOutputType | null
+    _max: AiTechnicianMaxAggregateOutputType | null
+  }
+
+  export type AiTechnicianMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    domain: string | null
+    brands: string | null
+    productTypes: string | null
+    instructions: string | null
+    responseStyle: string | null
+    webEnabled: boolean | null
+    experienceEnabled: boolean | null
+    active: boolean | null
+    createdById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AiTechnicianMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    domain: string | null
+    brands: string | null
+    productTypes: string | null
+    instructions: string | null
+    responseStyle: string | null
+    webEnabled: boolean | null
+    experienceEnabled: boolean | null
+    active: boolean | null
+    createdById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AiTechnicianCountAggregateOutputType = {
+    id: number
+    name: number
+    domain: number
+    brands: number
+    productTypes: number
+    instructions: number
+    responseStyle: number
+    webEnabled: number
+    experienceEnabled: number
+    active: number
+    createdById: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AiTechnicianMinAggregateInputType = {
+    id?: true
+    name?: true
+    domain?: true
+    brands?: true
+    productTypes?: true
+    instructions?: true
+    responseStyle?: true
+    webEnabled?: true
+    experienceEnabled?: true
+    active?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AiTechnicianMaxAggregateInputType = {
+    id?: true
+    name?: true
+    domain?: true
+    brands?: true
+    productTypes?: true
+    instructions?: true
+    responseStyle?: true
+    webEnabled?: true
+    experienceEnabled?: true
+    active?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AiTechnicianCountAggregateInputType = {
+    id?: true
+    name?: true
+    domain?: true
+    brands?: true
+    productTypes?: true
+    instructions?: true
+    responseStyle?: true
+    webEnabled?: true
+    experienceEnabled?: true
+    active?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AiTechnicianAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiTechnician to aggregate.
+     */
+    where?: AiTechnicianWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiTechnicians to fetch.
+     */
+    orderBy?: AiTechnicianOrderByWithRelationInput | AiTechnicianOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AiTechnicianWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiTechnicians from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiTechnicians.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AiTechnicians
+    **/
+    _count?: true | AiTechnicianCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AiTechnicianMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AiTechnicianMaxAggregateInputType
+  }
+
+  export type GetAiTechnicianAggregateType<T extends AiTechnicianAggregateArgs> = {
+        [P in keyof T & keyof AggregateAiTechnician]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAiTechnician[P]>
+      : GetScalarType<T[P], AggregateAiTechnician[P]>
+  }
+
+
+
+
+  export type AiTechnicianGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AiTechnicianWhereInput
+    orderBy?: AiTechnicianOrderByWithAggregationInput | AiTechnicianOrderByWithAggregationInput[]
+    by: AiTechnicianScalarFieldEnum[] | AiTechnicianScalarFieldEnum
+    having?: AiTechnicianScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AiTechnicianCountAggregateInputType | true
+    _min?: AiTechnicianMinAggregateInputType
+    _max?: AiTechnicianMaxAggregateInputType
+  }
+
+  export type AiTechnicianGroupByOutputType = {
+    id: string
+    name: string
+    domain: string
+    brands: string | null
+    productTypes: string | null
+    instructions: string
+    responseStyle: string
+    webEnabled: boolean
+    experienceEnabled: boolean
+    active: boolean
+    createdById: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: AiTechnicianCountAggregateOutputType | null
+    _min: AiTechnicianMinAggregateOutputType | null
+    _max: AiTechnicianMaxAggregateOutputType | null
+  }
+
+  type GetAiTechnicianGroupByPayload<T extends AiTechnicianGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AiTechnicianGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AiTechnicianGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AiTechnicianGroupByOutputType[P]>
+            : GetScalarType<T[P], AiTechnicianGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AiTechnicianSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    domain?: boolean
+    brands?: boolean
+    productTypes?: boolean
+    instructions?: boolean
+    responseStyle?: boolean
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | AiTechnician$createdByArgs<ExtArgs>
+    manuals?: boolean | AiTechnician$manualsArgs<ExtArgs>
+    experiences?: boolean | AiTechnician$experiencesArgs<ExtArgs>
+    _count?: boolean | AiTechnicianCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["aiTechnician"]>
+
+  export type AiTechnicianSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    domain?: boolean
+    brands?: boolean
+    productTypes?: boolean
+    instructions?: boolean
+    responseStyle?: boolean
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | AiTechnician$createdByArgs<ExtArgs>
+  }, ExtArgs["result"]["aiTechnician"]>
+
+  export type AiTechnicianSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    domain?: boolean
+    brands?: boolean
+    productTypes?: boolean
+    instructions?: boolean
+    responseStyle?: boolean
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | AiTechnician$createdByArgs<ExtArgs>
+  }, ExtArgs["result"]["aiTechnician"]>
+
+  export type AiTechnicianSelectScalar = {
+    id?: boolean
+    name?: boolean
+    domain?: boolean
+    brands?: boolean
+    productTypes?: boolean
+    instructions?: boolean
+    responseStyle?: boolean
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AiTechnicianOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "domain" | "brands" | "productTypes" | "instructions" | "responseStyle" | "webEnabled" | "experienceEnabled" | "active" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["aiTechnician"]>
+  export type AiTechnicianInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | AiTechnician$createdByArgs<ExtArgs>
+    manuals?: boolean | AiTechnician$manualsArgs<ExtArgs>
+    experiences?: boolean | AiTechnician$experiencesArgs<ExtArgs>
+    _count?: boolean | AiTechnicianCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AiTechnicianIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | AiTechnician$createdByArgs<ExtArgs>
+  }
+  export type AiTechnicianIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | AiTechnician$createdByArgs<ExtArgs>
+  }
+
+  export type $AiTechnicianPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AiTechnician"
+    objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs> | null
+      manuals: Prisma.$AiTechnicianManualPayload<ExtArgs>[]
+      experiences: Prisma.$TechnicianExperiencePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      domain: string
+      brands: string | null
+      productTypes: string | null
+      instructions: string
+      responseStyle: string
+      webEnabled: boolean
+      experienceEnabled: boolean
+      active: boolean
+      createdById: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["aiTechnician"]>
+    composites: {}
+  }
+
+  type AiTechnicianGetPayload<S extends boolean | null | undefined | AiTechnicianDefaultArgs> = $Result.GetResult<Prisma.$AiTechnicianPayload, S>
+
+  type AiTechnicianCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AiTechnicianFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AiTechnicianCountAggregateInputType | true
+    }
+
+  export interface AiTechnicianDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AiTechnician'], meta: { name: 'AiTechnician' } }
+    /**
+     * Find zero or one AiTechnician that matches the filter.
+     * @param {AiTechnicianFindUniqueArgs} args - Arguments to find a AiTechnician
+     * @example
+     * // Get one AiTechnician
+     * const aiTechnician = await prisma.aiTechnician.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AiTechnicianFindUniqueArgs>(args: SelectSubset<T, AiTechnicianFindUniqueArgs<ExtArgs>>): Prisma__AiTechnicianClient<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AiTechnician that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AiTechnicianFindUniqueOrThrowArgs} args - Arguments to find a AiTechnician
+     * @example
+     * // Get one AiTechnician
+     * const aiTechnician = await prisma.aiTechnician.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AiTechnicianFindUniqueOrThrowArgs>(args: SelectSubset<T, AiTechnicianFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AiTechnicianClient<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiTechnician that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianFindFirstArgs} args - Arguments to find a AiTechnician
+     * @example
+     * // Get one AiTechnician
+     * const aiTechnician = await prisma.aiTechnician.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AiTechnicianFindFirstArgs>(args?: SelectSubset<T, AiTechnicianFindFirstArgs<ExtArgs>>): Prisma__AiTechnicianClient<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiTechnician that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianFindFirstOrThrowArgs} args - Arguments to find a AiTechnician
+     * @example
+     * // Get one AiTechnician
+     * const aiTechnician = await prisma.aiTechnician.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AiTechnicianFindFirstOrThrowArgs>(args?: SelectSubset<T, AiTechnicianFindFirstOrThrowArgs<ExtArgs>>): Prisma__AiTechnicianClient<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AiTechnicians that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AiTechnicians
+     * const aiTechnicians = await prisma.aiTechnician.findMany()
+     * 
+     * // Get first 10 AiTechnicians
+     * const aiTechnicians = await prisma.aiTechnician.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const aiTechnicianWithIdOnly = await prisma.aiTechnician.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AiTechnicianFindManyArgs>(args?: SelectSubset<T, AiTechnicianFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AiTechnician.
+     * @param {AiTechnicianCreateArgs} args - Arguments to create a AiTechnician.
+     * @example
+     * // Create one AiTechnician
+     * const AiTechnician = await prisma.aiTechnician.create({
+     *   data: {
+     *     // ... data to create a AiTechnician
+     *   }
+     * })
+     * 
+     */
+    create<T extends AiTechnicianCreateArgs>(args: SelectSubset<T, AiTechnicianCreateArgs<ExtArgs>>): Prisma__AiTechnicianClient<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AiTechnicians.
+     * @param {AiTechnicianCreateManyArgs} args - Arguments to create many AiTechnicians.
+     * @example
+     * // Create many AiTechnicians
+     * const aiTechnician = await prisma.aiTechnician.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AiTechnicianCreateManyArgs>(args?: SelectSubset<T, AiTechnicianCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AiTechnicians and returns the data saved in the database.
+     * @param {AiTechnicianCreateManyAndReturnArgs} args - Arguments to create many AiTechnicians.
+     * @example
+     * // Create many AiTechnicians
+     * const aiTechnician = await prisma.aiTechnician.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AiTechnicians and only return the `id`
+     * const aiTechnicianWithIdOnly = await prisma.aiTechnician.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AiTechnicianCreateManyAndReturnArgs>(args?: SelectSubset<T, AiTechnicianCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AiTechnician.
+     * @param {AiTechnicianDeleteArgs} args - Arguments to delete one AiTechnician.
+     * @example
+     * // Delete one AiTechnician
+     * const AiTechnician = await prisma.aiTechnician.delete({
+     *   where: {
+     *     // ... filter to delete one AiTechnician
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AiTechnicianDeleteArgs>(args: SelectSubset<T, AiTechnicianDeleteArgs<ExtArgs>>): Prisma__AiTechnicianClient<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AiTechnician.
+     * @param {AiTechnicianUpdateArgs} args - Arguments to update one AiTechnician.
+     * @example
+     * // Update one AiTechnician
+     * const aiTechnician = await prisma.aiTechnician.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AiTechnicianUpdateArgs>(args: SelectSubset<T, AiTechnicianUpdateArgs<ExtArgs>>): Prisma__AiTechnicianClient<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AiTechnicians.
+     * @param {AiTechnicianDeleteManyArgs} args - Arguments to filter AiTechnicians to delete.
+     * @example
+     * // Delete a few AiTechnicians
+     * const { count } = await prisma.aiTechnician.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AiTechnicianDeleteManyArgs>(args?: SelectSubset<T, AiTechnicianDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiTechnicians.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AiTechnicians
+     * const aiTechnician = await prisma.aiTechnician.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AiTechnicianUpdateManyArgs>(args: SelectSubset<T, AiTechnicianUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiTechnicians and returns the data updated in the database.
+     * @param {AiTechnicianUpdateManyAndReturnArgs} args - Arguments to update many AiTechnicians.
+     * @example
+     * // Update many AiTechnicians
+     * const aiTechnician = await prisma.aiTechnician.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AiTechnicians and only return the `id`
+     * const aiTechnicianWithIdOnly = await prisma.aiTechnician.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AiTechnicianUpdateManyAndReturnArgs>(args: SelectSubset<T, AiTechnicianUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AiTechnician.
+     * @param {AiTechnicianUpsertArgs} args - Arguments to update or create a AiTechnician.
+     * @example
+     * // Update or create a AiTechnician
+     * const aiTechnician = await prisma.aiTechnician.upsert({
+     *   create: {
+     *     // ... data to create a AiTechnician
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AiTechnician we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AiTechnicianUpsertArgs>(args: SelectSubset<T, AiTechnicianUpsertArgs<ExtArgs>>): Prisma__AiTechnicianClient<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AiTechnicians.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianCountArgs} args - Arguments to filter AiTechnicians to count.
+     * @example
+     * // Count the number of AiTechnicians
+     * const count = await prisma.aiTechnician.count({
+     *   where: {
+     *     // ... the filter for the AiTechnicians we want to count
+     *   }
+     * })
+    **/
+    count<T extends AiTechnicianCountArgs>(
+      args?: Subset<T, AiTechnicianCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AiTechnicianCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AiTechnician.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AiTechnicianAggregateArgs>(args: Subset<T, AiTechnicianAggregateArgs>): Prisma.PrismaPromise<GetAiTechnicianAggregateType<T>>
+
+    /**
+     * Group by AiTechnician.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AiTechnicianGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AiTechnicianGroupByArgs['orderBy'] }
+        : { orderBy?: AiTechnicianGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AiTechnicianGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAiTechnicianGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AiTechnician model
+   */
+  readonly fields: AiTechnicianFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AiTechnician.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AiTechnicianClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdBy<T extends AiTechnician$createdByArgs<ExtArgs> = {}>(args?: Subset<T, AiTechnician$createdByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    manuals<T extends AiTechnician$manualsArgs<ExtArgs> = {}>(args?: Subset<T, AiTechnician$manualsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiTechnicianManualPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    experiences<T extends AiTechnician$experiencesArgs<ExtArgs> = {}>(args?: Subset<T, AiTechnician$experiencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TechnicianExperiencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AiTechnician model
+   */
+  interface AiTechnicianFieldRefs {
+    readonly id: FieldRef<"AiTechnician", 'String'>
+    readonly name: FieldRef<"AiTechnician", 'String'>
+    readonly domain: FieldRef<"AiTechnician", 'String'>
+    readonly brands: FieldRef<"AiTechnician", 'String'>
+    readonly productTypes: FieldRef<"AiTechnician", 'String'>
+    readonly instructions: FieldRef<"AiTechnician", 'String'>
+    readonly responseStyle: FieldRef<"AiTechnician", 'String'>
+    readonly webEnabled: FieldRef<"AiTechnician", 'Boolean'>
+    readonly experienceEnabled: FieldRef<"AiTechnician", 'Boolean'>
+    readonly active: FieldRef<"AiTechnician", 'Boolean'>
+    readonly createdById: FieldRef<"AiTechnician", 'String'>
+    readonly createdAt: FieldRef<"AiTechnician", 'DateTime'>
+    readonly updatedAt: FieldRef<"AiTechnician", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AiTechnician findUnique
+   */
+  export type AiTechnicianFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTechnician to fetch.
+     */
+    where: AiTechnicianWhereUniqueInput
+  }
+
+  /**
+   * AiTechnician findUniqueOrThrow
+   */
+  export type AiTechnicianFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTechnician to fetch.
+     */
+    where: AiTechnicianWhereUniqueInput
+  }
+
+  /**
+   * AiTechnician findFirst
+   */
+  export type AiTechnicianFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTechnician to fetch.
+     */
+    where?: AiTechnicianWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiTechnicians to fetch.
+     */
+    orderBy?: AiTechnicianOrderByWithRelationInput | AiTechnicianOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiTechnicians.
+     */
+    cursor?: AiTechnicianWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiTechnicians from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiTechnicians.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiTechnicians.
+     */
+    distinct?: AiTechnicianScalarFieldEnum | AiTechnicianScalarFieldEnum[]
+  }
+
+  /**
+   * AiTechnician findFirstOrThrow
+   */
+  export type AiTechnicianFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTechnician to fetch.
+     */
+    where?: AiTechnicianWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiTechnicians to fetch.
+     */
+    orderBy?: AiTechnicianOrderByWithRelationInput | AiTechnicianOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiTechnicians.
+     */
+    cursor?: AiTechnicianWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiTechnicians from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiTechnicians.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiTechnicians.
+     */
+    distinct?: AiTechnicianScalarFieldEnum | AiTechnicianScalarFieldEnum[]
+  }
+
+  /**
+   * AiTechnician findMany
+   */
+  export type AiTechnicianFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTechnicians to fetch.
+     */
+    where?: AiTechnicianWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiTechnicians to fetch.
+     */
+    orderBy?: AiTechnicianOrderByWithRelationInput | AiTechnicianOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AiTechnicians.
+     */
+    cursor?: AiTechnicianWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiTechnicians from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiTechnicians.
+     */
+    skip?: number
+    distinct?: AiTechnicianScalarFieldEnum | AiTechnicianScalarFieldEnum[]
+  }
+
+  /**
+   * AiTechnician create
+   */
+  export type AiTechnicianCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AiTechnician.
+     */
+    data: XOR<AiTechnicianCreateInput, AiTechnicianUncheckedCreateInput>
+  }
+
+  /**
+   * AiTechnician createMany
+   */
+  export type AiTechnicianCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AiTechnicians.
+     */
+    data: AiTechnicianCreateManyInput | AiTechnicianCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AiTechnician createManyAndReturn
+   */
+  export type AiTechnicianCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * The data used to create many AiTechnicians.
+     */
+    data: AiTechnicianCreateManyInput | AiTechnicianCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AiTechnician update
+   */
+  export type AiTechnicianUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AiTechnician.
+     */
+    data: XOR<AiTechnicianUpdateInput, AiTechnicianUncheckedUpdateInput>
+    /**
+     * Choose, which AiTechnician to update.
+     */
+    where: AiTechnicianWhereUniqueInput
+  }
+
+  /**
+   * AiTechnician updateMany
+   */
+  export type AiTechnicianUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AiTechnicians.
+     */
+    data: XOR<AiTechnicianUpdateManyMutationInput, AiTechnicianUncheckedUpdateManyInput>
+    /**
+     * Filter which AiTechnicians to update
+     */
+    where?: AiTechnicianWhereInput
+    /**
+     * Limit how many AiTechnicians to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiTechnician updateManyAndReturn
+   */
+  export type AiTechnicianUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * The data used to update AiTechnicians.
+     */
+    data: XOR<AiTechnicianUpdateManyMutationInput, AiTechnicianUncheckedUpdateManyInput>
+    /**
+     * Filter which AiTechnicians to update
+     */
+    where?: AiTechnicianWhereInput
+    /**
+     * Limit how many AiTechnicians to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AiTechnician upsert
+   */
+  export type AiTechnicianUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AiTechnician to update in case it exists.
+     */
+    where: AiTechnicianWhereUniqueInput
+    /**
+     * In case the AiTechnician found by the `where` argument doesn't exist, create a new AiTechnician with this data.
+     */
+    create: XOR<AiTechnicianCreateInput, AiTechnicianUncheckedCreateInput>
+    /**
+     * In case the AiTechnician was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AiTechnicianUpdateInput, AiTechnicianUncheckedUpdateInput>
+  }
+
+  /**
+   * AiTechnician delete
+   */
+  export type AiTechnicianDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianInclude<ExtArgs> | null
+    /**
+     * Filter which AiTechnician to delete.
+     */
+    where: AiTechnicianWhereUniqueInput
+  }
+
+  /**
+   * AiTechnician deleteMany
+   */
+  export type AiTechnicianDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiTechnicians to delete
+     */
+    where?: AiTechnicianWhereInput
+    /**
+     * Limit how many AiTechnicians to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiTechnician.createdBy
+   */
+  export type AiTechnician$createdByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * AiTechnician.manuals
+   */
+  export type AiTechnician$manualsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianManual
+     */
+    select?: AiTechnicianManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnicianManual
+     */
+    omit?: AiTechnicianManualOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianManualInclude<ExtArgs> | null
+    where?: AiTechnicianManualWhereInput
+    orderBy?: AiTechnicianManualOrderByWithRelationInput | AiTechnicianManualOrderByWithRelationInput[]
+    cursor?: AiTechnicianManualWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AiTechnicianManualScalarFieldEnum | AiTechnicianManualScalarFieldEnum[]
+  }
+
+  /**
+   * AiTechnician.experiences
+   */
+  export type AiTechnician$experiencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TechnicianExperience
+     */
+    select?: TechnicianExperienceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TechnicianExperience
+     */
+    omit?: TechnicianExperienceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TechnicianExperienceInclude<ExtArgs> | null
+    where?: TechnicianExperienceWhereInput
+    orderBy?: TechnicianExperienceOrderByWithRelationInput | TechnicianExperienceOrderByWithRelationInput[]
+    cursor?: TechnicianExperienceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TechnicianExperienceScalarFieldEnum | TechnicianExperienceScalarFieldEnum[]
+  }
+
+  /**
+   * AiTechnician without action
+   */
+  export type AiTechnicianDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnician
+     */
+    select?: AiTechnicianSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnician
+     */
+    omit?: AiTechnicianOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AiTechnicianManual
+   */
+
+  export type AggregateAiTechnicianManual = {
+    _count: AiTechnicianManualCountAggregateOutputType | null
+    _min: AiTechnicianManualMinAggregateOutputType | null
+    _max: AiTechnicianManualMaxAggregateOutputType | null
+  }
+
+  export type AiTechnicianManualMinAggregateOutputType = {
+    id: string | null
+    technicianId: string | null
+    projectId: string | null
+    projectName: string | null
+    vectorStoreId: string | null
+    manualId: string | null
+    manualName: string | null
+    createdAt: Date | null
+  }
+
+  export type AiTechnicianManualMaxAggregateOutputType = {
+    id: string | null
+    technicianId: string | null
+    projectId: string | null
+    projectName: string | null
+    vectorStoreId: string | null
+    manualId: string | null
+    manualName: string | null
+    createdAt: Date | null
+  }
+
+  export type AiTechnicianManualCountAggregateOutputType = {
+    id: number
+    technicianId: number
+    projectId: number
+    projectName: number
+    vectorStoreId: number
+    manualId: number
+    manualName: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type AiTechnicianManualMinAggregateInputType = {
+    id?: true
+    technicianId?: true
+    projectId?: true
+    projectName?: true
+    vectorStoreId?: true
+    manualId?: true
+    manualName?: true
+    createdAt?: true
+  }
+
+  export type AiTechnicianManualMaxAggregateInputType = {
+    id?: true
+    technicianId?: true
+    projectId?: true
+    projectName?: true
+    vectorStoreId?: true
+    manualId?: true
+    manualName?: true
+    createdAt?: true
+  }
+
+  export type AiTechnicianManualCountAggregateInputType = {
+    id?: true
+    technicianId?: true
+    projectId?: true
+    projectName?: true
+    vectorStoreId?: true
+    manualId?: true
+    manualName?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type AiTechnicianManualAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiTechnicianManual to aggregate.
+     */
+    where?: AiTechnicianManualWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiTechnicianManuals to fetch.
+     */
+    orderBy?: AiTechnicianManualOrderByWithRelationInput | AiTechnicianManualOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AiTechnicianManualWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiTechnicianManuals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiTechnicianManuals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AiTechnicianManuals
+    **/
+    _count?: true | AiTechnicianManualCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AiTechnicianManualMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AiTechnicianManualMaxAggregateInputType
+  }
+
+  export type GetAiTechnicianManualAggregateType<T extends AiTechnicianManualAggregateArgs> = {
+        [P in keyof T & keyof AggregateAiTechnicianManual]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAiTechnicianManual[P]>
+      : GetScalarType<T[P], AggregateAiTechnicianManual[P]>
+  }
+
+
+
+
+  export type AiTechnicianManualGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AiTechnicianManualWhereInput
+    orderBy?: AiTechnicianManualOrderByWithAggregationInput | AiTechnicianManualOrderByWithAggregationInput[]
+    by: AiTechnicianManualScalarFieldEnum[] | AiTechnicianManualScalarFieldEnum
+    having?: AiTechnicianManualScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AiTechnicianManualCountAggregateInputType | true
+    _min?: AiTechnicianManualMinAggregateInputType
+    _max?: AiTechnicianManualMaxAggregateInputType
+  }
+
+  export type AiTechnicianManualGroupByOutputType = {
+    id: string
+    technicianId: string
+    projectId: string
+    projectName: string
+    vectorStoreId: string
+    manualId: string
+    manualName: string
+    createdAt: Date
+    _count: AiTechnicianManualCountAggregateOutputType | null
+    _min: AiTechnicianManualMinAggregateOutputType | null
+    _max: AiTechnicianManualMaxAggregateOutputType | null
+  }
+
+  type GetAiTechnicianManualGroupByPayload<T extends AiTechnicianManualGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AiTechnicianManualGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AiTechnicianManualGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AiTechnicianManualGroupByOutputType[P]>
+            : GetScalarType<T[P], AiTechnicianManualGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AiTechnicianManualSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    technicianId?: boolean
+    projectId?: boolean
+    projectName?: boolean
+    vectorStoreId?: boolean
+    manualId?: boolean
+    manualName?: boolean
+    createdAt?: boolean
+    technician?: boolean | AiTechnicianDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["aiTechnicianManual"]>
+
+  export type AiTechnicianManualSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    technicianId?: boolean
+    projectId?: boolean
+    projectName?: boolean
+    vectorStoreId?: boolean
+    manualId?: boolean
+    manualName?: boolean
+    createdAt?: boolean
+    technician?: boolean | AiTechnicianDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["aiTechnicianManual"]>
+
+  export type AiTechnicianManualSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    technicianId?: boolean
+    projectId?: boolean
+    projectName?: boolean
+    vectorStoreId?: boolean
+    manualId?: boolean
+    manualName?: boolean
+    createdAt?: boolean
+    technician?: boolean | AiTechnicianDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["aiTechnicianManual"]>
+
+  export type AiTechnicianManualSelectScalar = {
+    id?: boolean
+    technicianId?: boolean
+    projectId?: boolean
+    projectName?: boolean
+    vectorStoreId?: boolean
+    manualId?: boolean
+    manualName?: boolean
+    createdAt?: boolean
+  }
+
+  export type AiTechnicianManualOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "technicianId" | "projectId" | "projectName" | "vectorStoreId" | "manualId" | "manualName" | "createdAt", ExtArgs["result"]["aiTechnicianManual"]>
+  export type AiTechnicianManualInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    technician?: boolean | AiTechnicianDefaultArgs<ExtArgs>
+  }
+  export type AiTechnicianManualIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    technician?: boolean | AiTechnicianDefaultArgs<ExtArgs>
+  }
+  export type AiTechnicianManualIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    technician?: boolean | AiTechnicianDefaultArgs<ExtArgs>
+  }
+
+  export type $AiTechnicianManualPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AiTechnicianManual"
+    objects: {
+      technician: Prisma.$AiTechnicianPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      technicianId: string
+      projectId: string
+      projectName: string
+      vectorStoreId: string
+      manualId: string
+      manualName: string
+      createdAt: Date
+    }, ExtArgs["result"]["aiTechnicianManual"]>
+    composites: {}
+  }
+
+  type AiTechnicianManualGetPayload<S extends boolean | null | undefined | AiTechnicianManualDefaultArgs> = $Result.GetResult<Prisma.$AiTechnicianManualPayload, S>
+
+  type AiTechnicianManualCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AiTechnicianManualFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AiTechnicianManualCountAggregateInputType | true
+    }
+
+  export interface AiTechnicianManualDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AiTechnicianManual'], meta: { name: 'AiTechnicianManual' } }
+    /**
+     * Find zero or one AiTechnicianManual that matches the filter.
+     * @param {AiTechnicianManualFindUniqueArgs} args - Arguments to find a AiTechnicianManual
+     * @example
+     * // Get one AiTechnicianManual
+     * const aiTechnicianManual = await prisma.aiTechnicianManual.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AiTechnicianManualFindUniqueArgs>(args: SelectSubset<T, AiTechnicianManualFindUniqueArgs<ExtArgs>>): Prisma__AiTechnicianManualClient<$Result.GetResult<Prisma.$AiTechnicianManualPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AiTechnicianManual that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AiTechnicianManualFindUniqueOrThrowArgs} args - Arguments to find a AiTechnicianManual
+     * @example
+     * // Get one AiTechnicianManual
+     * const aiTechnicianManual = await prisma.aiTechnicianManual.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AiTechnicianManualFindUniqueOrThrowArgs>(args: SelectSubset<T, AiTechnicianManualFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AiTechnicianManualClient<$Result.GetResult<Prisma.$AiTechnicianManualPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiTechnicianManual that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianManualFindFirstArgs} args - Arguments to find a AiTechnicianManual
+     * @example
+     * // Get one AiTechnicianManual
+     * const aiTechnicianManual = await prisma.aiTechnicianManual.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AiTechnicianManualFindFirstArgs>(args?: SelectSubset<T, AiTechnicianManualFindFirstArgs<ExtArgs>>): Prisma__AiTechnicianManualClient<$Result.GetResult<Prisma.$AiTechnicianManualPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiTechnicianManual that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianManualFindFirstOrThrowArgs} args - Arguments to find a AiTechnicianManual
+     * @example
+     * // Get one AiTechnicianManual
+     * const aiTechnicianManual = await prisma.aiTechnicianManual.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AiTechnicianManualFindFirstOrThrowArgs>(args?: SelectSubset<T, AiTechnicianManualFindFirstOrThrowArgs<ExtArgs>>): Prisma__AiTechnicianManualClient<$Result.GetResult<Prisma.$AiTechnicianManualPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AiTechnicianManuals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianManualFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AiTechnicianManuals
+     * const aiTechnicianManuals = await prisma.aiTechnicianManual.findMany()
+     * 
+     * // Get first 10 AiTechnicianManuals
+     * const aiTechnicianManuals = await prisma.aiTechnicianManual.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const aiTechnicianManualWithIdOnly = await prisma.aiTechnicianManual.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AiTechnicianManualFindManyArgs>(args?: SelectSubset<T, AiTechnicianManualFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiTechnicianManualPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AiTechnicianManual.
+     * @param {AiTechnicianManualCreateArgs} args - Arguments to create a AiTechnicianManual.
+     * @example
+     * // Create one AiTechnicianManual
+     * const AiTechnicianManual = await prisma.aiTechnicianManual.create({
+     *   data: {
+     *     // ... data to create a AiTechnicianManual
+     *   }
+     * })
+     * 
+     */
+    create<T extends AiTechnicianManualCreateArgs>(args: SelectSubset<T, AiTechnicianManualCreateArgs<ExtArgs>>): Prisma__AiTechnicianManualClient<$Result.GetResult<Prisma.$AiTechnicianManualPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AiTechnicianManuals.
+     * @param {AiTechnicianManualCreateManyArgs} args - Arguments to create many AiTechnicianManuals.
+     * @example
+     * // Create many AiTechnicianManuals
+     * const aiTechnicianManual = await prisma.aiTechnicianManual.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AiTechnicianManualCreateManyArgs>(args?: SelectSubset<T, AiTechnicianManualCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AiTechnicianManuals and returns the data saved in the database.
+     * @param {AiTechnicianManualCreateManyAndReturnArgs} args - Arguments to create many AiTechnicianManuals.
+     * @example
+     * // Create many AiTechnicianManuals
+     * const aiTechnicianManual = await prisma.aiTechnicianManual.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AiTechnicianManuals and only return the `id`
+     * const aiTechnicianManualWithIdOnly = await prisma.aiTechnicianManual.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AiTechnicianManualCreateManyAndReturnArgs>(args?: SelectSubset<T, AiTechnicianManualCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiTechnicianManualPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AiTechnicianManual.
+     * @param {AiTechnicianManualDeleteArgs} args - Arguments to delete one AiTechnicianManual.
+     * @example
+     * // Delete one AiTechnicianManual
+     * const AiTechnicianManual = await prisma.aiTechnicianManual.delete({
+     *   where: {
+     *     // ... filter to delete one AiTechnicianManual
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AiTechnicianManualDeleteArgs>(args: SelectSubset<T, AiTechnicianManualDeleteArgs<ExtArgs>>): Prisma__AiTechnicianManualClient<$Result.GetResult<Prisma.$AiTechnicianManualPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AiTechnicianManual.
+     * @param {AiTechnicianManualUpdateArgs} args - Arguments to update one AiTechnicianManual.
+     * @example
+     * // Update one AiTechnicianManual
+     * const aiTechnicianManual = await prisma.aiTechnicianManual.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AiTechnicianManualUpdateArgs>(args: SelectSubset<T, AiTechnicianManualUpdateArgs<ExtArgs>>): Prisma__AiTechnicianManualClient<$Result.GetResult<Prisma.$AiTechnicianManualPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AiTechnicianManuals.
+     * @param {AiTechnicianManualDeleteManyArgs} args - Arguments to filter AiTechnicianManuals to delete.
+     * @example
+     * // Delete a few AiTechnicianManuals
+     * const { count } = await prisma.aiTechnicianManual.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AiTechnicianManualDeleteManyArgs>(args?: SelectSubset<T, AiTechnicianManualDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiTechnicianManuals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianManualUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AiTechnicianManuals
+     * const aiTechnicianManual = await prisma.aiTechnicianManual.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AiTechnicianManualUpdateManyArgs>(args: SelectSubset<T, AiTechnicianManualUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiTechnicianManuals and returns the data updated in the database.
+     * @param {AiTechnicianManualUpdateManyAndReturnArgs} args - Arguments to update many AiTechnicianManuals.
+     * @example
+     * // Update many AiTechnicianManuals
+     * const aiTechnicianManual = await prisma.aiTechnicianManual.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AiTechnicianManuals and only return the `id`
+     * const aiTechnicianManualWithIdOnly = await prisma.aiTechnicianManual.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AiTechnicianManualUpdateManyAndReturnArgs>(args: SelectSubset<T, AiTechnicianManualUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiTechnicianManualPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AiTechnicianManual.
+     * @param {AiTechnicianManualUpsertArgs} args - Arguments to update or create a AiTechnicianManual.
+     * @example
+     * // Update or create a AiTechnicianManual
+     * const aiTechnicianManual = await prisma.aiTechnicianManual.upsert({
+     *   create: {
+     *     // ... data to create a AiTechnicianManual
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AiTechnicianManual we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AiTechnicianManualUpsertArgs>(args: SelectSubset<T, AiTechnicianManualUpsertArgs<ExtArgs>>): Prisma__AiTechnicianManualClient<$Result.GetResult<Prisma.$AiTechnicianManualPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AiTechnicianManuals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianManualCountArgs} args - Arguments to filter AiTechnicianManuals to count.
+     * @example
+     * // Count the number of AiTechnicianManuals
+     * const count = await prisma.aiTechnicianManual.count({
+     *   where: {
+     *     // ... the filter for the AiTechnicianManuals we want to count
+     *   }
+     * })
+    **/
+    count<T extends AiTechnicianManualCountArgs>(
+      args?: Subset<T, AiTechnicianManualCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AiTechnicianManualCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AiTechnicianManual.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianManualAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AiTechnicianManualAggregateArgs>(args: Subset<T, AiTechnicianManualAggregateArgs>): Prisma.PrismaPromise<GetAiTechnicianManualAggregateType<T>>
+
+    /**
+     * Group by AiTechnicianManual.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTechnicianManualGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AiTechnicianManualGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AiTechnicianManualGroupByArgs['orderBy'] }
+        : { orderBy?: AiTechnicianManualGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AiTechnicianManualGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAiTechnicianManualGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AiTechnicianManual model
+   */
+  readonly fields: AiTechnicianManualFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AiTechnicianManual.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AiTechnicianManualClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    technician<T extends AiTechnicianDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AiTechnicianDefaultArgs<ExtArgs>>): Prisma__AiTechnicianClient<$Result.GetResult<Prisma.$AiTechnicianPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AiTechnicianManual model
+   */
+  interface AiTechnicianManualFieldRefs {
+    readonly id: FieldRef<"AiTechnicianManual", 'String'>
+    readonly technicianId: FieldRef<"AiTechnicianManual", 'String'>
+    readonly projectId: FieldRef<"AiTechnicianManual", 'String'>
+    readonly projectName: FieldRef<"AiTechnicianManual", 'String'>
+    readonly vectorStoreId: FieldRef<"AiTechnicianManual", 'String'>
+    readonly manualId: FieldRef<"AiTechnicianManual", 'String'>
+    readonly manualName: FieldRef<"AiTechnicianManual", 'String'>
+    readonly createdAt: FieldRef<"AiTechnicianManual", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AiTechnicianManual findUnique
+   */
+  export type AiTechnicianManualFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianManual
+     */
+    select?: AiTechnicianManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnicianManual
+     */
+    omit?: AiTechnicianManualOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianManualInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTechnicianManual to fetch.
+     */
+    where: AiTechnicianManualWhereUniqueInput
+  }
+
+  /**
+   * AiTechnicianManual findUniqueOrThrow
+   */
+  export type AiTechnicianManualFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianManual
+     */
+    select?: AiTechnicianManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnicianManual
+     */
+    omit?: AiTechnicianManualOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianManualInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTechnicianManual to fetch.
+     */
+    where: AiTechnicianManualWhereUniqueInput
+  }
+
+  /**
+   * AiTechnicianManual findFirst
+   */
+  export type AiTechnicianManualFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianManual
+     */
+    select?: AiTechnicianManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnicianManual
+     */
+    omit?: AiTechnicianManualOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianManualInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTechnicianManual to fetch.
+     */
+    where?: AiTechnicianManualWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiTechnicianManuals to fetch.
+     */
+    orderBy?: AiTechnicianManualOrderByWithRelationInput | AiTechnicianManualOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiTechnicianManuals.
+     */
+    cursor?: AiTechnicianManualWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiTechnicianManuals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiTechnicianManuals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiTechnicianManuals.
+     */
+    distinct?: AiTechnicianManualScalarFieldEnum | AiTechnicianManualScalarFieldEnum[]
+  }
+
+  /**
+   * AiTechnicianManual findFirstOrThrow
+   */
+  export type AiTechnicianManualFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianManual
+     */
+    select?: AiTechnicianManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnicianManual
+     */
+    omit?: AiTechnicianManualOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianManualInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTechnicianManual to fetch.
+     */
+    where?: AiTechnicianManualWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiTechnicianManuals to fetch.
+     */
+    orderBy?: AiTechnicianManualOrderByWithRelationInput | AiTechnicianManualOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiTechnicianManuals.
+     */
+    cursor?: AiTechnicianManualWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiTechnicianManuals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiTechnicianManuals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiTechnicianManuals.
+     */
+    distinct?: AiTechnicianManualScalarFieldEnum | AiTechnicianManualScalarFieldEnum[]
+  }
+
+  /**
+   * AiTechnicianManual findMany
+   */
+  export type AiTechnicianManualFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianManual
+     */
+    select?: AiTechnicianManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnicianManual
+     */
+    omit?: AiTechnicianManualOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianManualInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTechnicianManuals to fetch.
+     */
+    where?: AiTechnicianManualWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiTechnicianManuals to fetch.
+     */
+    orderBy?: AiTechnicianManualOrderByWithRelationInput | AiTechnicianManualOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AiTechnicianManuals.
+     */
+    cursor?: AiTechnicianManualWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiTechnicianManuals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiTechnicianManuals.
+     */
+    skip?: number
+    distinct?: AiTechnicianManualScalarFieldEnum | AiTechnicianManualScalarFieldEnum[]
+  }
+
+  /**
+   * AiTechnicianManual create
+   */
+  export type AiTechnicianManualCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianManual
+     */
+    select?: AiTechnicianManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnicianManual
+     */
+    omit?: AiTechnicianManualOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianManualInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AiTechnicianManual.
+     */
+    data: XOR<AiTechnicianManualCreateInput, AiTechnicianManualUncheckedCreateInput>
+  }
+
+  /**
+   * AiTechnicianManual createMany
+   */
+  export type AiTechnicianManualCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AiTechnicianManuals.
+     */
+    data: AiTechnicianManualCreateManyInput | AiTechnicianManualCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AiTechnicianManual createManyAndReturn
+   */
+  export type AiTechnicianManualCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianManual
+     */
+    select?: AiTechnicianManualSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnicianManual
+     */
+    omit?: AiTechnicianManualOmit<ExtArgs> | null
+    /**
+     * The data used to create many AiTechnicianManuals.
+     */
+    data: AiTechnicianManualCreateManyInput | AiTechnicianManualCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianManualIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AiTechnicianManual update
+   */
+  export type AiTechnicianManualUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianManual
+     */
+    select?: AiTechnicianManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnicianManual
+     */
+    omit?: AiTechnicianManualOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianManualInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AiTechnicianManual.
+     */
+    data: XOR<AiTechnicianManualUpdateInput, AiTechnicianManualUncheckedUpdateInput>
+    /**
+     * Choose, which AiTechnicianManual to update.
+     */
+    where: AiTechnicianManualWhereUniqueInput
+  }
+
+  /**
+   * AiTechnicianManual updateMany
+   */
+  export type AiTechnicianManualUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AiTechnicianManuals.
+     */
+    data: XOR<AiTechnicianManualUpdateManyMutationInput, AiTechnicianManualUncheckedUpdateManyInput>
+    /**
+     * Filter which AiTechnicianManuals to update
+     */
+    where?: AiTechnicianManualWhereInput
+    /**
+     * Limit how many AiTechnicianManuals to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiTechnicianManual updateManyAndReturn
+   */
+  export type AiTechnicianManualUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianManual
+     */
+    select?: AiTechnicianManualSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnicianManual
+     */
+    omit?: AiTechnicianManualOmit<ExtArgs> | null
+    /**
+     * The data used to update AiTechnicianManuals.
+     */
+    data: XOR<AiTechnicianManualUpdateManyMutationInput, AiTechnicianManualUncheckedUpdateManyInput>
+    /**
+     * Filter which AiTechnicianManuals to update
+     */
+    where?: AiTechnicianManualWhereInput
+    /**
+     * Limit how many AiTechnicianManuals to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianManualIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AiTechnicianManual upsert
+   */
+  export type AiTechnicianManualUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianManual
+     */
+    select?: AiTechnicianManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnicianManual
+     */
+    omit?: AiTechnicianManualOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianManualInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AiTechnicianManual to update in case it exists.
+     */
+    where: AiTechnicianManualWhereUniqueInput
+    /**
+     * In case the AiTechnicianManual found by the `where` argument doesn't exist, create a new AiTechnicianManual with this data.
+     */
+    create: XOR<AiTechnicianManualCreateInput, AiTechnicianManualUncheckedCreateInput>
+    /**
+     * In case the AiTechnicianManual was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AiTechnicianManualUpdateInput, AiTechnicianManualUncheckedUpdateInput>
+  }
+
+  /**
+   * AiTechnicianManual delete
+   */
+  export type AiTechnicianManualDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianManual
+     */
+    select?: AiTechnicianManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnicianManual
+     */
+    omit?: AiTechnicianManualOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianManualInclude<ExtArgs> | null
+    /**
+     * Filter which AiTechnicianManual to delete.
+     */
+    where: AiTechnicianManualWhereUniqueInput
+  }
+
+  /**
+   * AiTechnicianManual deleteMany
+   */
+  export type AiTechnicianManualDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiTechnicianManuals to delete
+     */
+    where?: AiTechnicianManualWhereInput
+    /**
+     * Limit how many AiTechnicianManuals to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiTechnicianManual without action
+   */
+  export type AiTechnicianManualDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTechnicianManual
+     */
+    select?: AiTechnicianManualSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTechnicianManual
+     */
+    omit?: AiTechnicianManualOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTechnicianManualInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -12879,6 +16849,61 @@ export namespace Prisma {
   };
 
   export type AssistantScalarFieldEnum = (typeof AssistantScalarFieldEnum)[keyof typeof AssistantScalarFieldEnum]
+
+
+  export const TechnicianExperienceScalarFieldEnum: {
+    id: 'id',
+    technicianId: 'technicianId',
+    projectId: 'projectId',
+    manualId: 'manualId',
+    manualName: 'manualName',
+    title: 'title',
+    question: 'question',
+    answer: 'answer',
+    symptoms: 'symptoms',
+    cause: 'cause',
+    solution: 'solution',
+    tags: 'tags',
+    source: 'source',
+    createdById: 'createdById',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TechnicianExperienceScalarFieldEnum = (typeof TechnicianExperienceScalarFieldEnum)[keyof typeof TechnicianExperienceScalarFieldEnum]
+
+
+  export const AiTechnicianScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    domain: 'domain',
+    brands: 'brands',
+    productTypes: 'productTypes',
+    instructions: 'instructions',
+    responseStyle: 'responseStyle',
+    webEnabled: 'webEnabled',
+    experienceEnabled: 'experienceEnabled',
+    active: 'active',
+    createdById: 'createdById',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AiTechnicianScalarFieldEnum = (typeof AiTechnicianScalarFieldEnum)[keyof typeof AiTechnicianScalarFieldEnum]
+
+
+  export const AiTechnicianManualScalarFieldEnum: {
+    id: 'id',
+    technicianId: 'technicianId',
+    projectId: 'projectId',
+    projectName: 'projectName',
+    vectorStoreId: 'vectorStoreId',
+    manualId: 'manualId',
+    manualName: 'manualName',
+    createdAt: 'createdAt'
+  };
+
+  export type AiTechnicianManualScalarFieldEnum = (typeof AiTechnicianManualScalarFieldEnum)[keyof typeof AiTechnicianManualScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -13213,6 +17238,8 @@ export namespace Prisma {
     accounts?: AccountListRelationFilter
     members?: MemberListRelationFilter
     invitations?: InvitationListRelationFilter
+    technicianExperiences?: TechnicianExperienceListRelationFilter
+    aiTechnicians?: AiTechnicianListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -13232,6 +17259,8 @@ export namespace Prisma {
     accounts?: AccountOrderByRelationAggregateInput
     members?: MemberOrderByRelationAggregateInput
     invitations?: InvitationOrderByRelationAggregateInput
+    technicianExperiences?: TechnicianExperienceOrderByRelationAggregateInput
+    aiTechnicians?: AiTechnicianOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -13254,6 +17283,8 @@ export namespace Prisma {
     accounts?: AccountListRelationFilter
     members?: MemberListRelationFilter
     invitations?: InvitationListRelationFilter
+    technicianExperiences?: TechnicianExperienceListRelationFilter
+    aiTechnicians?: AiTechnicianListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -13696,6 +17727,291 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Assistant"> | Date | string
   }
 
+  export type TechnicianExperienceWhereInput = {
+    AND?: TechnicianExperienceWhereInput | TechnicianExperienceWhereInput[]
+    OR?: TechnicianExperienceWhereInput[]
+    NOT?: TechnicianExperienceWhereInput | TechnicianExperienceWhereInput[]
+    id?: StringFilter<"TechnicianExperience"> | string
+    technicianId?: StringNullableFilter<"TechnicianExperience"> | string | null
+    projectId?: StringNullableFilter<"TechnicianExperience"> | string | null
+    manualId?: StringNullableFilter<"TechnicianExperience"> | string | null
+    manualName?: StringNullableFilter<"TechnicianExperience"> | string | null
+    title?: StringFilter<"TechnicianExperience"> | string
+    question?: StringFilter<"TechnicianExperience"> | string
+    answer?: StringFilter<"TechnicianExperience"> | string
+    symptoms?: StringNullableFilter<"TechnicianExperience"> | string | null
+    cause?: StringNullableFilter<"TechnicianExperience"> | string | null
+    solution?: StringNullableFilter<"TechnicianExperience"> | string | null
+    tags?: StringNullableFilter<"TechnicianExperience"> | string | null
+    source?: StringFilter<"TechnicianExperience"> | string
+    createdById?: StringNullableFilter<"TechnicianExperience"> | string | null
+    createdAt?: DateTimeFilter<"TechnicianExperience"> | Date | string
+    updatedAt?: DateTimeFilter<"TechnicianExperience"> | Date | string
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    technician?: XOR<AiTechnicianNullableScalarRelationFilter, AiTechnicianWhereInput> | null
+  }
+
+  export type TechnicianExperienceOrderByWithRelationInput = {
+    id?: SortOrder
+    technicianId?: SortOrderInput | SortOrder
+    projectId?: SortOrderInput | SortOrder
+    manualId?: SortOrderInput | SortOrder
+    manualName?: SortOrderInput | SortOrder
+    title?: SortOrder
+    question?: SortOrder
+    answer?: SortOrder
+    symptoms?: SortOrderInput | SortOrder
+    cause?: SortOrderInput | SortOrder
+    solution?: SortOrderInput | SortOrder
+    tags?: SortOrderInput | SortOrder
+    source?: SortOrder
+    createdById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: UserOrderByWithRelationInput
+    technician?: AiTechnicianOrderByWithRelationInput
+  }
+
+  export type TechnicianExperienceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TechnicianExperienceWhereInput | TechnicianExperienceWhereInput[]
+    OR?: TechnicianExperienceWhereInput[]
+    NOT?: TechnicianExperienceWhereInput | TechnicianExperienceWhereInput[]
+    technicianId?: StringNullableFilter<"TechnicianExperience"> | string | null
+    projectId?: StringNullableFilter<"TechnicianExperience"> | string | null
+    manualId?: StringNullableFilter<"TechnicianExperience"> | string | null
+    manualName?: StringNullableFilter<"TechnicianExperience"> | string | null
+    title?: StringFilter<"TechnicianExperience"> | string
+    question?: StringFilter<"TechnicianExperience"> | string
+    answer?: StringFilter<"TechnicianExperience"> | string
+    symptoms?: StringNullableFilter<"TechnicianExperience"> | string | null
+    cause?: StringNullableFilter<"TechnicianExperience"> | string | null
+    solution?: StringNullableFilter<"TechnicianExperience"> | string | null
+    tags?: StringNullableFilter<"TechnicianExperience"> | string | null
+    source?: StringFilter<"TechnicianExperience"> | string
+    createdById?: StringNullableFilter<"TechnicianExperience"> | string | null
+    createdAt?: DateTimeFilter<"TechnicianExperience"> | Date | string
+    updatedAt?: DateTimeFilter<"TechnicianExperience"> | Date | string
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    technician?: XOR<AiTechnicianNullableScalarRelationFilter, AiTechnicianWhereInput> | null
+  }, "id">
+
+  export type TechnicianExperienceOrderByWithAggregationInput = {
+    id?: SortOrder
+    technicianId?: SortOrderInput | SortOrder
+    projectId?: SortOrderInput | SortOrder
+    manualId?: SortOrderInput | SortOrder
+    manualName?: SortOrderInput | SortOrder
+    title?: SortOrder
+    question?: SortOrder
+    answer?: SortOrder
+    symptoms?: SortOrderInput | SortOrder
+    cause?: SortOrderInput | SortOrder
+    solution?: SortOrderInput | SortOrder
+    tags?: SortOrderInput | SortOrder
+    source?: SortOrder
+    createdById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TechnicianExperienceCountOrderByAggregateInput
+    _max?: TechnicianExperienceMaxOrderByAggregateInput
+    _min?: TechnicianExperienceMinOrderByAggregateInput
+  }
+
+  export type TechnicianExperienceScalarWhereWithAggregatesInput = {
+    AND?: TechnicianExperienceScalarWhereWithAggregatesInput | TechnicianExperienceScalarWhereWithAggregatesInput[]
+    OR?: TechnicianExperienceScalarWhereWithAggregatesInput[]
+    NOT?: TechnicianExperienceScalarWhereWithAggregatesInput | TechnicianExperienceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TechnicianExperience"> | string
+    technicianId?: StringNullableWithAggregatesFilter<"TechnicianExperience"> | string | null
+    projectId?: StringNullableWithAggregatesFilter<"TechnicianExperience"> | string | null
+    manualId?: StringNullableWithAggregatesFilter<"TechnicianExperience"> | string | null
+    manualName?: StringNullableWithAggregatesFilter<"TechnicianExperience"> | string | null
+    title?: StringWithAggregatesFilter<"TechnicianExperience"> | string
+    question?: StringWithAggregatesFilter<"TechnicianExperience"> | string
+    answer?: StringWithAggregatesFilter<"TechnicianExperience"> | string
+    symptoms?: StringNullableWithAggregatesFilter<"TechnicianExperience"> | string | null
+    cause?: StringNullableWithAggregatesFilter<"TechnicianExperience"> | string | null
+    solution?: StringNullableWithAggregatesFilter<"TechnicianExperience"> | string | null
+    tags?: StringNullableWithAggregatesFilter<"TechnicianExperience"> | string | null
+    source?: StringWithAggregatesFilter<"TechnicianExperience"> | string
+    createdById?: StringNullableWithAggregatesFilter<"TechnicianExperience"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"TechnicianExperience"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"TechnicianExperience"> | Date | string
+  }
+
+  export type AiTechnicianWhereInput = {
+    AND?: AiTechnicianWhereInput | AiTechnicianWhereInput[]
+    OR?: AiTechnicianWhereInput[]
+    NOT?: AiTechnicianWhereInput | AiTechnicianWhereInput[]
+    id?: StringFilter<"AiTechnician"> | string
+    name?: StringFilter<"AiTechnician"> | string
+    domain?: StringFilter<"AiTechnician"> | string
+    brands?: StringNullableFilter<"AiTechnician"> | string | null
+    productTypes?: StringNullableFilter<"AiTechnician"> | string | null
+    instructions?: StringFilter<"AiTechnician"> | string
+    responseStyle?: StringFilter<"AiTechnician"> | string
+    webEnabled?: BoolFilter<"AiTechnician"> | boolean
+    experienceEnabled?: BoolFilter<"AiTechnician"> | boolean
+    active?: BoolFilter<"AiTechnician"> | boolean
+    createdById?: StringNullableFilter<"AiTechnician"> | string | null
+    createdAt?: DateTimeFilter<"AiTechnician"> | Date | string
+    updatedAt?: DateTimeFilter<"AiTechnician"> | Date | string
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    manuals?: AiTechnicianManualListRelationFilter
+    experiences?: TechnicianExperienceListRelationFilter
+  }
+
+  export type AiTechnicianOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    domain?: SortOrder
+    brands?: SortOrderInput | SortOrder
+    productTypes?: SortOrderInput | SortOrder
+    instructions?: SortOrder
+    responseStyle?: SortOrder
+    webEnabled?: SortOrder
+    experienceEnabled?: SortOrder
+    active?: SortOrder
+    createdById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: UserOrderByWithRelationInput
+    manuals?: AiTechnicianManualOrderByRelationAggregateInput
+    experiences?: TechnicianExperienceOrderByRelationAggregateInput
+  }
+
+  export type AiTechnicianWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AiTechnicianWhereInput | AiTechnicianWhereInput[]
+    OR?: AiTechnicianWhereInput[]
+    NOT?: AiTechnicianWhereInput | AiTechnicianWhereInput[]
+    name?: StringFilter<"AiTechnician"> | string
+    domain?: StringFilter<"AiTechnician"> | string
+    brands?: StringNullableFilter<"AiTechnician"> | string | null
+    productTypes?: StringNullableFilter<"AiTechnician"> | string | null
+    instructions?: StringFilter<"AiTechnician"> | string
+    responseStyle?: StringFilter<"AiTechnician"> | string
+    webEnabled?: BoolFilter<"AiTechnician"> | boolean
+    experienceEnabled?: BoolFilter<"AiTechnician"> | boolean
+    active?: BoolFilter<"AiTechnician"> | boolean
+    createdById?: StringNullableFilter<"AiTechnician"> | string | null
+    createdAt?: DateTimeFilter<"AiTechnician"> | Date | string
+    updatedAt?: DateTimeFilter<"AiTechnician"> | Date | string
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    manuals?: AiTechnicianManualListRelationFilter
+    experiences?: TechnicianExperienceListRelationFilter
+  }, "id">
+
+  export type AiTechnicianOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    domain?: SortOrder
+    brands?: SortOrderInput | SortOrder
+    productTypes?: SortOrderInput | SortOrder
+    instructions?: SortOrder
+    responseStyle?: SortOrder
+    webEnabled?: SortOrder
+    experienceEnabled?: SortOrder
+    active?: SortOrder
+    createdById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AiTechnicianCountOrderByAggregateInput
+    _max?: AiTechnicianMaxOrderByAggregateInput
+    _min?: AiTechnicianMinOrderByAggregateInput
+  }
+
+  export type AiTechnicianScalarWhereWithAggregatesInput = {
+    AND?: AiTechnicianScalarWhereWithAggregatesInput | AiTechnicianScalarWhereWithAggregatesInput[]
+    OR?: AiTechnicianScalarWhereWithAggregatesInput[]
+    NOT?: AiTechnicianScalarWhereWithAggregatesInput | AiTechnicianScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AiTechnician"> | string
+    name?: StringWithAggregatesFilter<"AiTechnician"> | string
+    domain?: StringWithAggregatesFilter<"AiTechnician"> | string
+    brands?: StringNullableWithAggregatesFilter<"AiTechnician"> | string | null
+    productTypes?: StringNullableWithAggregatesFilter<"AiTechnician"> | string | null
+    instructions?: StringWithAggregatesFilter<"AiTechnician"> | string
+    responseStyle?: StringWithAggregatesFilter<"AiTechnician"> | string
+    webEnabled?: BoolWithAggregatesFilter<"AiTechnician"> | boolean
+    experienceEnabled?: BoolWithAggregatesFilter<"AiTechnician"> | boolean
+    active?: BoolWithAggregatesFilter<"AiTechnician"> | boolean
+    createdById?: StringNullableWithAggregatesFilter<"AiTechnician"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"AiTechnician"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AiTechnician"> | Date | string
+  }
+
+  export type AiTechnicianManualWhereInput = {
+    AND?: AiTechnicianManualWhereInput | AiTechnicianManualWhereInput[]
+    OR?: AiTechnicianManualWhereInput[]
+    NOT?: AiTechnicianManualWhereInput | AiTechnicianManualWhereInput[]
+    id?: StringFilter<"AiTechnicianManual"> | string
+    technicianId?: StringFilter<"AiTechnicianManual"> | string
+    projectId?: StringFilter<"AiTechnicianManual"> | string
+    projectName?: StringFilter<"AiTechnicianManual"> | string
+    vectorStoreId?: StringFilter<"AiTechnicianManual"> | string
+    manualId?: StringFilter<"AiTechnicianManual"> | string
+    manualName?: StringFilter<"AiTechnicianManual"> | string
+    createdAt?: DateTimeFilter<"AiTechnicianManual"> | Date | string
+    technician?: XOR<AiTechnicianScalarRelationFilter, AiTechnicianWhereInput>
+  }
+
+  export type AiTechnicianManualOrderByWithRelationInput = {
+    id?: SortOrder
+    technicianId?: SortOrder
+    projectId?: SortOrder
+    projectName?: SortOrder
+    vectorStoreId?: SortOrder
+    manualId?: SortOrder
+    manualName?: SortOrder
+    createdAt?: SortOrder
+    technician?: AiTechnicianOrderByWithRelationInput
+  }
+
+  export type AiTechnicianManualWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    technicianId_projectId_manualId?: AiTechnicianManualTechnicianIdProjectIdManualIdCompoundUniqueInput
+    AND?: AiTechnicianManualWhereInput | AiTechnicianManualWhereInput[]
+    OR?: AiTechnicianManualWhereInput[]
+    NOT?: AiTechnicianManualWhereInput | AiTechnicianManualWhereInput[]
+    technicianId?: StringFilter<"AiTechnicianManual"> | string
+    projectId?: StringFilter<"AiTechnicianManual"> | string
+    projectName?: StringFilter<"AiTechnicianManual"> | string
+    vectorStoreId?: StringFilter<"AiTechnicianManual"> | string
+    manualId?: StringFilter<"AiTechnicianManual"> | string
+    manualName?: StringFilter<"AiTechnicianManual"> | string
+    createdAt?: DateTimeFilter<"AiTechnicianManual"> | Date | string
+    technician?: XOR<AiTechnicianScalarRelationFilter, AiTechnicianWhereInput>
+  }, "id" | "technicianId_projectId_manualId">
+
+  export type AiTechnicianManualOrderByWithAggregationInput = {
+    id?: SortOrder
+    technicianId?: SortOrder
+    projectId?: SortOrder
+    projectName?: SortOrder
+    vectorStoreId?: SortOrder
+    manualId?: SortOrder
+    manualName?: SortOrder
+    createdAt?: SortOrder
+    _count?: AiTechnicianManualCountOrderByAggregateInput
+    _max?: AiTechnicianManualMaxOrderByAggregateInput
+    _min?: AiTechnicianManualMinOrderByAggregateInput
+  }
+
+  export type AiTechnicianManualScalarWhereWithAggregatesInput = {
+    AND?: AiTechnicianManualScalarWhereWithAggregatesInput | AiTechnicianManualScalarWhereWithAggregatesInput[]
+    OR?: AiTechnicianManualScalarWhereWithAggregatesInput[]
+    NOT?: AiTechnicianManualScalarWhereWithAggregatesInput | AiTechnicianManualScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AiTechnicianManual"> | string
+    technicianId?: StringWithAggregatesFilter<"AiTechnicianManual"> | string
+    projectId?: StringWithAggregatesFilter<"AiTechnicianManual"> | string
+    projectName?: StringWithAggregatesFilter<"AiTechnicianManual"> | string
+    vectorStoreId?: StringWithAggregatesFilter<"AiTechnicianManual"> | string
+    manualId?: StringWithAggregatesFilter<"AiTechnicianManual"> | string
+    manualName?: StringWithAggregatesFilter<"AiTechnicianManual"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"AiTechnicianManual"> | Date | string
+  }
+
   export type OrganizationCreateInput = {
     id: string
     name: string
@@ -13906,6 +18222,8 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     members?: MemberCreateNestedManyWithoutUserInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
+    technicianExperiences?: TechnicianExperienceCreateNestedManyWithoutCreatedByInput
+    aiTechnicians?: AiTechnicianCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -13925,6 +18243,8 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     members?: MemberUncheckedCreateNestedManyWithoutUserInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    technicianExperiences?: TechnicianExperienceUncheckedCreateNestedManyWithoutCreatedByInput
+    aiTechnicians?: AiTechnicianUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
@@ -13944,6 +18264,8 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     members?: MemberUpdateManyWithoutUserNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
+    technicianExperiences?: TechnicianExperienceUpdateManyWithoutCreatedByNestedInput
+    aiTechnicians?: AiTechnicianUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -13963,6 +18285,8 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     members?: MemberUncheckedUpdateManyWithoutUserNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    technicianExperiences?: TechnicianExperienceUncheckedUpdateManyWithoutCreatedByNestedInput
+    aiTechnicians?: AiTechnicianUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -14453,6 +18777,332 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TechnicianExperienceCreateInput = {
+    id?: string
+    projectId?: string | null
+    manualId?: string | null
+    manualName?: string | null
+    title: string
+    question: string
+    answer: string
+    symptoms?: string | null
+    cause?: string | null
+    solution?: string | null
+    tags?: string | null
+    source?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutTechnicianExperiencesInput
+    technician?: AiTechnicianCreateNestedOneWithoutExperiencesInput
+  }
+
+  export type TechnicianExperienceUncheckedCreateInput = {
+    id?: string
+    technicianId?: string | null
+    projectId?: string | null
+    manualId?: string | null
+    manualName?: string | null
+    title: string
+    question: string
+    answer: string
+    symptoms?: string | null
+    cause?: string | null
+    solution?: string | null
+    tags?: string | null
+    source?: string
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TechnicianExperienceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualName?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    symptoms?: NullableStringFieldUpdateOperationsInput | string | null
+    cause?: NullableStringFieldUpdateOperationsInput | string | null
+    solution?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutTechnicianExperiencesNestedInput
+    technician?: AiTechnicianUpdateOneWithoutExperiencesNestedInput
+  }
+
+  export type TechnicianExperienceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    technicianId?: NullableStringFieldUpdateOperationsInput | string | null
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualName?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    symptoms?: NullableStringFieldUpdateOperationsInput | string | null
+    cause?: NullableStringFieldUpdateOperationsInput | string | null
+    solution?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TechnicianExperienceCreateManyInput = {
+    id?: string
+    technicianId?: string | null
+    projectId?: string | null
+    manualId?: string | null
+    manualName?: string | null
+    title: string
+    question: string
+    answer: string
+    symptoms?: string | null
+    cause?: string | null
+    solution?: string | null
+    tags?: string | null
+    source?: string
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TechnicianExperienceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualName?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    symptoms?: NullableStringFieldUpdateOperationsInput | string | null
+    cause?: NullableStringFieldUpdateOperationsInput | string | null
+    solution?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TechnicianExperienceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    technicianId?: NullableStringFieldUpdateOperationsInput | string | null
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualName?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    symptoms?: NullableStringFieldUpdateOperationsInput | string | null
+    cause?: NullableStringFieldUpdateOperationsInput | string | null
+    solution?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiTechnicianCreateInput = {
+    id?: string
+    name: string
+    domain: string
+    brands?: string | null
+    productTypes?: string | null
+    instructions: string
+    responseStyle?: string
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutAiTechniciansInput
+    manuals?: AiTechnicianManualCreateNestedManyWithoutTechnicianInput
+    experiences?: TechnicianExperienceCreateNestedManyWithoutTechnicianInput
+  }
+
+  export type AiTechnicianUncheckedCreateInput = {
+    id?: string
+    name: string
+    domain: string
+    brands?: string | null
+    productTypes?: string | null
+    instructions: string
+    responseStyle?: string
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    manuals?: AiTechnicianManualUncheckedCreateNestedManyWithoutTechnicianInput
+    experiences?: TechnicianExperienceUncheckedCreateNestedManyWithoutTechnicianInput
+  }
+
+  export type AiTechnicianUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    brands?: NullableStringFieldUpdateOperationsInput | string | null
+    productTypes?: NullableStringFieldUpdateOperationsInput | string | null
+    instructions?: StringFieldUpdateOperationsInput | string
+    responseStyle?: StringFieldUpdateOperationsInput | string
+    webEnabled?: BoolFieldUpdateOperationsInput | boolean
+    experienceEnabled?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutAiTechniciansNestedInput
+    manuals?: AiTechnicianManualUpdateManyWithoutTechnicianNestedInput
+    experiences?: TechnicianExperienceUpdateManyWithoutTechnicianNestedInput
+  }
+
+  export type AiTechnicianUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    brands?: NullableStringFieldUpdateOperationsInput | string | null
+    productTypes?: NullableStringFieldUpdateOperationsInput | string | null
+    instructions?: StringFieldUpdateOperationsInput | string
+    responseStyle?: StringFieldUpdateOperationsInput | string
+    webEnabled?: BoolFieldUpdateOperationsInput | boolean
+    experienceEnabled?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    manuals?: AiTechnicianManualUncheckedUpdateManyWithoutTechnicianNestedInput
+    experiences?: TechnicianExperienceUncheckedUpdateManyWithoutTechnicianNestedInput
+  }
+
+  export type AiTechnicianCreateManyInput = {
+    id?: string
+    name: string
+    domain: string
+    brands?: string | null
+    productTypes?: string | null
+    instructions: string
+    responseStyle?: string
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AiTechnicianUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    brands?: NullableStringFieldUpdateOperationsInput | string | null
+    productTypes?: NullableStringFieldUpdateOperationsInput | string | null
+    instructions?: StringFieldUpdateOperationsInput | string
+    responseStyle?: StringFieldUpdateOperationsInput | string
+    webEnabled?: BoolFieldUpdateOperationsInput | boolean
+    experienceEnabled?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiTechnicianUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    brands?: NullableStringFieldUpdateOperationsInput | string | null
+    productTypes?: NullableStringFieldUpdateOperationsInput | string | null
+    instructions?: StringFieldUpdateOperationsInput | string
+    responseStyle?: StringFieldUpdateOperationsInput | string
+    webEnabled?: BoolFieldUpdateOperationsInput | boolean
+    experienceEnabled?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiTechnicianManualCreateInput = {
+    id?: string
+    projectId: string
+    projectName: string
+    vectorStoreId: string
+    manualId: string
+    manualName: string
+    createdAt?: Date | string
+    technician: AiTechnicianCreateNestedOneWithoutManualsInput
+  }
+
+  export type AiTechnicianManualUncheckedCreateInput = {
+    id?: string
+    technicianId: string
+    projectId: string
+    projectName: string
+    vectorStoreId: string
+    manualId: string
+    manualName: string
+    createdAt?: Date | string
+  }
+
+  export type AiTechnicianManualUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    projectName?: StringFieldUpdateOperationsInput | string
+    vectorStoreId?: StringFieldUpdateOperationsInput | string
+    manualId?: StringFieldUpdateOperationsInput | string
+    manualName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    technician?: AiTechnicianUpdateOneRequiredWithoutManualsNestedInput
+  }
+
+  export type AiTechnicianManualUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    technicianId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    projectName?: StringFieldUpdateOperationsInput | string
+    vectorStoreId?: StringFieldUpdateOperationsInput | string
+    manualId?: StringFieldUpdateOperationsInput | string
+    manualName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiTechnicianManualCreateManyInput = {
+    id?: string
+    technicianId: string
+    projectId: string
+    projectName: string
+    vectorStoreId: string
+    manualId: string
+    manualName: string
+    createdAt?: Date | string
+  }
+
+  export type AiTechnicianManualUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    projectName?: StringFieldUpdateOperationsInput | string
+    vectorStoreId?: StringFieldUpdateOperationsInput | string
+    manualId?: StringFieldUpdateOperationsInput | string
+    manualName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiTechnicianManualUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    technicianId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    projectName?: StringFieldUpdateOperationsInput | string
+    vectorStoreId?: StringFieldUpdateOperationsInput | string
+    manualId?: StringFieldUpdateOperationsInput | string
+    manualName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -14717,11 +19367,31 @@ export namespace Prisma {
     none?: AccountWhereInput
   }
 
+  export type TechnicianExperienceListRelationFilter = {
+    every?: TechnicianExperienceWhereInput
+    some?: TechnicianExperienceWhereInput
+    none?: TechnicianExperienceWhereInput
+  }
+
+  export type AiTechnicianListRelationFilter = {
+    every?: AiTechnicianWhereInput
+    some?: AiTechnicianWhereInput
+    none?: AiTechnicianWhereInput
+  }
+
   export type SessionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type AccountOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TechnicianExperienceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AiTechnicianOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -15082,6 +19752,175 @@ export namespace Prisma {
     pageCount?: SortOrder
   }
 
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type AiTechnicianNullableScalarRelationFilter = {
+    is?: AiTechnicianWhereInput | null
+    isNot?: AiTechnicianWhereInput | null
+  }
+
+  export type TechnicianExperienceCountOrderByAggregateInput = {
+    id?: SortOrder
+    technicianId?: SortOrder
+    projectId?: SortOrder
+    manualId?: SortOrder
+    manualName?: SortOrder
+    title?: SortOrder
+    question?: SortOrder
+    answer?: SortOrder
+    symptoms?: SortOrder
+    cause?: SortOrder
+    solution?: SortOrder
+    tags?: SortOrder
+    source?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TechnicianExperienceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    technicianId?: SortOrder
+    projectId?: SortOrder
+    manualId?: SortOrder
+    manualName?: SortOrder
+    title?: SortOrder
+    question?: SortOrder
+    answer?: SortOrder
+    symptoms?: SortOrder
+    cause?: SortOrder
+    solution?: SortOrder
+    tags?: SortOrder
+    source?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TechnicianExperienceMinOrderByAggregateInput = {
+    id?: SortOrder
+    technicianId?: SortOrder
+    projectId?: SortOrder
+    manualId?: SortOrder
+    manualName?: SortOrder
+    title?: SortOrder
+    question?: SortOrder
+    answer?: SortOrder
+    symptoms?: SortOrder
+    cause?: SortOrder
+    solution?: SortOrder
+    tags?: SortOrder
+    source?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AiTechnicianManualListRelationFilter = {
+    every?: AiTechnicianManualWhereInput
+    some?: AiTechnicianManualWhereInput
+    none?: AiTechnicianManualWhereInput
+  }
+
+  export type AiTechnicianManualOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AiTechnicianCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    domain?: SortOrder
+    brands?: SortOrder
+    productTypes?: SortOrder
+    instructions?: SortOrder
+    responseStyle?: SortOrder
+    webEnabled?: SortOrder
+    experienceEnabled?: SortOrder
+    active?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AiTechnicianMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    domain?: SortOrder
+    brands?: SortOrder
+    productTypes?: SortOrder
+    instructions?: SortOrder
+    responseStyle?: SortOrder
+    webEnabled?: SortOrder
+    experienceEnabled?: SortOrder
+    active?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AiTechnicianMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    domain?: SortOrder
+    brands?: SortOrder
+    productTypes?: SortOrder
+    instructions?: SortOrder
+    responseStyle?: SortOrder
+    webEnabled?: SortOrder
+    experienceEnabled?: SortOrder
+    active?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AiTechnicianScalarRelationFilter = {
+    is?: AiTechnicianWhereInput
+    isNot?: AiTechnicianWhereInput
+  }
+
+  export type AiTechnicianManualTechnicianIdProjectIdManualIdCompoundUniqueInput = {
+    technicianId: string
+    projectId: string
+    manualId: string
+  }
+
+  export type AiTechnicianManualCountOrderByAggregateInput = {
+    id?: SortOrder
+    technicianId?: SortOrder
+    projectId?: SortOrder
+    projectName?: SortOrder
+    vectorStoreId?: SortOrder
+    manualId?: SortOrder
+    manualName?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AiTechnicianManualMaxOrderByAggregateInput = {
+    id?: SortOrder
+    technicianId?: SortOrder
+    projectId?: SortOrder
+    projectName?: SortOrder
+    vectorStoreId?: SortOrder
+    manualId?: SortOrder
+    manualName?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AiTechnicianManualMinOrderByAggregateInput = {
+    id?: SortOrder
+    technicianId?: SortOrder
+    projectId?: SortOrder
+    projectName?: SortOrder
+    vectorStoreId?: SortOrder
+    manualId?: SortOrder
+    manualName?: SortOrder
+    createdAt?: SortOrder
+  }
+
   export type MemberCreateNestedManyWithoutOrganizationInput = {
     create?: XOR<MemberCreateWithoutOrganizationInput, MemberUncheckedCreateWithoutOrganizationInput> | MemberCreateWithoutOrganizationInput[] | MemberUncheckedCreateWithoutOrganizationInput[]
     connectOrCreate?: MemberCreateOrConnectWithoutOrganizationInput | MemberCreateOrConnectWithoutOrganizationInput[]
@@ -15266,6 +20105,20 @@ export namespace Prisma {
     connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
   }
 
+  export type TechnicianExperienceCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<TechnicianExperienceCreateWithoutCreatedByInput, TechnicianExperienceUncheckedCreateWithoutCreatedByInput> | TechnicianExperienceCreateWithoutCreatedByInput[] | TechnicianExperienceUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: TechnicianExperienceCreateOrConnectWithoutCreatedByInput | TechnicianExperienceCreateOrConnectWithoutCreatedByInput[]
+    createMany?: TechnicianExperienceCreateManyCreatedByInputEnvelope
+    connect?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+  }
+
+  export type AiTechnicianCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<AiTechnicianCreateWithoutCreatedByInput, AiTechnicianUncheckedCreateWithoutCreatedByInput> | AiTechnicianCreateWithoutCreatedByInput[] | AiTechnicianUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: AiTechnicianCreateOrConnectWithoutCreatedByInput | AiTechnicianCreateOrConnectWithoutCreatedByInput[]
+    createMany?: AiTechnicianCreateManyCreatedByInputEnvelope
+    connect?: AiTechnicianWhereUniqueInput | AiTechnicianWhereUniqueInput[]
+  }
+
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -15292,6 +20145,20 @@ export namespace Prisma {
     connectOrCreate?: InvitationCreateOrConnectWithoutInviterInput | InvitationCreateOrConnectWithoutInviterInput[]
     createMany?: InvitationCreateManyInviterInputEnvelope
     connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+  }
+
+  export type TechnicianExperienceUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<TechnicianExperienceCreateWithoutCreatedByInput, TechnicianExperienceUncheckedCreateWithoutCreatedByInput> | TechnicianExperienceCreateWithoutCreatedByInput[] | TechnicianExperienceUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: TechnicianExperienceCreateOrConnectWithoutCreatedByInput | TechnicianExperienceCreateOrConnectWithoutCreatedByInput[]
+    createMany?: TechnicianExperienceCreateManyCreatedByInputEnvelope
+    connect?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+  }
+
+  export type AiTechnicianUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<AiTechnicianCreateWithoutCreatedByInput, AiTechnicianUncheckedCreateWithoutCreatedByInput> | AiTechnicianCreateWithoutCreatedByInput[] | AiTechnicianUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: AiTechnicianCreateOrConnectWithoutCreatedByInput | AiTechnicianCreateOrConnectWithoutCreatedByInput[]
+    createMany?: AiTechnicianCreateManyCreatedByInputEnvelope
+    connect?: AiTechnicianWhereUniqueInput | AiTechnicianWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -15366,6 +20233,34 @@ export namespace Prisma {
     deleteMany?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
   }
 
+  export type TechnicianExperienceUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<TechnicianExperienceCreateWithoutCreatedByInput, TechnicianExperienceUncheckedCreateWithoutCreatedByInput> | TechnicianExperienceCreateWithoutCreatedByInput[] | TechnicianExperienceUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: TechnicianExperienceCreateOrConnectWithoutCreatedByInput | TechnicianExperienceCreateOrConnectWithoutCreatedByInput[]
+    upsert?: TechnicianExperienceUpsertWithWhereUniqueWithoutCreatedByInput | TechnicianExperienceUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: TechnicianExperienceCreateManyCreatedByInputEnvelope
+    set?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    disconnect?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    delete?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    connect?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    update?: TechnicianExperienceUpdateWithWhereUniqueWithoutCreatedByInput | TechnicianExperienceUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: TechnicianExperienceUpdateManyWithWhereWithoutCreatedByInput | TechnicianExperienceUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: TechnicianExperienceScalarWhereInput | TechnicianExperienceScalarWhereInput[]
+  }
+
+  export type AiTechnicianUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<AiTechnicianCreateWithoutCreatedByInput, AiTechnicianUncheckedCreateWithoutCreatedByInput> | AiTechnicianCreateWithoutCreatedByInput[] | AiTechnicianUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: AiTechnicianCreateOrConnectWithoutCreatedByInput | AiTechnicianCreateOrConnectWithoutCreatedByInput[]
+    upsert?: AiTechnicianUpsertWithWhereUniqueWithoutCreatedByInput | AiTechnicianUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: AiTechnicianCreateManyCreatedByInputEnvelope
+    set?: AiTechnicianWhereUniqueInput | AiTechnicianWhereUniqueInput[]
+    disconnect?: AiTechnicianWhereUniqueInput | AiTechnicianWhereUniqueInput[]
+    delete?: AiTechnicianWhereUniqueInput | AiTechnicianWhereUniqueInput[]
+    connect?: AiTechnicianWhereUniqueInput | AiTechnicianWhereUniqueInput[]
+    update?: AiTechnicianUpdateWithWhereUniqueWithoutCreatedByInput | AiTechnicianUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: AiTechnicianUpdateManyWithWhereWithoutCreatedByInput | AiTechnicianUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: AiTechnicianScalarWhereInput | AiTechnicianScalarWhereInput[]
+  }
+
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -15422,6 +20317,34 @@ export namespace Prisma {
     deleteMany?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
   }
 
+  export type TechnicianExperienceUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<TechnicianExperienceCreateWithoutCreatedByInput, TechnicianExperienceUncheckedCreateWithoutCreatedByInput> | TechnicianExperienceCreateWithoutCreatedByInput[] | TechnicianExperienceUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: TechnicianExperienceCreateOrConnectWithoutCreatedByInput | TechnicianExperienceCreateOrConnectWithoutCreatedByInput[]
+    upsert?: TechnicianExperienceUpsertWithWhereUniqueWithoutCreatedByInput | TechnicianExperienceUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: TechnicianExperienceCreateManyCreatedByInputEnvelope
+    set?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    disconnect?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    delete?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    connect?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    update?: TechnicianExperienceUpdateWithWhereUniqueWithoutCreatedByInput | TechnicianExperienceUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: TechnicianExperienceUpdateManyWithWhereWithoutCreatedByInput | TechnicianExperienceUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: TechnicianExperienceScalarWhereInput | TechnicianExperienceScalarWhereInput[]
+  }
+
+  export type AiTechnicianUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<AiTechnicianCreateWithoutCreatedByInput, AiTechnicianUncheckedCreateWithoutCreatedByInput> | AiTechnicianCreateWithoutCreatedByInput[] | AiTechnicianUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: AiTechnicianCreateOrConnectWithoutCreatedByInput | AiTechnicianCreateOrConnectWithoutCreatedByInput[]
+    upsert?: AiTechnicianUpsertWithWhereUniqueWithoutCreatedByInput | AiTechnicianUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: AiTechnicianCreateManyCreatedByInputEnvelope
+    set?: AiTechnicianWhereUniqueInput | AiTechnicianWhereUniqueInput[]
+    disconnect?: AiTechnicianWhereUniqueInput | AiTechnicianWhereUniqueInput[]
+    delete?: AiTechnicianWhereUniqueInput | AiTechnicianWhereUniqueInput[]
+    connect?: AiTechnicianWhereUniqueInput | AiTechnicianWhereUniqueInput[]
+    update?: AiTechnicianUpdateWithWhereUniqueWithoutCreatedByInput | AiTechnicianUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: AiTechnicianUpdateManyWithWhereWithoutCreatedByInput | AiTechnicianUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: AiTechnicianScalarWhereInput | AiTechnicianScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutSessionsInput = {
     create?: XOR<UserCreateWithoutSessionsInput, UserUncheckedCreateWithoutSessionsInput>
     connectOrCreate?: UserCreateOrConnectWithoutSessionsInput
@@ -15464,6 +20387,152 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type UserCreateNestedOneWithoutTechnicianExperiencesInput = {
+    create?: XOR<UserCreateWithoutTechnicianExperiencesInput, UserUncheckedCreateWithoutTechnicianExperiencesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTechnicianExperiencesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type AiTechnicianCreateNestedOneWithoutExperiencesInput = {
+    create?: XOR<AiTechnicianCreateWithoutExperiencesInput, AiTechnicianUncheckedCreateWithoutExperiencesInput>
+    connectOrCreate?: AiTechnicianCreateOrConnectWithoutExperiencesInput
+    connect?: AiTechnicianWhereUniqueInput
+  }
+
+  export type UserUpdateOneWithoutTechnicianExperiencesNestedInput = {
+    create?: XOR<UserCreateWithoutTechnicianExperiencesInput, UserUncheckedCreateWithoutTechnicianExperiencesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTechnicianExperiencesInput
+    upsert?: UserUpsertWithoutTechnicianExperiencesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTechnicianExperiencesInput, UserUpdateWithoutTechnicianExperiencesInput>, UserUncheckedUpdateWithoutTechnicianExperiencesInput>
+  }
+
+  export type AiTechnicianUpdateOneWithoutExperiencesNestedInput = {
+    create?: XOR<AiTechnicianCreateWithoutExperiencesInput, AiTechnicianUncheckedCreateWithoutExperiencesInput>
+    connectOrCreate?: AiTechnicianCreateOrConnectWithoutExperiencesInput
+    upsert?: AiTechnicianUpsertWithoutExperiencesInput
+    disconnect?: AiTechnicianWhereInput | boolean
+    delete?: AiTechnicianWhereInput | boolean
+    connect?: AiTechnicianWhereUniqueInput
+    update?: XOR<XOR<AiTechnicianUpdateToOneWithWhereWithoutExperiencesInput, AiTechnicianUpdateWithoutExperiencesInput>, AiTechnicianUncheckedUpdateWithoutExperiencesInput>
+  }
+
+  export type UserCreateNestedOneWithoutAiTechniciansInput = {
+    create?: XOR<UserCreateWithoutAiTechniciansInput, UserUncheckedCreateWithoutAiTechniciansInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAiTechniciansInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type AiTechnicianManualCreateNestedManyWithoutTechnicianInput = {
+    create?: XOR<AiTechnicianManualCreateWithoutTechnicianInput, AiTechnicianManualUncheckedCreateWithoutTechnicianInput> | AiTechnicianManualCreateWithoutTechnicianInput[] | AiTechnicianManualUncheckedCreateWithoutTechnicianInput[]
+    connectOrCreate?: AiTechnicianManualCreateOrConnectWithoutTechnicianInput | AiTechnicianManualCreateOrConnectWithoutTechnicianInput[]
+    createMany?: AiTechnicianManualCreateManyTechnicianInputEnvelope
+    connect?: AiTechnicianManualWhereUniqueInput | AiTechnicianManualWhereUniqueInput[]
+  }
+
+  export type TechnicianExperienceCreateNestedManyWithoutTechnicianInput = {
+    create?: XOR<TechnicianExperienceCreateWithoutTechnicianInput, TechnicianExperienceUncheckedCreateWithoutTechnicianInput> | TechnicianExperienceCreateWithoutTechnicianInput[] | TechnicianExperienceUncheckedCreateWithoutTechnicianInput[]
+    connectOrCreate?: TechnicianExperienceCreateOrConnectWithoutTechnicianInput | TechnicianExperienceCreateOrConnectWithoutTechnicianInput[]
+    createMany?: TechnicianExperienceCreateManyTechnicianInputEnvelope
+    connect?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+  }
+
+  export type AiTechnicianManualUncheckedCreateNestedManyWithoutTechnicianInput = {
+    create?: XOR<AiTechnicianManualCreateWithoutTechnicianInput, AiTechnicianManualUncheckedCreateWithoutTechnicianInput> | AiTechnicianManualCreateWithoutTechnicianInput[] | AiTechnicianManualUncheckedCreateWithoutTechnicianInput[]
+    connectOrCreate?: AiTechnicianManualCreateOrConnectWithoutTechnicianInput | AiTechnicianManualCreateOrConnectWithoutTechnicianInput[]
+    createMany?: AiTechnicianManualCreateManyTechnicianInputEnvelope
+    connect?: AiTechnicianManualWhereUniqueInput | AiTechnicianManualWhereUniqueInput[]
+  }
+
+  export type TechnicianExperienceUncheckedCreateNestedManyWithoutTechnicianInput = {
+    create?: XOR<TechnicianExperienceCreateWithoutTechnicianInput, TechnicianExperienceUncheckedCreateWithoutTechnicianInput> | TechnicianExperienceCreateWithoutTechnicianInput[] | TechnicianExperienceUncheckedCreateWithoutTechnicianInput[]
+    connectOrCreate?: TechnicianExperienceCreateOrConnectWithoutTechnicianInput | TechnicianExperienceCreateOrConnectWithoutTechnicianInput[]
+    createMany?: TechnicianExperienceCreateManyTechnicianInputEnvelope
+    connect?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneWithoutAiTechniciansNestedInput = {
+    create?: XOR<UserCreateWithoutAiTechniciansInput, UserUncheckedCreateWithoutAiTechniciansInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAiTechniciansInput
+    upsert?: UserUpsertWithoutAiTechniciansInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAiTechniciansInput, UserUpdateWithoutAiTechniciansInput>, UserUncheckedUpdateWithoutAiTechniciansInput>
+  }
+
+  export type AiTechnicianManualUpdateManyWithoutTechnicianNestedInput = {
+    create?: XOR<AiTechnicianManualCreateWithoutTechnicianInput, AiTechnicianManualUncheckedCreateWithoutTechnicianInput> | AiTechnicianManualCreateWithoutTechnicianInput[] | AiTechnicianManualUncheckedCreateWithoutTechnicianInput[]
+    connectOrCreate?: AiTechnicianManualCreateOrConnectWithoutTechnicianInput | AiTechnicianManualCreateOrConnectWithoutTechnicianInput[]
+    upsert?: AiTechnicianManualUpsertWithWhereUniqueWithoutTechnicianInput | AiTechnicianManualUpsertWithWhereUniqueWithoutTechnicianInput[]
+    createMany?: AiTechnicianManualCreateManyTechnicianInputEnvelope
+    set?: AiTechnicianManualWhereUniqueInput | AiTechnicianManualWhereUniqueInput[]
+    disconnect?: AiTechnicianManualWhereUniqueInput | AiTechnicianManualWhereUniqueInput[]
+    delete?: AiTechnicianManualWhereUniqueInput | AiTechnicianManualWhereUniqueInput[]
+    connect?: AiTechnicianManualWhereUniqueInput | AiTechnicianManualWhereUniqueInput[]
+    update?: AiTechnicianManualUpdateWithWhereUniqueWithoutTechnicianInput | AiTechnicianManualUpdateWithWhereUniqueWithoutTechnicianInput[]
+    updateMany?: AiTechnicianManualUpdateManyWithWhereWithoutTechnicianInput | AiTechnicianManualUpdateManyWithWhereWithoutTechnicianInput[]
+    deleteMany?: AiTechnicianManualScalarWhereInput | AiTechnicianManualScalarWhereInput[]
+  }
+
+  export type TechnicianExperienceUpdateManyWithoutTechnicianNestedInput = {
+    create?: XOR<TechnicianExperienceCreateWithoutTechnicianInput, TechnicianExperienceUncheckedCreateWithoutTechnicianInput> | TechnicianExperienceCreateWithoutTechnicianInput[] | TechnicianExperienceUncheckedCreateWithoutTechnicianInput[]
+    connectOrCreate?: TechnicianExperienceCreateOrConnectWithoutTechnicianInput | TechnicianExperienceCreateOrConnectWithoutTechnicianInput[]
+    upsert?: TechnicianExperienceUpsertWithWhereUniqueWithoutTechnicianInput | TechnicianExperienceUpsertWithWhereUniqueWithoutTechnicianInput[]
+    createMany?: TechnicianExperienceCreateManyTechnicianInputEnvelope
+    set?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    disconnect?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    delete?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    connect?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    update?: TechnicianExperienceUpdateWithWhereUniqueWithoutTechnicianInput | TechnicianExperienceUpdateWithWhereUniqueWithoutTechnicianInput[]
+    updateMany?: TechnicianExperienceUpdateManyWithWhereWithoutTechnicianInput | TechnicianExperienceUpdateManyWithWhereWithoutTechnicianInput[]
+    deleteMany?: TechnicianExperienceScalarWhereInput | TechnicianExperienceScalarWhereInput[]
+  }
+
+  export type AiTechnicianManualUncheckedUpdateManyWithoutTechnicianNestedInput = {
+    create?: XOR<AiTechnicianManualCreateWithoutTechnicianInput, AiTechnicianManualUncheckedCreateWithoutTechnicianInput> | AiTechnicianManualCreateWithoutTechnicianInput[] | AiTechnicianManualUncheckedCreateWithoutTechnicianInput[]
+    connectOrCreate?: AiTechnicianManualCreateOrConnectWithoutTechnicianInput | AiTechnicianManualCreateOrConnectWithoutTechnicianInput[]
+    upsert?: AiTechnicianManualUpsertWithWhereUniqueWithoutTechnicianInput | AiTechnicianManualUpsertWithWhereUniqueWithoutTechnicianInput[]
+    createMany?: AiTechnicianManualCreateManyTechnicianInputEnvelope
+    set?: AiTechnicianManualWhereUniqueInput | AiTechnicianManualWhereUniqueInput[]
+    disconnect?: AiTechnicianManualWhereUniqueInput | AiTechnicianManualWhereUniqueInput[]
+    delete?: AiTechnicianManualWhereUniqueInput | AiTechnicianManualWhereUniqueInput[]
+    connect?: AiTechnicianManualWhereUniqueInput | AiTechnicianManualWhereUniqueInput[]
+    update?: AiTechnicianManualUpdateWithWhereUniqueWithoutTechnicianInput | AiTechnicianManualUpdateWithWhereUniqueWithoutTechnicianInput[]
+    updateMany?: AiTechnicianManualUpdateManyWithWhereWithoutTechnicianInput | AiTechnicianManualUpdateManyWithWhereWithoutTechnicianInput[]
+    deleteMany?: AiTechnicianManualScalarWhereInput | AiTechnicianManualScalarWhereInput[]
+  }
+
+  export type TechnicianExperienceUncheckedUpdateManyWithoutTechnicianNestedInput = {
+    create?: XOR<TechnicianExperienceCreateWithoutTechnicianInput, TechnicianExperienceUncheckedCreateWithoutTechnicianInput> | TechnicianExperienceCreateWithoutTechnicianInput[] | TechnicianExperienceUncheckedCreateWithoutTechnicianInput[]
+    connectOrCreate?: TechnicianExperienceCreateOrConnectWithoutTechnicianInput | TechnicianExperienceCreateOrConnectWithoutTechnicianInput[]
+    upsert?: TechnicianExperienceUpsertWithWhereUniqueWithoutTechnicianInput | TechnicianExperienceUpsertWithWhereUniqueWithoutTechnicianInput[]
+    createMany?: TechnicianExperienceCreateManyTechnicianInputEnvelope
+    set?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    disconnect?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    delete?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    connect?: TechnicianExperienceWhereUniqueInput | TechnicianExperienceWhereUniqueInput[]
+    update?: TechnicianExperienceUpdateWithWhereUniqueWithoutTechnicianInput | TechnicianExperienceUpdateWithWhereUniqueWithoutTechnicianInput[]
+    updateMany?: TechnicianExperienceUpdateManyWithWhereWithoutTechnicianInput | TechnicianExperienceUpdateManyWithWhereWithoutTechnicianInput[]
+    deleteMany?: TechnicianExperienceScalarWhereInput | TechnicianExperienceScalarWhereInput[]
+  }
+
+  export type AiTechnicianCreateNestedOneWithoutManualsInput = {
+    create?: XOR<AiTechnicianCreateWithoutManualsInput, AiTechnicianUncheckedCreateWithoutManualsInput>
+    connectOrCreate?: AiTechnicianCreateOrConnectWithoutManualsInput
+    connect?: AiTechnicianWhereUniqueInput
+  }
+
+  export type AiTechnicianUpdateOneRequiredWithoutManualsNestedInput = {
+    create?: XOR<AiTechnicianCreateWithoutManualsInput, AiTechnicianUncheckedCreateWithoutManualsInput>
+    connectOrCreate?: AiTechnicianCreateOrConnectWithoutManualsInput
+    upsert?: AiTechnicianUpsertWithoutManualsInput
+    connect?: AiTechnicianWhereUniqueInput
+    update?: XOR<XOR<AiTechnicianUpdateToOneWithWhereWithoutManualsInput, AiTechnicianUpdateWithoutManualsInput>, AiTechnicianUncheckedUpdateWithoutManualsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -15863,6 +20932,8 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
+    technicianExperiences?: TechnicianExperienceCreateNestedManyWithoutCreatedByInput
+    aiTechnicians?: AiTechnicianCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMembersInput = {
@@ -15881,6 +20952,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    technicianExperiences?: TechnicianExperienceUncheckedCreateNestedManyWithoutCreatedByInput
+    aiTechnicians?: AiTechnicianUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMembersInput = {
@@ -15946,6 +21019,8 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
+    technicianExperiences?: TechnicianExperienceUpdateManyWithoutCreatedByNestedInput
+    aiTechnicians?: AiTechnicianUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMembersInput = {
@@ -15964,6 +21039,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    technicianExperiences?: TechnicianExperienceUncheckedUpdateManyWithoutCreatedByNestedInput
+    aiTechnicians?: AiTechnicianUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type OrganizationCreateWithoutInvitationsInput = {
@@ -16007,6 +21084,8 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     members?: MemberCreateNestedManyWithoutUserInput
+    technicianExperiences?: TechnicianExperienceCreateNestedManyWithoutCreatedByInput
+    aiTechnicians?: AiTechnicianCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutInvitationsInput = {
@@ -16025,6 +21104,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     members?: MemberUncheckedCreateNestedManyWithoutUserInput
+    technicianExperiences?: TechnicianExperienceUncheckedCreateNestedManyWithoutCreatedByInput
+    aiTechnicians?: AiTechnicianUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutInvitationsInput = {
@@ -16090,6 +21171,8 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     members?: MemberUpdateManyWithoutUserNestedInput
+    technicianExperiences?: TechnicianExperienceUpdateManyWithoutCreatedByNestedInput
+    aiTechnicians?: AiTechnicianUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInvitationsInput = {
@@ -16108,6 +21191,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     members?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    technicianExperiences?: TechnicianExperienceUncheckedUpdateManyWithoutCreatedByNestedInput
+    aiTechnicians?: AiTechnicianUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type SessionCreateWithoutUserInput = {
@@ -16234,6 +21319,96 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TechnicianExperienceCreateWithoutCreatedByInput = {
+    id?: string
+    projectId?: string | null
+    manualId?: string | null
+    manualName?: string | null
+    title: string
+    question: string
+    answer: string
+    symptoms?: string | null
+    cause?: string | null
+    solution?: string | null
+    tags?: string | null
+    source?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    technician?: AiTechnicianCreateNestedOneWithoutExperiencesInput
+  }
+
+  export type TechnicianExperienceUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    technicianId?: string | null
+    projectId?: string | null
+    manualId?: string | null
+    manualName?: string | null
+    title: string
+    question: string
+    answer: string
+    symptoms?: string | null
+    cause?: string | null
+    solution?: string | null
+    tags?: string | null
+    source?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TechnicianExperienceCreateOrConnectWithoutCreatedByInput = {
+    where: TechnicianExperienceWhereUniqueInput
+    create: XOR<TechnicianExperienceCreateWithoutCreatedByInput, TechnicianExperienceUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type TechnicianExperienceCreateManyCreatedByInputEnvelope = {
+    data: TechnicianExperienceCreateManyCreatedByInput | TechnicianExperienceCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AiTechnicianCreateWithoutCreatedByInput = {
+    id?: string
+    name: string
+    domain: string
+    brands?: string | null
+    productTypes?: string | null
+    instructions: string
+    responseStyle?: string
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    manuals?: AiTechnicianManualCreateNestedManyWithoutTechnicianInput
+    experiences?: TechnicianExperienceCreateNestedManyWithoutTechnicianInput
+  }
+
+  export type AiTechnicianUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    name: string
+    domain: string
+    brands?: string | null
+    productTypes?: string | null
+    instructions: string
+    responseStyle?: string
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    manuals?: AiTechnicianManualUncheckedCreateNestedManyWithoutTechnicianInput
+    experiences?: TechnicianExperienceUncheckedCreateNestedManyWithoutTechnicianInput
+  }
+
+  export type AiTechnicianCreateOrConnectWithoutCreatedByInput = {
+    where: AiTechnicianWhereUniqueInput
+    create: XOR<AiTechnicianCreateWithoutCreatedByInput, AiTechnicianUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type AiTechnicianCreateManyCreatedByInputEnvelope = {
+    data: AiTechnicianCreateManyCreatedByInput | AiTechnicianCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
     where: SessionWhereUniqueInput
     update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
@@ -16332,6 +21507,79 @@ export namespace Prisma {
     data: XOR<InvitationUpdateManyMutationInput, InvitationUncheckedUpdateManyWithoutInviterInput>
   }
 
+  export type TechnicianExperienceUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: TechnicianExperienceWhereUniqueInput
+    update: XOR<TechnicianExperienceUpdateWithoutCreatedByInput, TechnicianExperienceUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<TechnicianExperienceCreateWithoutCreatedByInput, TechnicianExperienceUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type TechnicianExperienceUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: TechnicianExperienceWhereUniqueInput
+    data: XOR<TechnicianExperienceUpdateWithoutCreatedByInput, TechnicianExperienceUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type TechnicianExperienceUpdateManyWithWhereWithoutCreatedByInput = {
+    where: TechnicianExperienceScalarWhereInput
+    data: XOR<TechnicianExperienceUpdateManyMutationInput, TechnicianExperienceUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type TechnicianExperienceScalarWhereInput = {
+    AND?: TechnicianExperienceScalarWhereInput | TechnicianExperienceScalarWhereInput[]
+    OR?: TechnicianExperienceScalarWhereInput[]
+    NOT?: TechnicianExperienceScalarWhereInput | TechnicianExperienceScalarWhereInput[]
+    id?: StringFilter<"TechnicianExperience"> | string
+    technicianId?: StringNullableFilter<"TechnicianExperience"> | string | null
+    projectId?: StringNullableFilter<"TechnicianExperience"> | string | null
+    manualId?: StringNullableFilter<"TechnicianExperience"> | string | null
+    manualName?: StringNullableFilter<"TechnicianExperience"> | string | null
+    title?: StringFilter<"TechnicianExperience"> | string
+    question?: StringFilter<"TechnicianExperience"> | string
+    answer?: StringFilter<"TechnicianExperience"> | string
+    symptoms?: StringNullableFilter<"TechnicianExperience"> | string | null
+    cause?: StringNullableFilter<"TechnicianExperience"> | string | null
+    solution?: StringNullableFilter<"TechnicianExperience"> | string | null
+    tags?: StringNullableFilter<"TechnicianExperience"> | string | null
+    source?: StringFilter<"TechnicianExperience"> | string
+    createdById?: StringNullableFilter<"TechnicianExperience"> | string | null
+    createdAt?: DateTimeFilter<"TechnicianExperience"> | Date | string
+    updatedAt?: DateTimeFilter<"TechnicianExperience"> | Date | string
+  }
+
+  export type AiTechnicianUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: AiTechnicianWhereUniqueInput
+    update: XOR<AiTechnicianUpdateWithoutCreatedByInput, AiTechnicianUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<AiTechnicianCreateWithoutCreatedByInput, AiTechnicianUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type AiTechnicianUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: AiTechnicianWhereUniqueInput
+    data: XOR<AiTechnicianUpdateWithoutCreatedByInput, AiTechnicianUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type AiTechnicianUpdateManyWithWhereWithoutCreatedByInput = {
+    where: AiTechnicianScalarWhereInput
+    data: XOR<AiTechnicianUpdateManyMutationInput, AiTechnicianUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type AiTechnicianScalarWhereInput = {
+    AND?: AiTechnicianScalarWhereInput | AiTechnicianScalarWhereInput[]
+    OR?: AiTechnicianScalarWhereInput[]
+    NOT?: AiTechnicianScalarWhereInput | AiTechnicianScalarWhereInput[]
+    id?: StringFilter<"AiTechnician"> | string
+    name?: StringFilter<"AiTechnician"> | string
+    domain?: StringFilter<"AiTechnician"> | string
+    brands?: StringNullableFilter<"AiTechnician"> | string | null
+    productTypes?: StringNullableFilter<"AiTechnician"> | string | null
+    instructions?: StringFilter<"AiTechnician"> | string
+    responseStyle?: StringFilter<"AiTechnician"> | string
+    webEnabled?: BoolFilter<"AiTechnician"> | boolean
+    experienceEnabled?: BoolFilter<"AiTechnician"> | boolean
+    active?: BoolFilter<"AiTechnician"> | boolean
+    createdById?: StringNullableFilter<"AiTechnician"> | string | null
+    createdAt?: DateTimeFilter<"AiTechnician"> | Date | string
+    updatedAt?: DateTimeFilter<"AiTechnician"> | Date | string
+  }
+
   export type UserCreateWithoutSessionsInput = {
     id: string
     name: string
@@ -16348,6 +21596,8 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     members?: MemberCreateNestedManyWithoutUserInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
+    technicianExperiences?: TechnicianExperienceCreateNestedManyWithoutCreatedByInput
+    aiTechnicians?: AiTechnicianCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -16366,6 +21616,8 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     members?: MemberUncheckedCreateNestedManyWithoutUserInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    technicianExperiences?: TechnicianExperienceUncheckedCreateNestedManyWithoutCreatedByInput
+    aiTechnicians?: AiTechnicianUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -16400,6 +21652,8 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     members?: MemberUpdateManyWithoutUserNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
+    technicianExperiences?: TechnicianExperienceUpdateManyWithoutCreatedByNestedInput
+    aiTechnicians?: AiTechnicianUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -16418,6 +21672,8 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     members?: MemberUncheckedUpdateManyWithoutUserNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    technicianExperiences?: TechnicianExperienceUncheckedUpdateManyWithoutCreatedByNestedInput
+    aiTechnicians?: AiTechnicianUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -16436,6 +21692,8 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     members?: MemberCreateNestedManyWithoutUserInput
     invitations?: InvitationCreateNestedManyWithoutInviterInput
+    technicianExperiences?: TechnicianExperienceCreateNestedManyWithoutCreatedByInput
+    aiTechnicians?: AiTechnicianCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -16454,6 +21712,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     members?: MemberUncheckedCreateNestedManyWithoutUserInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    technicianExperiences?: TechnicianExperienceUncheckedCreateNestedManyWithoutCreatedByInput
+    aiTechnicians?: AiTechnicianUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -16488,6 +21748,8 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     members?: MemberUpdateManyWithoutUserNestedInput
     invitations?: InvitationUpdateManyWithoutInviterNestedInput
+    technicianExperiences?: TechnicianExperienceUpdateManyWithoutCreatedByNestedInput
+    aiTechnicians?: AiTechnicianUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -16506,6 +21768,490 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     members?: MemberUncheckedUpdateManyWithoutUserNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    technicianExperiences?: TechnicianExperienceUncheckedUpdateManyWithoutCreatedByNestedInput
+    aiTechnicians?: AiTechnicianUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserCreateWithoutTechnicianExperiencesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    role?: $Enums.Role
+    status?: $Enums.Status
+    createdAt: Date | string
+    updatedAt: Date | string
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    members?: MemberCreateNestedManyWithoutUserInput
+    invitations?: InvitationCreateNestedManyWithoutInviterInput
+    aiTechnicians?: AiTechnicianCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutTechnicianExperiencesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    role?: $Enums.Role
+    status?: $Enums.Status
+    createdAt: Date | string
+    updatedAt: Date | string
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    members?: MemberUncheckedCreateNestedManyWithoutUserInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    aiTechnicians?: AiTechnicianUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutTechnicianExperiencesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTechnicianExperiencesInput, UserUncheckedCreateWithoutTechnicianExperiencesInput>
+  }
+
+  export type AiTechnicianCreateWithoutExperiencesInput = {
+    id?: string
+    name: string
+    domain: string
+    brands?: string | null
+    productTypes?: string | null
+    instructions: string
+    responseStyle?: string
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutAiTechniciansInput
+    manuals?: AiTechnicianManualCreateNestedManyWithoutTechnicianInput
+  }
+
+  export type AiTechnicianUncheckedCreateWithoutExperiencesInput = {
+    id?: string
+    name: string
+    domain: string
+    brands?: string | null
+    productTypes?: string | null
+    instructions: string
+    responseStyle?: string
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    manuals?: AiTechnicianManualUncheckedCreateNestedManyWithoutTechnicianInput
+  }
+
+  export type AiTechnicianCreateOrConnectWithoutExperiencesInput = {
+    where: AiTechnicianWhereUniqueInput
+    create: XOR<AiTechnicianCreateWithoutExperiencesInput, AiTechnicianUncheckedCreateWithoutExperiencesInput>
+  }
+
+  export type UserUpsertWithoutTechnicianExperiencesInput = {
+    update: XOR<UserUpdateWithoutTechnicianExperiencesInput, UserUncheckedUpdateWithoutTechnicianExperiencesInput>
+    create: XOR<UserCreateWithoutTechnicianExperiencesInput, UserUncheckedCreateWithoutTechnicianExperiencesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTechnicianExperiencesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTechnicianExperiencesInput, UserUncheckedUpdateWithoutTechnicianExperiencesInput>
+  }
+
+  export type UserUpdateWithoutTechnicianExperiencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    members?: MemberUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUpdateManyWithoutInviterNestedInput
+    aiTechnicians?: AiTechnicianUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTechnicianExperiencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    aiTechnicians?: AiTechnicianUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type AiTechnicianUpsertWithoutExperiencesInput = {
+    update: XOR<AiTechnicianUpdateWithoutExperiencesInput, AiTechnicianUncheckedUpdateWithoutExperiencesInput>
+    create: XOR<AiTechnicianCreateWithoutExperiencesInput, AiTechnicianUncheckedCreateWithoutExperiencesInput>
+    where?: AiTechnicianWhereInput
+  }
+
+  export type AiTechnicianUpdateToOneWithWhereWithoutExperiencesInput = {
+    where?: AiTechnicianWhereInput
+    data: XOR<AiTechnicianUpdateWithoutExperiencesInput, AiTechnicianUncheckedUpdateWithoutExperiencesInput>
+  }
+
+  export type AiTechnicianUpdateWithoutExperiencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    brands?: NullableStringFieldUpdateOperationsInput | string | null
+    productTypes?: NullableStringFieldUpdateOperationsInput | string | null
+    instructions?: StringFieldUpdateOperationsInput | string
+    responseStyle?: StringFieldUpdateOperationsInput | string
+    webEnabled?: BoolFieldUpdateOperationsInput | boolean
+    experienceEnabled?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutAiTechniciansNestedInput
+    manuals?: AiTechnicianManualUpdateManyWithoutTechnicianNestedInput
+  }
+
+  export type AiTechnicianUncheckedUpdateWithoutExperiencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    brands?: NullableStringFieldUpdateOperationsInput | string | null
+    productTypes?: NullableStringFieldUpdateOperationsInput | string | null
+    instructions?: StringFieldUpdateOperationsInput | string
+    responseStyle?: StringFieldUpdateOperationsInput | string
+    webEnabled?: BoolFieldUpdateOperationsInput | boolean
+    experienceEnabled?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    manuals?: AiTechnicianManualUncheckedUpdateManyWithoutTechnicianNestedInput
+  }
+
+  export type UserCreateWithoutAiTechniciansInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    role?: $Enums.Role
+    status?: $Enums.Status
+    createdAt: Date | string
+    updatedAt: Date | string
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    members?: MemberCreateNestedManyWithoutUserInput
+    invitations?: InvitationCreateNestedManyWithoutInviterInput
+    technicianExperiences?: TechnicianExperienceCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutAiTechniciansInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    role?: $Enums.Role
+    status?: $Enums.Status
+    createdAt: Date | string
+    updatedAt: Date | string
+    banned?: boolean | null
+    banReason?: string | null
+    banExpires?: Date | string | null
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    members?: MemberUncheckedCreateNestedManyWithoutUserInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    technicianExperiences?: TechnicianExperienceUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutAiTechniciansInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAiTechniciansInput, UserUncheckedCreateWithoutAiTechniciansInput>
+  }
+
+  export type AiTechnicianManualCreateWithoutTechnicianInput = {
+    id?: string
+    projectId: string
+    projectName: string
+    vectorStoreId: string
+    manualId: string
+    manualName: string
+    createdAt?: Date | string
+  }
+
+  export type AiTechnicianManualUncheckedCreateWithoutTechnicianInput = {
+    id?: string
+    projectId: string
+    projectName: string
+    vectorStoreId: string
+    manualId: string
+    manualName: string
+    createdAt?: Date | string
+  }
+
+  export type AiTechnicianManualCreateOrConnectWithoutTechnicianInput = {
+    where: AiTechnicianManualWhereUniqueInput
+    create: XOR<AiTechnicianManualCreateWithoutTechnicianInput, AiTechnicianManualUncheckedCreateWithoutTechnicianInput>
+  }
+
+  export type AiTechnicianManualCreateManyTechnicianInputEnvelope = {
+    data: AiTechnicianManualCreateManyTechnicianInput | AiTechnicianManualCreateManyTechnicianInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TechnicianExperienceCreateWithoutTechnicianInput = {
+    id?: string
+    projectId?: string | null
+    manualId?: string | null
+    manualName?: string | null
+    title: string
+    question: string
+    answer: string
+    symptoms?: string | null
+    cause?: string | null
+    solution?: string | null
+    tags?: string | null
+    source?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutTechnicianExperiencesInput
+  }
+
+  export type TechnicianExperienceUncheckedCreateWithoutTechnicianInput = {
+    id?: string
+    projectId?: string | null
+    manualId?: string | null
+    manualName?: string | null
+    title: string
+    question: string
+    answer: string
+    symptoms?: string | null
+    cause?: string | null
+    solution?: string | null
+    tags?: string | null
+    source?: string
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TechnicianExperienceCreateOrConnectWithoutTechnicianInput = {
+    where: TechnicianExperienceWhereUniqueInput
+    create: XOR<TechnicianExperienceCreateWithoutTechnicianInput, TechnicianExperienceUncheckedCreateWithoutTechnicianInput>
+  }
+
+  export type TechnicianExperienceCreateManyTechnicianInputEnvelope = {
+    data: TechnicianExperienceCreateManyTechnicianInput | TechnicianExperienceCreateManyTechnicianInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutAiTechniciansInput = {
+    update: XOR<UserUpdateWithoutAiTechniciansInput, UserUncheckedUpdateWithoutAiTechniciansInput>
+    create: XOR<UserCreateWithoutAiTechniciansInput, UserUncheckedCreateWithoutAiTechniciansInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAiTechniciansInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAiTechniciansInput, UserUncheckedUpdateWithoutAiTechniciansInput>
+  }
+
+  export type UserUpdateWithoutAiTechniciansInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    members?: MemberUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUpdateManyWithoutInviterNestedInput
+    technicianExperiences?: TechnicianExperienceUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAiTechniciansInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    banned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    banExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    members?: MemberUncheckedUpdateManyWithoutUserNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    technicianExperiences?: TechnicianExperienceUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type AiTechnicianManualUpsertWithWhereUniqueWithoutTechnicianInput = {
+    where: AiTechnicianManualWhereUniqueInput
+    update: XOR<AiTechnicianManualUpdateWithoutTechnicianInput, AiTechnicianManualUncheckedUpdateWithoutTechnicianInput>
+    create: XOR<AiTechnicianManualCreateWithoutTechnicianInput, AiTechnicianManualUncheckedCreateWithoutTechnicianInput>
+  }
+
+  export type AiTechnicianManualUpdateWithWhereUniqueWithoutTechnicianInput = {
+    where: AiTechnicianManualWhereUniqueInput
+    data: XOR<AiTechnicianManualUpdateWithoutTechnicianInput, AiTechnicianManualUncheckedUpdateWithoutTechnicianInput>
+  }
+
+  export type AiTechnicianManualUpdateManyWithWhereWithoutTechnicianInput = {
+    where: AiTechnicianManualScalarWhereInput
+    data: XOR<AiTechnicianManualUpdateManyMutationInput, AiTechnicianManualUncheckedUpdateManyWithoutTechnicianInput>
+  }
+
+  export type AiTechnicianManualScalarWhereInput = {
+    AND?: AiTechnicianManualScalarWhereInput | AiTechnicianManualScalarWhereInput[]
+    OR?: AiTechnicianManualScalarWhereInput[]
+    NOT?: AiTechnicianManualScalarWhereInput | AiTechnicianManualScalarWhereInput[]
+    id?: StringFilter<"AiTechnicianManual"> | string
+    technicianId?: StringFilter<"AiTechnicianManual"> | string
+    projectId?: StringFilter<"AiTechnicianManual"> | string
+    projectName?: StringFilter<"AiTechnicianManual"> | string
+    vectorStoreId?: StringFilter<"AiTechnicianManual"> | string
+    manualId?: StringFilter<"AiTechnicianManual"> | string
+    manualName?: StringFilter<"AiTechnicianManual"> | string
+    createdAt?: DateTimeFilter<"AiTechnicianManual"> | Date | string
+  }
+
+  export type TechnicianExperienceUpsertWithWhereUniqueWithoutTechnicianInput = {
+    where: TechnicianExperienceWhereUniqueInput
+    update: XOR<TechnicianExperienceUpdateWithoutTechnicianInput, TechnicianExperienceUncheckedUpdateWithoutTechnicianInput>
+    create: XOR<TechnicianExperienceCreateWithoutTechnicianInput, TechnicianExperienceUncheckedCreateWithoutTechnicianInput>
+  }
+
+  export type TechnicianExperienceUpdateWithWhereUniqueWithoutTechnicianInput = {
+    where: TechnicianExperienceWhereUniqueInput
+    data: XOR<TechnicianExperienceUpdateWithoutTechnicianInput, TechnicianExperienceUncheckedUpdateWithoutTechnicianInput>
+  }
+
+  export type TechnicianExperienceUpdateManyWithWhereWithoutTechnicianInput = {
+    where: TechnicianExperienceScalarWhereInput
+    data: XOR<TechnicianExperienceUpdateManyMutationInput, TechnicianExperienceUncheckedUpdateManyWithoutTechnicianInput>
+  }
+
+  export type AiTechnicianCreateWithoutManualsInput = {
+    id?: string
+    name: string
+    domain: string
+    brands?: string | null
+    productTypes?: string | null
+    instructions: string
+    responseStyle?: string
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutAiTechniciansInput
+    experiences?: TechnicianExperienceCreateNestedManyWithoutTechnicianInput
+  }
+
+  export type AiTechnicianUncheckedCreateWithoutManualsInput = {
+    id?: string
+    name: string
+    domain: string
+    brands?: string | null
+    productTypes?: string | null
+    instructions: string
+    responseStyle?: string
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    experiences?: TechnicianExperienceUncheckedCreateNestedManyWithoutTechnicianInput
+  }
+
+  export type AiTechnicianCreateOrConnectWithoutManualsInput = {
+    where: AiTechnicianWhereUniqueInput
+    create: XOR<AiTechnicianCreateWithoutManualsInput, AiTechnicianUncheckedCreateWithoutManualsInput>
+  }
+
+  export type AiTechnicianUpsertWithoutManualsInput = {
+    update: XOR<AiTechnicianUpdateWithoutManualsInput, AiTechnicianUncheckedUpdateWithoutManualsInput>
+    create: XOR<AiTechnicianCreateWithoutManualsInput, AiTechnicianUncheckedCreateWithoutManualsInput>
+    where?: AiTechnicianWhereInput
+  }
+
+  export type AiTechnicianUpdateToOneWithWhereWithoutManualsInput = {
+    where?: AiTechnicianWhereInput
+    data: XOR<AiTechnicianUpdateWithoutManualsInput, AiTechnicianUncheckedUpdateWithoutManualsInput>
+  }
+
+  export type AiTechnicianUpdateWithoutManualsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    brands?: NullableStringFieldUpdateOperationsInput | string | null
+    productTypes?: NullableStringFieldUpdateOperationsInput | string | null
+    instructions?: StringFieldUpdateOperationsInput | string
+    responseStyle?: StringFieldUpdateOperationsInput | string
+    webEnabled?: BoolFieldUpdateOperationsInput | boolean
+    experienceEnabled?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutAiTechniciansNestedInput
+    experiences?: TechnicianExperienceUpdateManyWithoutTechnicianNestedInput
+  }
+
+  export type AiTechnicianUncheckedUpdateWithoutManualsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    brands?: NullableStringFieldUpdateOperationsInput | string | null
+    productTypes?: NullableStringFieldUpdateOperationsInput | string | null
+    instructions?: StringFieldUpdateOperationsInput | string
+    responseStyle?: StringFieldUpdateOperationsInput | string
+    webEnabled?: BoolFieldUpdateOperationsInput | boolean
+    experienceEnabled?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    experiences?: TechnicianExperienceUncheckedUpdateManyWithoutTechnicianNestedInput
   }
 
   export type MemberCreateManyOrganizationInput = {
@@ -16612,6 +22358,39 @@ export namespace Prisma {
     role?: string | null
     status?: string
     expiresAt: Date | string
+  }
+
+  export type TechnicianExperienceCreateManyCreatedByInput = {
+    id?: string
+    technicianId?: string | null
+    projectId?: string | null
+    manualId?: string | null
+    manualName?: string | null
+    title: string
+    question: string
+    answer: string
+    symptoms?: string | null
+    cause?: string | null
+    solution?: string | null
+    tags?: string | null
+    source?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AiTechnicianCreateManyCreatedByInput = {
+    id?: string
+    name: string
+    domain: string
+    brands?: string | null
+    productTypes?: string | null
+    instructions: string
+    responseStyle?: string
+    webEnabled?: boolean
+    experienceEnabled?: boolean
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type SessionUpdateWithoutUserInput = {
@@ -16738,6 +22517,221 @@ export namespace Prisma {
     role?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TechnicianExperienceUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualName?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    symptoms?: NullableStringFieldUpdateOperationsInput | string | null
+    cause?: NullableStringFieldUpdateOperationsInput | string | null
+    solution?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    technician?: AiTechnicianUpdateOneWithoutExperiencesNestedInput
+  }
+
+  export type TechnicianExperienceUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    technicianId?: NullableStringFieldUpdateOperationsInput | string | null
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualName?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    symptoms?: NullableStringFieldUpdateOperationsInput | string | null
+    cause?: NullableStringFieldUpdateOperationsInput | string | null
+    solution?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TechnicianExperienceUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    technicianId?: NullableStringFieldUpdateOperationsInput | string | null
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualName?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    symptoms?: NullableStringFieldUpdateOperationsInput | string | null
+    cause?: NullableStringFieldUpdateOperationsInput | string | null
+    solution?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiTechnicianUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    brands?: NullableStringFieldUpdateOperationsInput | string | null
+    productTypes?: NullableStringFieldUpdateOperationsInput | string | null
+    instructions?: StringFieldUpdateOperationsInput | string
+    responseStyle?: StringFieldUpdateOperationsInput | string
+    webEnabled?: BoolFieldUpdateOperationsInput | boolean
+    experienceEnabled?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    manuals?: AiTechnicianManualUpdateManyWithoutTechnicianNestedInput
+    experiences?: TechnicianExperienceUpdateManyWithoutTechnicianNestedInput
+  }
+
+  export type AiTechnicianUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    brands?: NullableStringFieldUpdateOperationsInput | string | null
+    productTypes?: NullableStringFieldUpdateOperationsInput | string | null
+    instructions?: StringFieldUpdateOperationsInput | string
+    responseStyle?: StringFieldUpdateOperationsInput | string
+    webEnabled?: BoolFieldUpdateOperationsInput | boolean
+    experienceEnabled?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    manuals?: AiTechnicianManualUncheckedUpdateManyWithoutTechnicianNestedInput
+    experiences?: TechnicianExperienceUncheckedUpdateManyWithoutTechnicianNestedInput
+  }
+
+  export type AiTechnicianUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    domain?: StringFieldUpdateOperationsInput | string
+    brands?: NullableStringFieldUpdateOperationsInput | string | null
+    productTypes?: NullableStringFieldUpdateOperationsInput | string | null
+    instructions?: StringFieldUpdateOperationsInput | string
+    responseStyle?: StringFieldUpdateOperationsInput | string
+    webEnabled?: BoolFieldUpdateOperationsInput | boolean
+    experienceEnabled?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiTechnicianManualCreateManyTechnicianInput = {
+    id?: string
+    projectId: string
+    projectName: string
+    vectorStoreId: string
+    manualId: string
+    manualName: string
+    createdAt?: Date | string
+  }
+
+  export type TechnicianExperienceCreateManyTechnicianInput = {
+    id?: string
+    projectId?: string | null
+    manualId?: string | null
+    manualName?: string | null
+    title: string
+    question: string
+    answer: string
+    symptoms?: string | null
+    cause?: string | null
+    solution?: string | null
+    tags?: string | null
+    source?: string
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AiTechnicianManualUpdateWithoutTechnicianInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    projectName?: StringFieldUpdateOperationsInput | string
+    vectorStoreId?: StringFieldUpdateOperationsInput | string
+    manualId?: StringFieldUpdateOperationsInput | string
+    manualName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiTechnicianManualUncheckedUpdateWithoutTechnicianInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    projectName?: StringFieldUpdateOperationsInput | string
+    vectorStoreId?: StringFieldUpdateOperationsInput | string
+    manualId?: StringFieldUpdateOperationsInput | string
+    manualName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiTechnicianManualUncheckedUpdateManyWithoutTechnicianInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    projectName?: StringFieldUpdateOperationsInput | string
+    vectorStoreId?: StringFieldUpdateOperationsInput | string
+    manualId?: StringFieldUpdateOperationsInput | string
+    manualName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TechnicianExperienceUpdateWithoutTechnicianInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualName?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    symptoms?: NullableStringFieldUpdateOperationsInput | string | null
+    cause?: NullableStringFieldUpdateOperationsInput | string | null
+    solution?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutTechnicianExperiencesNestedInput
+  }
+
+  export type TechnicianExperienceUncheckedUpdateWithoutTechnicianInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualName?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    symptoms?: NullableStringFieldUpdateOperationsInput | string | null
+    cause?: NullableStringFieldUpdateOperationsInput | string | null
+    solution?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TechnicianExperienceUncheckedUpdateManyWithoutTechnicianInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualId?: NullableStringFieldUpdateOperationsInput | string | null
+    manualName?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    symptoms?: NullableStringFieldUpdateOperationsInput | string | null
+    cause?: NullableStringFieldUpdateOperationsInput | string | null
+    solution?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

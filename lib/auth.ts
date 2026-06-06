@@ -10,7 +10,18 @@ import { passwordSchema } from "./validation";
 import { prisma } from "./prisma";
 import { nextCookies } from "better-auth/next-js";
 
+const authBaseURL = process.env.BETTER_AUTH_URL ?? "http://localhost:3000";
+const trustedOrigins = Array.from(
+  new Set(
+    [authBaseURL, "http://localhost:3000", "http://127.0.0.1:3000"].map(
+      (origin) => new URL(origin).origin,
+    ),
+  ),
+);
+
 export const auth = betterAuth({
+  baseURL: authBaseURL,
+  trustedOrigins,
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),

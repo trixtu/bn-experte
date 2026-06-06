@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useId, useMemo, useRef, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -12,7 +12,6 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   PaginationState,
-  Row,
   SortingState,
   useReactTable,
   VisibilityState,
@@ -206,7 +205,7 @@ const columns: ColumnDef<Item>[] = [
   {
     id: "actions",
     header: () => <span className="sr-only">Actions</span>,
-    cell: ({ row }) => <RowActions row={row} />,
+    cell: () => <RowActions />,
     size: 60,
     enableHiding: false,
   },
@@ -271,28 +270,11 @@ export default function Component() {
     },
   })
 
-  // Get unique status values
-  const uniqueStatusValues = useMemo(() => {
-    const statusColumn = table.getColumn("status")
-
-    if (!statusColumn) return []
-
-    const values = Array.from(statusColumn.getFacetedUniqueValues().keys())
-
-    return values.sort()
-  }, [table.getColumn("status")?.getFacetedUniqueValues()])
-
-  // Get counts for each status
-  const statusCounts = useMemo(() => {
-    const statusColumn = table.getColumn("status")
-    if (!statusColumn) return new Map()
-    return statusColumn.getFacetedUniqueValues()
-  }, [table.getColumn("status")?.getFacetedUniqueValues()])
-
-  const selectedStatuses = useMemo(() => {
-    const filterValue = table.getColumn("status")?.getFilterValue() as string[]
-    return filterValue ?? []
-  }, [table.getColumn("status")?.getFilterValue()])
+  const statusColumn = table.getColumn("status")
+  const statusCounts = statusColumn?.getFacetedUniqueValues() ?? new Map()
+  const uniqueStatusValues = Array.from(statusCounts.keys()).sort()
+  const selectedStatuses =
+    (statusColumn?.getFilterValue() as string[] | undefined) ?? []
 
   const handleStatusChange = (checked: boolean, value: string) => {
     const filterValue = table.getColumn("status")?.getFilterValue() as string[]
@@ -720,7 +702,7 @@ export default function Component() {
   )
 }
 
-function RowActions({ row }: { row: Row<Item> }) {
+function RowActions() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
