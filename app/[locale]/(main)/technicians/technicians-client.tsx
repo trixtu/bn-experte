@@ -88,6 +88,58 @@ const emptyDraft: TechnicianDraft = {
   manualKeys: [],
 };
 
+const berichtInstructions = [
+  "Ești un asistent AI specializat în redactarea și verificarea rapoartelor tehnice de lucru: Arbeitsbericht, Servicebericht, Wartungsbericht, Störungsbericht și Übergabebericht.",
+  "Scopul tău este să ajuți utilizatorul să transforme observațiile tehnicianului într-un Bericht clar, complet, profesional și ușor de predat clientului sau firmei.",
+  "Răspunde conversațional, dar structurează rezultatul ca un raport tehnic. Dacă utilizatorul cere text final în germană, redactează în germană profesională, simplă și precisă.",
+  "Folosește șabloanele/manualele asociate ca sursă principală pentru câmpuri, ordine, formulări și cerințe. Dacă nu există șablon asociat sau lipsește o informație, spune clar ce lipsește și cere datele necesare.",
+  "Nu inventa date: ore, materiale, coduri de eroare, măsurători, nume client, adresă, număr comandă, valori electrice, piese înlocuite sau semnături. Marchează necunoscutele ca „nicht angegeben” sau cere completare.",
+  "Când creezi un Bericht, verifică următoarele puncte: client/obiect, dată, tehnician, instalație/produs, brand/model, problemă reclamată, diagnostic, cauză, lucrări efectuate, piese/materiale, timp de lucru, stare finală, recomandări, siguranță și următorii pași.",
+  "Pentru intervenții la porți, bariere, Brandschutzanlage sau instalații electrice, diferențiază clar între observație, cauză confirmată, cauză probabilă și recomandare. Nu prezenta presupunerile ca fapt.",
+  "Dacă raportul trebuie să fie pentru client, folosește formulări neutre și profesionale. Evită acuzații și texte prea tehnice dacă nu sunt necesare.",
+  "Dacă raportul este intern, poți include detalii tehnice suplimentare, pași de diagnostic, coduri de eroare, piese recomandate și observații pentru următoarea intervenție.",
+  "La final, dacă lipsesc informații importante, adaugă o secțiune scurtă „Fehlende Angaben” cu întrebările exacte pe care utilizatorul trebuie să le clarifice.",
+].join("\n");
+
+function createBerichtDraft(manualOptions: ManualOption[]): TechnicianDraft {
+  const reportManualKeys = manualOptions
+    .filter((manual) => {
+      const searchable = [
+        manual.projectName,
+        manual.manualName,
+        manual.vectorStoreId,
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      return [
+        "bericht",
+        "arbeitsbericht",
+        "servicebericht",
+        "wartungsbericht",
+        "störungsbericht",
+        "stoerungsbericht",
+        "blanko",
+        "rapport",
+      ].some((keyword) => searchable.includes(keyword));
+    })
+    .map(getManualKey);
+
+  return {
+    name: "Bericht Assistent",
+    domain: "Bericht / Arbeitsbericht",
+    brands: "B&N Tortechnik",
+    productTypes:
+      "Arbeitsbericht, Servicebericht, Wartungsbericht, Störungsbericht",
+    instructions: berichtInstructions,
+    responseStyle: "bericht",
+    webEnabled: false,
+    experienceEnabled: true,
+    active: true,
+    manualKeys: [...new Set(reportManualKeys)],
+  };
+}
+
 function getManualKey(manual: Pick<ManualOption, "projectId" | "manualId">) {
   return `${manual.projectId}:${manual.manualId}`;
 }
@@ -278,10 +330,20 @@ export default function TechniciansClient({
             </div>
           </div>
 
-          <Button onClick={() => setDraft(emptyDraft)}>
-            <Plus className="size-4" />
-            Creează technician
-          </Button>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setDraft(createBerichtDraft(manualOptions))}
+            >
+              <FileText className="size-4" />
+              Bericht
+            </Button>
+            <Button type="button" onClick={() => setDraft(emptyDraft)}>
+              <Plus className="size-4" />
+              Creează technician
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -431,6 +493,27 @@ export default function TechniciansClient({
 
           {draft && (
             <div className="grid gap-5">
+              {!draft.id && (
+                <div className="flex flex-col gap-2 rounded-lg border bg-muted/20 p-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p className="text-sm font-medium">Preset rapid</p>
+                    <p className="text-xs text-muted-foreground">
+                      Completează automat câmpurile pentru rapoarte tehnice.
+                    </p>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="w-full sm:w-auto"
+                    onClick={() => setDraft(createBerichtDraft(manualOptions))}
+                  >
+                    <FileText className="size-4" />
+                    Folosește Bericht
+                  </Button>
+                </div>
+              )}
+
               <div className="grid gap-3 sm:grid-cols-2">
                 <Field label="Nume">
                   <Input

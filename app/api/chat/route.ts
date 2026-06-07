@@ -412,6 +412,48 @@ function buildConversationInput({
     .join("\n");
 }
 
+function buildBerichtInput({
+  message,
+  history,
+  experienceContext,
+}: {
+  message: string;
+  history: ChatHistoryMessage[];
+  experienceContext: string;
+}) {
+  return [
+    formatConversationHistory(history),
+    "",
+    experienceContext,
+    "",
+    "Observațiile / notițele brute ale tehnicianului:",
+    message,
+    "",
+    "Transformă aceste observații într-un Bericht tehnic utilizabil. Nu trata mesajul ca întrebare de manual.",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+function buildEmailInput({
+  message,
+  history,
+}: {
+  message: string;
+  history: ChatHistoryMessage[];
+}) {
+  return [
+    formatConversationHistory(history),
+    "",
+    "Textul brut al utilizatorului, care trebuie transformat cât mai fidel în germană:",
+    message,
+    "",
+    "Păstrează intenția, informațiile și nivelul de detaliu al textului. Nu adăuga informații noi.",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
 function normalizeMessage(message: unknown, hasImages: boolean) {
   if (typeof message === "string" && message.trim()) {
     return message.trim();
@@ -472,6 +514,58 @@ async function getSelectedTechnician(technicianId: unknown) {
 type LoadedTechnician = NonNullable<
   Awaited<ReturnType<typeof getSelectedTechnician>>
 >;
+
+function isBerichtTechnician(technician: LoadedTechnician | null) {
+  if (!technician) return false;
+
+  const normalized = normalizeForIntent(
+    [
+      technician.name,
+      technician.domain,
+      technician.productTypes,
+      technician.responseStyle,
+      technician.instructions,
+    ]
+      .filter(Boolean)
+      .join(" "),
+  );
+
+  return includesAny(normalized, [
+    "bericht",
+    "arbeitsbericht",
+    "servicebericht",
+    "wartungsbericht",
+    "storungsbericht",
+    "stoerungsbericht",
+    "raport",
+  ]);
+}
+
+function isEmailTechnician(technician: LoadedTechnician | null) {
+  if (!technician) return false;
+
+  const normalized = normalizeForIntent(
+    [
+      technician.name,
+      technician.domain,
+      technician.productTypes,
+      technician.responseStyle,
+      technician.instructions,
+    ]
+      .filter(Boolean)
+      .join(" "),
+  );
+
+  return includesAny(normalized, [
+    "email",
+    "e-mail",
+    "mail",
+    "kundenkommunikation",
+    "kunden e mail",
+    "kundenmail",
+    "email-de",
+  ]);
+}
 
 function formatTechnicianInstruction(technician: LoadedTechnician) {
   return [
@@ -757,6 +851,8 @@ export async function POST(req: Request) {
     hasImages: images.length > 0,
   });
   const selectedTechnician = await getSelectedTechnician(body.technicianId);
+  const berichtMode = isBerichtTechnician(selectedTechnician);
+  const emailMode = isEmailTechnician(selectedTechnician);
   const technicianManualIds =
     selectedTechnician?.manuals
       .filter((manual) => manual.projectId === assistantId)
@@ -774,7 +870,7 @@ export async function POST(req: Request) {
         ].join("\n")
       : "";
   const relevantExperiences =
-    intent.mode === "conversation"
+    emailMode || (intent.mode === "conversation" && !berichtMode)
       ? []
       : await getRelevantExperiences({
           assistantId,
@@ -847,6 +943,103 @@ export async function POST(req: Request) {
       stream: true,
     };
   };
+
+  if (emailMode && selectedTechnician) {
+    const emailParams: ResponseCreateParamsStreaming = {
+      model: chatModel,
+      instructions: [
+        languageInstruction,
+        technicianInstruction,
+        "Mod special: Email DE / traducere fidelă.",
+        "Sarcina principală: utilizatorul scrie în română, iar tu transformi textul într-un email sau mesaj în limba germană.",
+        "Păstrează cât mai fidel ce a scris utilizatorul: aceeași intenție, aceleași date, același nivel de detaliu. Corectează doar gramatica, tonul și forma profesională.",
+        "Nu inventa și nu adăuga informații noi: nu adăuga cereri despre model, frecvență, compatibilitate, adresă de livrare, termene, prețuri, materiale, promisiuni sau pași suplimentari dacă utilizatorul nu le-a menționat.",
+        "Nu adăuga secțiuni precum „Noch zu klären”, „Rückfragen”, „Bitte teilen Sie uns mit...” decât dacă utilizatorul cere explicit să ceri informații suplimentare.",
+        "Nu trata mesajul ca întrebare tehnică de manual. Nu căuta în manual și nu răspunde cu diagnostic tehnic pentru acest mod.",
+        "Dacă utilizatorul spune că există poză/foto, păstrează referința la fotografie în germană, dar nu inventa ce se vede în poză dacă nu este atașată sau clară.",
+        "Dacă utilizatorul cere doar traducere, răspunde doar cu textul tradus. Dacă cere email, folosește format de email cu Betreff, Anrede, corp și încheiere.",
+        "Folosește un ton politicos și natural, cu „Sie”. Nu face textul mult mai lung decât originalul decât dacă este necesar pentru gramatică și claritate.",
+        images.length > 0
+          ? "Utilizatorul a atașat imagine. Poți menționa „siehe beigefügtes Foto” dacă se potrivește, dar nu inventa detalii vizuale."
+          : "",
+      ]
+        .filter(Boolean)
+        .join("\n\n"),
+      input: buildMultimodalInput({
+        text: buildEmailInput({
+          message,
+          history: conversationHistory,
+        }),
+        images,
+      }),
+      temperature: 0,
+      stream: true,
+    };
+
+    return new Response(createOpenAITextStream({ params: emailParams }), {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache",
+      },
+    });
+  }
+
+  if (berichtMode && selectedTechnician) {
+    const manualFilter = buildManualFilter({
+      selectedManualId,
+      technicianManualIds,
+    });
+    const berichtTools: ResponseCreateParamsStreaming["tools"] = vectorStoreId
+      ? [
+          {
+            type: "file_search",
+            vector_store_ids: [vectorStoreId],
+            filters: manualFilter,
+            max_num_results: 8,
+          },
+        ]
+      : undefined;
+
+    const berichtParams: ResponseCreateParamsStreaming = {
+      model: chatModel,
+      instructions: [
+        assistant.instructions,
+        languageInstruction,
+        technicianInstruction,
+        "Mod special: Bericht / Arbeitsbericht.",
+        "Nu trata mesajul utilizatorului ca întrebare de manual și nu răspunde cu „nu am găsit în manual”. Pentru Bericht, sarcina principală este redactarea raportului din observațiile introduse de utilizator.",
+        "Manualele sau șabloanele asociate pot fi folosite doar pentru structură, câmpuri, formulări și verificare. Dacă nu găsești un șablon relevant, redactează totuși raportul din datele primite.",
+        "Redactează implicit textul final în germană profesională, pentru Arbeitsbericht/Servicebericht. Dacă utilizatorul cere română, răspunde în română.",
+        "Corectează gramatica și termenii tehnici germani: de exemplu Führungsschiene, Inbetriebnahme, außer Betrieb, beschädigt, verbogen.",
+        "Păstrează sensul observațiilor. Nu inventa client, adresă, dată, ore, materiale, piese, măsurători, semnături sau lucrări care nu au fost menționate.",
+        "Dacă textul utilizatorului este scurt, oferă un Bericht concis, gata de copiat. Dacă lipsesc date importante, adaugă la final o secțiune scurtă „Fehlende Angaben”.",
+        "Structură recomandată: Kurzbeschreibung, Feststellung, Ursache / Schadenbild, Durchgeführte Maßnahme, Status der Anlage, Empfehlung / Nächste Schritte.",
+        "Pentru fraze de service, folosește formulări neutre și profesionale. Exemplu de ton: „Das Tor wurde im Bereich der rechten Führungsschiene beschädigt. Aufgrund der Verformung war eine sichere Inbetriebnahme nicht möglich. Die Anlage wurde außer Betrieb gesetzt.”",
+        "Dacă utilizatorul atașează imagini, folosește-le pentru a formula observații, dar marchează ce nu este vizibil clar.",
+        imageInstruction,
+      ]
+        .filter(Boolean)
+        .join("\n\n"),
+      input: buildMultimodalInput({
+        text: buildBerichtInput({
+          message,
+          history: conversationHistory,
+          experienceContext,
+        }),
+        images,
+      }),
+      tools: berichtTools,
+      temperature: 0,
+      stream: true,
+    };
+
+    return new Response(createOpenAITextStream({ params: berichtParams }), {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache",
+      },
+    });
+  }
 
   if (intent.mode === "conversation") {
     const conversationParams: ResponseCreateParamsStreaming = {
