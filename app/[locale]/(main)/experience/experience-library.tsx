@@ -2,12 +2,22 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import {
   AlertCircle,
   BrainCircuit,
   CalendarDays,
+  Eye,
+  FileText,
   Search,
   Trash2,
 } from "lucide-react";
@@ -43,6 +53,8 @@ export default function ExperienceLibrary({
   const [experiences, setExperiences] = useState(initialExperiences);
   const [query, setQuery] = useState("");
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [selectedExperience, setSelectedExperience] =
+    useState<ExperienceItem | null>(null);
 
   const visibleExperiences = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -206,18 +218,139 @@ export default function ExperienceLibrary({
                 )}
                 {experience.tags && (
                   <div className="flex flex-wrap gap-1.5">
-                    {experience.tags.split(",").map((tag) => (
-                      <Badge key={tag.trim()} variant="secondary">
-                        {tag.trim()}
+                    {splitTags(experience.tags).map((tag) => (
+                      <Badge key={tag} variant="secondary">
+                        {tag}
                       </Badge>
                     ))}
                   </div>
                 )}
               </div>
+
+              <div className="mt-4 flex justify-end">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="w-full sm:w-auto"
+                  onClick={() => setSelectedExperience(experience)}
+                >
+                  <Eye className="size-4" />
+                  Deschide
+                </Button>
+              </div>
             </article>
           ))}
         </section>
       )}
+
+      <Dialog
+        open={selectedExperience !== null}
+        onOpenChange={(open) => {
+          if (!open) setSelectedExperience(null);
+        }}
+      >
+        <DialogContent className="max-h-[92svh] max-w-3xl gap-0 overflow-hidden p-0">
+          {selectedExperience ? (
+            <>
+              <DialogHeader className="border-b px-5 py-4 pr-12 text-left sm:px-6">
+                <div className="flex flex-wrap items-center gap-2">
+                  {selectedExperience.technicianName && (
+                    <Badge variant="secondary">
+                      {selectedExperience.technicianName}
+                    </Badge>
+                  )}
+                  {selectedExperience.manualName && (
+                    <Badge variant="outline">
+                      <FileText className="size-3" />
+                      {selectedExperience.manualName}
+                    </Badge>
+                  )}
+                  <Badge variant="outline">
+                    {formatDate(selectedExperience.updatedAt)}
+                  </Badge>
+                </div>
+                <DialogTitle className="mt-2 text-xl leading-snug">
+                  {selectedExperience.title}
+                </DialogTitle>
+                <DialogDescription>
+                  Conținut complet al experienței salvate pentru tehnician.
+                </DialogDescription>
+              </DialogHeader>
+
+              <ScrollArea className="max-h-[calc(92svh-132px)]">
+                <div className="space-y-4 px-5 py-5 sm:px-6">
+                  <div className="grid gap-3 rounded-lg border bg-muted/20 p-3 text-sm sm:grid-cols-2">
+                    <MetadataRow
+                      label="Domeniu"
+                      value={selectedExperience.technicianDomain}
+                    />
+                    <MetadataRow
+                      label="Sursă"
+                      value={formatSource(selectedExperience.source)}
+                    />
+                    <MetadataRow
+                      label="Manual"
+                      value={selectedExperience.manualName}
+                    />
+                    <MetadataRow
+                      label="Creat"
+                      value={formatDate(selectedExperience.createdAt)}
+                    />
+                  </div>
+
+                  <DetailSection
+                    label="Întrebare / simptom"
+                    value={selectedExperience.question}
+                  />
+
+                  {selectedExperience.symptoms && (
+                    <DetailSection
+                      label="Simptome observate"
+                      value={selectedExperience.symptoms}
+                    />
+                  )}
+
+                  {selectedExperience.cause && (
+                    <DetailSection
+                      label="Cauză"
+                      value={selectedExperience.cause}
+                    />
+                  )}
+
+                  {selectedExperience.solution && (
+                    <DetailSection
+                      label="Soluție"
+                      value={selectedExperience.solution}
+                    />
+                  )}
+
+                  <DetailSection
+                    label="Răspuns complet salvat"
+                    value={selectedExperience.answer}
+                    emphasis
+                  />
+
+                  {selectedExperience.tags && (
+                    <div className="rounded-lg border bg-background p-4">
+                      <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">
+                        Taguri
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {splitTags(selectedExperience.tags).map((tag) => (
+                          <Badge key={tag} variant="secondary">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </ScrollArea>
+            </>
+          ) : null}
+        </DialogContent>
+      </Dialog>
     </main>
   );
 }
@@ -229,6 +362,61 @@ function InfoBlock({ label, value }: { label: string; value: string }) {
       <p className="mt-1 line-clamp-5 whitespace-pre-wrap">{value}</p>
     </div>
   );
+}
+
+function DetailSection({
+  label,
+  value,
+  emphasis = false,
+}: {
+  label: string;
+  value: string;
+  emphasis?: boolean;
+}) {
+  return (
+    <section
+      className={cn(
+        "rounded-lg border bg-background p-4",
+        emphasis && "border-primary/20 bg-muted/20",
+      )}
+    >
+      <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">
+        {label}
+      </p>
+      <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-foreground">
+        {value}
+      </p>
+    </section>
+  );
+}
+
+function MetadataRow({
+  label,
+  value,
+}: {
+  label: string;
+  value: string | null;
+}) {
+  return (
+    <div className="min-w-0">
+      <p className="text-xs text-muted-foreground">{label}</p>
+      <p className="mt-1 truncate font-medium">{value || "Nespecificat"}</p>
+    </div>
+  );
+}
+
+function splitTags(value: string) {
+  return value
+    .split(",")
+    .map((tag) => tag.trim())
+    .filter(Boolean);
+}
+
+function formatSource(value: string) {
+  if (value === "chat") return "Chat";
+  if (value === "manual") return "Manual";
+  if (value === "web") return "Web";
+  return value;
 }
 
 function formatDate(value: string) {

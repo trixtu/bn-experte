@@ -137,7 +137,7 @@ function NavigationProgressMarkup() {
     <>
       <div
         aria-hidden="true"
-        className="navigation-progress pointer-events-none fixed inset-x-0 top-0 z-[100] h-1 overflow-hidden bg-transparent"
+        className="navigation-progress pointer-events-none fixed inset-x-0 top-0 z-[100] h-0.5 overflow-hidden bg-transparent sm:h-1"
       >
         <div className="navigation-progress-bar h-full origin-left bg-primary shadow-sm" />
       </div>
@@ -145,7 +145,7 @@ function NavigationProgressMarkup() {
       <div
         role="status"
         aria-live="polite"
-        className="navigation-progress-status pointer-events-none fixed right-4 top-4 z-[101] flex items-center gap-2 rounded-md border bg-background/95 px-3 py-2 text-sm text-muted-foreground shadow-sm backdrop-blur"
+        className="navigation-progress-status pointer-events-none fixed inset-x-3 bottom-[calc(env(safe-area-inset-bottom)+0.875rem)] z-[101] flex items-center justify-center gap-2 rounded-lg border bg-background/95 px-3 py-2 text-[13px] text-muted-foreground shadow-sm backdrop-blur sm:inset-x-auto sm:bottom-auto sm:right-4 sm:top-4 sm:justify-start sm:rounded-md sm:text-sm"
       >
         <Loader2 className="size-4 animate-spin" />
         <span>Se încarcă...</span>

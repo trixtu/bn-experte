@@ -151,7 +151,7 @@
 }
 
 .navigation-progress-status {
-  transform: translateY(-4px);
+  transform: translateY(6px);
 }
 
 html[data-route-loading="true"] .navigation-progress,
@@ -163,6 +163,17 @@ html[data-route-loading="true"][data-route-loading-slow="true"]
   .navigation-progress-status {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (min-width: 640px) {
+  .navigation-progress-status {
+    transform: translateY(-4px);
+  }
+
+  html[data-route-loading="true"][data-route-loading-slow="true"]
+    .navigation-progress-status {
+    transform: translateY(0);
+  }
 }
 
 .navigation-progress-bar {
