@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
+import { NavigationProgress } from "@/components/navigation-progress";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -41,6 +42,7 @@ export default async function RootLayout({ children, params }: Props) {
           disableTransitionOnChange
         >
           <NextIntlClientProvider locale={locale}>
+            <NavigationProgress />
             {children}
           </NextIntlClientProvider>
           <Toaster />
